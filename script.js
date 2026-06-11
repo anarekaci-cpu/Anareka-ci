@@ -111,3 +111,85 @@ new Chart(document.getElementById('chartAxes'), {
     }
   }
 });
+
+/* ===== CARROUSEL ÉVÉNEMENTS ===== */
+(function(){
+  const track   = document.getElementById('carrouselTrack');
+  const slides  = document.querySelectorAll('.carr-slide');
+  const dots    = document.querySelectorAll('.carr-dot');
+  const thumbs  = document.querySelectorAll('.carr-thumb');
+  const btnPrev = document.getElementById('carrPrev');
+  const btnNext = document.getElementById('carrNext');
+  const counter = document.getElementById('carrCurrent');
+  if(!track) return;
+
+  let current = 0;
+  let timer;
+  const total = slides.length;
+
+  function goTo(n) {
+    // Wrap around
+    current = (n + total) % total;
+
+    // Déplacer le track
+    track.style.transform = `translateX(-${current * 100}%)`;
+
+    // Activer slide
+    slides.forEach((s,i) => s.classList.toggle('active', i === current));
+
+    // Dots
+    dots.forEach((d,i) => d.classList.toggle('active', i === current));
+
+    // Thumbs
+    thumbs.forEach((t,i) => t.classList.toggle('active', i === current));
+
+    // Compteur
+    counter.textContent = current + 1;
+
+    // Scroll thumb visible
+    if(thumbs[current]) {
+      thumbs[current].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+    }
+
+    resetTimer();
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+
+  // Init
+  slides[0].classList.add('active');
+  thumbs[0].classList.add('active');
+
+  // Boutons
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+  btnNext.addEventListener('click', () => goTo(current + 1));
+
+  // Dots
+  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
+
+  // Thumbs
+  thumbs.forEach(t => t.addEventListener('click', () => goTo(+t.dataset.i)));
+
+  // Swipe tactile
+  let startX = 0;
+  track.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if(Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+  });
+
+  // Pause au survol
+  track.closest('.carrousel-wrap').addEventListener('mouseenter', () => clearInterval(timer));
+  track.closest('.carrousel-wrap').addEventListener('mouseleave', () => resetTimer());
+
+  // Clavier
+  document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowLeft')  goTo(current - 1);
+    if(e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  resetTimer();
+})();
