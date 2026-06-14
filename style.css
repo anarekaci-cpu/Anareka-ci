@@ -324,7 +324,7 @@ nav.scrolled {
   padding: 12px 0;
 }
 .train-track.train-reverse {
-  animation: trainRight 50s linear infinite;
+  animation: trainRight 55s linear infinite;
 }
 
 @keyframes trainLeft  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
