@@ -274,7 +274,19 @@ h1 em {
 
 <!-- ===== L'ATTIÉKÉ — GALERIE GRAND FORMAT ===== -->
 <div class="galerie">
+  <div class="galerie-grains" aria-hidden="true">
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+  </div>
   <div class="galerie-header">
+    <div class="galerie-icon" aria-hidden="true">
+      <span class="steam s1"></span>
+      <span class="steam s2"></span>
+      <span class="steam s3"></span>
+      <span class="galerie-bowl">🍚</span>
+    </div>
     <span class="galerie-tag">🌿 Patrimoine culinaire</span>
     <h2 class="galerie-titre">L'Attiéké — Patrimoine culinaire ivoirien</h2>
     <div class="galerie-rule"></div>
@@ -299,100 +311,6 @@ h1 em {
     </div>
   </div>
 </div>
-
-<!-- CSS GALERIE GRAND FORMAT -->
-<style>
-.galerie {
-  background: linear-gradient(180deg, #fbf4e6 0%, #f3e6cd 50%, #fbf4e6 100%);
-  padding: 70px 24px 80px;
-  position: relative;
-  overflow: hidden;
-}
-.galerie::before {
-  content:''; position:absolute; inset:0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(193,101,47,0.10) 0%, transparent 65%);
-  pointer-events:none;
-}
-.galerie-header {
-  text-align: center;
-  margin-bottom: 48px;
-  padding: 0 20px;
-  position: relative;
-  z-index: 1;
-}
-.galerie-tag {
-  display:inline-block; background:rgba(193,101,47,0.12);
-  color:#c1652f; font-size:12px; font-weight:600; letter-spacing:.12em;
-  text-transform:uppercase; padding:6px 16px; border-radius:20px;
-  border:1px solid rgba(193,101,47,0.3); margin-bottom:14px;
-  font-family:'Outfit',sans-serif;
-}
-.galerie-titre {
-  font-family:'Cormorant Garamond',serif;
-  font-size: clamp(28px, 4.5vw, 46px);
-  color:#1a3d2b; font-weight:600; margin:0 0 12px; letter-spacing:.01em;
-}
-.galerie-rule {
-  width:50px; height:2px; background:linear-gradient(90deg,transparent,#c1652f,transparent);
-  margin:0 auto 14px;
-}
-.galerie-sous { color:rgba(26,61,43,0.6); font-size:14px; font-family:'Outfit',sans-serif; margin:0; }
-
-.galerie-inner {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 8px 4px 16px;
-  position: relative;
-  z-index: 1;
-}
-.galerie-inner::-webkit-scrollbar { height: 8px; }
-.galerie-inner::-webkit-scrollbar-thumb { background: rgba(193,101,47,0.35); border-radius: 10px; }
-.galerie-inner::-webkit-scrollbar-track { background: rgba(193,101,47,0.08); border-radius: 10px; }
-
-.galerie-item {
-  position: relative;
-  flex: 0 0 320px;
-  height: 380px;
-  border-radius: 18px;
-  overflow: hidden;
-  scroll-snap-align: start;
-  border: 2px solid rgba(193,101,47,0.18);
-  transition: border-color .3s, transform .3s, box-shadow .3s;
-}
-.galerie-item:hover {
-  border-color: rgba(193,101,47,0.7);
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(120,70,20,0.25), 0 0 24px rgba(193,101,47,0.2);
-}
-.galerie-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform .5s ease;
-}
-.galerie-item:hover img { transform: scale(1.06); }
-.galerie-label {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(40,20,5,0.85));
-  color: #fbf4e6;
-  font-family: 'Outfit', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 60px 18px 18px;
-}
-@media (max-width: 760px) {
-  .galerie-item { flex: 0 0 86vw; height: 300px; }
-  .galerie { padding: 50px 16px 60px; }
-}
-</style>
 
 <!-- CHIFFRES -->
 <div class="chiffres">
@@ -499,143 +417,6 @@ h1 em {
     <p class="lightbox-cap" id="lightboxCap"></p>
   </div>
 </div>
-
-<!-- CSS TRAIN -->
-<style>
-/* ===== ALBUM ACCUEIL ===== */
-.album-accueil {
-  background: linear-gradient(180deg, #0d2218 0%, #1a3d2b 50%, #0d2218 100%);
-  padding: 56px 0 52px;
-  position: relative;
-  overflow: hidden;
-}
-.album-accueil::before {
-  content:''; position:absolute; inset:0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 65%);
-  pointer-events:none;
-}
-.album-header { text-align:center; margin-bottom:40px; padding:0 20px; }
-.album-tag {
-  display:inline-block; background:rgba(201,168,76,0.15);
-  color:#c9a84c; font-size:12px; font-weight:600; letter-spacing:.12em;
-  text-transform:uppercase; padding:6px 16px; border-radius:20px;
-  border:1px solid rgba(201,168,76,0.3); margin-bottom:14px;
-  font-family:'Outfit',sans-serif;
-}
-.album-titre {
-  font-family:'Cormorant Garamond',serif; font-size:clamp(26px,4vw,42px);
-  color:#fff; font-weight:600; margin:0 0 10px; letter-spacing:.01em;
-}
-.album-rule {
-  width:50px; height:2px; background:linear-gradient(90deg,transparent,#c9a84c,transparent);
-  margin:0 auto 10px;
-}
-.album-sous { color:rgba(255,255,255,0.45); font-size:13px; font-family:'Outfit',sans-serif; margin:0; }
-
-/* ===== TRAIN ===== */
-.train-wrap {
-  overflow: hidden !important;
-  margin-bottom: 16px !important;
-  display: block !important;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-}
-.train-wrap:last-child { margin-bottom: 0 !important; }
-
-.train-track {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 14px !important;
-  width: max-content !important;
-  animation: trainLeft 55s linear infinite !important;
-  padding: 12px 0 !important;
-}
-.train-track.train-reverse {
-  animation: trainRight 50s linear infinite !important;
-}
-
-@keyframes trainLeft  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes trainRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-
-/* Pause au survol du conteneur */
-.train-wrap:hover .train-track { animation-play-state: paused !important; }
-
-/* Carte photo */
-.train-card {
-  position: relative !important;
-  width: 280px !important;
-  height: 190px !important;
-  border-radius: 14px !important;
-  overflow: hidden !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  cursor: pointer !important;
-  border: 2px solid rgba(201,168,76,0.15) !important;
-  transition: border-color .3s, transform .3s, box-shadow .3s !important;
-  display: block !important;
-  margin: 0 !important;
-}
-.train-card:hover {
-  border-color: rgba(201,168,76,0.7) !important;
-  transform: translateY(-6px) scale(1.03) !important;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.2) !important;
-  z-index: 5 !important;
-}
-.train-card img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-  transition: transform .4s ease !important;
-  max-width: none !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-}
-.train-card:hover img { transform: scale(1.08) !important; }
-
-/* Légende */
-.train-cap {
-  position: absolute !important;
-  bottom: 0 !important; left: 0 !important; right: 0 !important;
-  background: linear-gradient(transparent, rgba(10,25,16,0.9)) !important;
-  color: #e8c97a !important;
-  font-family: 'Outfit', sans-serif !important;
-  font-size: 12px !important; font-weight: 600 !important;
-  padding: 24px 12px 10px !important;
-  transform: translateY(4px) !important; opacity: 0 !important;
-  transition: opacity .3s, transform .3s !important;
-  display: block !important;
-}
-.train-card:hover .train-cap { opacity: 1 !important; transform: translateY(0) !important; }
-
-/* ===== LIGHTBOX ===== */
-.lightbox { position:fixed; inset:0; z-index:9999; display:none; align-items:center; justify-content:center; }
-.lightbox.open { display:flex; }
-.lightbox-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.93); cursor:pointer; }
-.lightbox-content {
-  position:relative; z-index:2;
-  display:flex; flex-direction:column; align-items:center;
-  animation: lbIn .3s ease;
-}
-@keyframes lbIn { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:scale(1)} }
-.lightbox-content img {
-  max-width:92vw; max-height:82vh; border-radius:14px;
-  box-shadow:0 24px 80px rgba(0,0,0,0.7); object-fit:contain; display:block;
-}
-.lightbox-cap {
-  color:#e8c97a; font-family:'Outfit',sans-serif; font-size:15px;
-  margin:14px 0 0; text-align:center; max-width:80vw;
-}
-.lightbox-close {
-  position:absolute; top:-16px; right:-16px;
-  background:#c9a84c; color:#1a3d2b; border:none;
-  width:36px; height:36px; border-radius:50%; font-size:16px;
-  font-weight:700; cursor:pointer;
-  transition:transform .2s, background .2s;
-}
-.lightbox-close:hover { transform:scale(1.15); background:#e8c97a; }
-</style>
 
 <!-- JS TRAIN LIGHTBOX -->
 <script>
