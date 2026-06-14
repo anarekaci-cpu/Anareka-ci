@@ -458,7 +458,7 @@ nav.scrolled {
 
 .galerie-item {
   position: relative;
-  height: 240px;
+  height: 300px;
   border-radius: 18px;
   overflow: hidden;
   border: 2px solid rgba(193,101,47,0.18);
@@ -552,13 +552,13 @@ nav.scrolled {
 
 @media (max-width: 760px) {
   .galerie-inner { gap: 8px; padding: 8px 12px 16px; }
-  .galerie-item { height: 120px; border-radius: 10px; }
+  .galerie-item { height: 170px; border-radius: 10px; }
   .galerie-label { font-size: 10px; padding: 24px 8px 8px; }
   .galerie { padding: 50px 16px 60px; }
 }
 @media (max-width: 460px) {
   .galerie-inner { gap: 6px; }
-  .galerie-item { height: 90px; border-radius: 8px; }
+  .galerie-item { height: 130px; border-radius: 8px; }
   .galerie-label { display: none; }
 }
 
