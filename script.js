@@ -70,7 +70,7 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('on');
-          observer.unobserve(entry.target); // Optionnel : une seule fois
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
@@ -78,7 +78,7 @@
     document.querySelectorAll('.reveal, .reveal-l').forEach(el => observer.observe(el));
   }
 
-  // ---------- COMPTEUR DE CHIFFRES (sauf 1996) ----------
+  // ---------- COMPTEUR DE CHIFFRES ----------
   function initCounter() {
     function animate(el) {
       const target = parseInt(el.dataset.target);
@@ -99,8 +99,7 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.querySelectorAll('[data-target]').forEach(el => {
-            // Ne pas animer les années (ex: 1996) ou si explicitement marqué
-            if (el.dataset.noAnimate === 'true' || parseInt(el.dataset.target) === 1996) return;
+            if (el.dataset.noAnimate === 'true') return;
             animate(el);
           });
           observer.unobserve(entry.target);
@@ -111,7 +110,7 @@
     document.querySelectorAll('.chiffres').forEach(el => observer.observe(el));
   }
 
-  // ---------- LIGHTBOX (intégrée) ----------
+  // ---------- LIGHTBOX ----------
   function initLightbox() {
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
