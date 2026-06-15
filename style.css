@@ -268,18 +268,91 @@ nav.scrolled {
 .hero-stat span { font-size:9.5px; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:2px; font-weight:500; }
 
 /* ===== GALERIE ===== */
-.galerie { background:var(--vert); }
+.galerie { background:var(--vert); position:relative; overflow:hidden; }
 .galerie-header {
-  text-align:center; padding:28px 20px 0;
-  font-size:10px; font-weight:600; letter-spacing:3px;
-  text-transform:uppercase; color:rgba(255,255,255,.45);
+  text-align:center; padding:44px 20px 4px;
+  position:relative; z-index:2;
 }
+
+/* Grains de manioc décoratifs flottant en fond */
+.galerie-grains { position:absolute; inset:0; pointer-events:none; z-index:0; }
+.galerie-grains .grain {
+  position:absolute; width:6px; height:9px; border-radius:50% 50% 45% 45%;
+  background:rgba(201,168,76,.22);
+  animation: grainFloat 7s ease-in-out infinite;
+}
+.galerie-grains .grain:nth-child(1){ left:7%;  top:22%; animation-delay:0s }
+.galerie-grains .grain:nth-child(2){ left:15%; top:68%; animation-delay:.6s }
+.galerie-grains .grain:nth-child(3){ left:24%; top:35%; animation-delay:1.2s }
+.galerie-grains .grain:nth-child(4){ left:33%; top:75%; animation-delay:.3s }
+.galerie-grains .grain:nth-child(5){ left:43%; top:18%; animation-delay:1.8s }
+.galerie-grains .grain:nth-child(6){ left:52%; top:60%; animation-delay:.9s }
+.galerie-grains .grain:nth-child(7){ left:61%; top:30%; animation-delay:2.1s }
+.galerie-grains .grain:nth-child(8){ left:70%; top:72%; animation-delay:.5s }
+.galerie-grains .grain:nth-child(9){ left:78%; top:25%; animation-delay:1.5s }
+.galerie-grains .grain:nth-child(10){ left:86%; top:64%; animation-delay:1s }
+.galerie-grains .grain:nth-child(11){ left:92%; top:40%; animation-delay:2.4s }
+.galerie-grains .grain:nth-child(12){ left:4%;  top:50%; animation-delay:1.7s }
+@keyframes grainFloat {
+  0%,100% { transform:translateY(0) rotate(0); opacity:.18; }
+  50%     { transform:translateY(-14px) rotate(18deg); opacity:.5; }
+}
+
+/* Bol d'attiéké fumant */
+.galerie-icon { position:relative; display:inline-block; margin-bottom:14px; height:54px; }
+.galerie-bowl { font-size:42px; line-height:1; display:block; }
+.galerie-icon .steam {
+  position:absolute; top:-2px; width:4px; height:18px; border-radius:4px;
+  background:linear-gradient(to top, rgba(255,255,255,.5), transparent);
+  opacity:0; animation: steamRise 2.6s ease-out infinite;
+}
+.galerie-icon .s1 { left:38%; animation-delay:0s }
+.galerie-icon .s2 { left:50%; animation-delay:.6s }
+.galerie-icon .s3 { left:62%; animation-delay:1.2s }
+@keyframes steamRise {
+  0%   { transform:translateY(6px) scaleY(.6);  opacity:0; }
+  35%  { opacity:.55; }
+  100% { transform:translateY(-18px) scaleY(1.2); opacity:0; }
+}
+
+/* Badge "Patrimoine culinaire" */
+.galerie-tag {
+  display:inline-block;
+  background:rgba(201,168,76,.15); color:var(--or-clair);
+  border:1px solid rgba(201,168,76,.35);
+  font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  padding:6px 16px; border-radius:20px; margin-bottom:16px;
+  font-family:'Outfit', sans-serif;
+}
+
+/* Titre de la galerie */
+.galerie-titre {
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(26px, 4vw, 40px); font-weight:600;
+  color:#fff; text-transform:none; letter-spacing:.01em;
+  line-height:1.15; margin:0 0 12px;
+}
+
+/* Filet doré */
+.galerie-rule {
+  width:50px; height:2px; margin:0 auto 12px;
+  background:linear-gradient(90deg, transparent, var(--or), transparent);
+}
+
+/* Sous-titre */
+.galerie-sous {
+  font-family:'Outfit', sans-serif;
+  font-size:13.5px; font-weight:300; text-transform:none; letter-spacing:.2px;
+  color:rgba(255,255,255,.55); margin:0 0 6px;
+}
+
 .galerie-inner {
   display:grid;
   grid-template-columns: repeat(4, 1fr);
   height:300px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
+  position:relative; z-index:1;
 }
 .galerie-item {
   position:relative; overflow:hidden; cursor:pointer;
@@ -622,6 +695,8 @@ footer small { font-size:11.5px; color:rgba(255,255,255,.28); display:block; mar
   .charts-2col { grid-template-columns:1fr; }
   .obj-grid { grid-template-columns:1fr; }
   .galerie-inner { height:220px; grid-template-columns: repeat(4, 80vw); overflow-x:auto; }
+  .galerie-header { padding:32px 16px 4px; }
+  .galerie-titre { font-size:24px; }
   .contact-corps { padding:20px; }
   .contact-qr { flex-direction:column; text-align:center; padding:20px; }
   .timeline { padding-left:100px; }
@@ -906,3 +981,18 @@ footer small { font-size:11.5px; color:rgba(255,255,255,.28); display:block; mar
 
 /* ===== GOOGLE MAPS ===== */
 .maps-wrap { border-radius: 12px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+
+/* ============================================================
+   ACCESSIBILITÉ — RESPECT DU "MOUVEMENT RÉDUIT"
+   Coupe les animations en boucle (trains, particules, grain…)
+   pour les personnes sensibles au mouvement et pour économiser
+   la batterie sur mobile. Le contenu reste entièrement visible.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
