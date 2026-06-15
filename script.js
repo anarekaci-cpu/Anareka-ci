@@ -1,15 +1,3 @@
-/* ===== PARTICLES ===== */
-(function(){
-  const c = document.querySelector('.hero');
-  if(!c) return;
-  for(let i=0;i<14;i++){
-    const d = document.createElement('div');
-    const s = Math.random()*50+10;
-    d.style.cssText = `position:absolute;border-radius:50%;width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:rgba(201,168,76,0.06);animation:float ${4+Math.random()*5}s ease-in-out ${Math.random()*4}s infinite;pointer-events:none;`;
-    c.appendChild(d);
-  }
-})();
-
 /* ===== NAV SCROLL ===== */
 const nav = document.getElementById('mainNav');
 const backTop = document.getElementById('backTop');
@@ -61,6 +49,9 @@ const cObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if(e.isIntersecting){
       e.target.querySelectorAll('[data-target]').forEach(el => {
+        // On n'anime pas la case "Année de création" (ex: 1996),
+        // qui doit rester affichée telle quelle.
+        if(el.dataset.noAnimate === 'true') return;
         if(parseInt(el.dataset.target) !== 1996) counter(el);
       });
       cObs.unobserve(e.target);
@@ -155,13 +146,14 @@ document.querySelectorAll('.chiffres').forEach(el => cObs.observe(el));
   if(!form) return;
 
   /* ----------------------------------------------------------------
-     POUR RECEVOIR LES DEMANDES AUTOMATIQUEMENT (recommandé) :
-     1. Crée un formulaire gratuit sur https://formspree.io
-     2. Colle l'URL fournie (ex: https://formspree.io/f/abcdwxyz) ci-dessous.
-     Tant que FORM_ENDPOINT est vide, le site ouvre la messagerie de
-     l'utilisateur pré-remplie vers CONTACT_EMAIL (aucune donnée perdue).
+     ENVOI AUTOMATIQUE VIA FORMSPREE
+     L'endpoint correspond à l'attribut action="" du <form> dans le HTML.
+     Tant que FORM_ENDPOINT est renseigné, les demandes sont envoyées
+     automatiquement et un message de succès s'affiche sans recharger
+     la page. En cas d'échec réseau, on bascule sur l'ouverture de la
+     messagerie pré-remplie vers CONTACT_EMAIL (aucune donnée perdue).
   ---------------------------------------------------------------- */
-  const FORM_ENDPOINT = '';
+  const FORM_ENDPOINT = 'https://formspree.io/f/xbdezwjg';
   const CONTACT_EMAIL = 'anarekaci@gmail.com';
 
   function afficherSucces(message){
@@ -181,7 +173,7 @@ document.querySelectorAll('.chiffres').forEach(el => cObs.observe(el));
 
     const data = new FormData(form);
 
-    // 1) Envoi automatique si un endpoint Formspree est configuré
+    // 1) Envoi automatique via Formspree
     if(FORM_ENDPOINT){
       try {
         const res = await fetch(FORM_ENDPOINT, {
@@ -189,7 +181,10 @@ document.querySelectorAll('.chiffres').forEach(el => cObs.observe(el));
           headers: { 'Accept': 'application/json' },
           body: data
         });
-        if(res.ok){ afficherSucces(); return; }
+        if(res.ok){
+          afficherSucces();
+          return;
+        }
         throw new Error('HTTP ' + res.status);
       } catch(err){
         console.warn('Envoi automatique échoué, ouverture de la messagerie :', err);
