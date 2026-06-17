@@ -552,18 +552,6 @@ nav.scrolled {
 .part-card-lien { font-size:11px; color:var(--gris); font-weight:500; white-space:nowrap; opacity:0; transition:opacity .2s; }
 .part-card:hover .part-card-lien { opacity:1; color:var(--vert); }
 
-/* ===== GRAPHIQUES ===== */
-.charts-2col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.chart-card {
-  background:var(--blanc); border:1px solid var(--bordure);
-  border-radius:var(--r); padding:28px; transition:box-shadow .3s;
-}
-.chart-card:hover { box-shadow:0 8px 28px rgba(26,61,43,.08); }
-.chart-card.full { grid-column:1/-1; }
-.c-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gris); margin-bottom:4px; }
-.c-titre { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--vert); margin-bottom:22px; }
-.chart-box { height:210px; position:relative; }
-
 /* ===== CONTACT ===== */
 .contact-wrap {
   background:var(--blanc); border-radius:var(--r);
@@ -813,6 +801,68 @@ nav.scrolled {
 #backTop.show { opacity:1; transform:translateY(0); }
 #backTop:hover { background:var(--or); color:var(--noir); transform:translateY(-3px); }
 
+/* ===== BANDEAU CTA ANIMÉ — REJOIGNEZ-NOUS ===== */
+.cta-band {
+  position:relative; overflow:hidden;
+  background:linear-gradient(135deg,var(--noir) 0%,var(--vert) 55%,var(--vert-clair) 100%);
+  padding:72px 28px; text-align:center;
+}
+.cta-orb1 {
+  position:absolute; width:420px; height:420px; border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.22) 0%,transparent 65%);
+  top:-140px; left:-100px; pointer-events:none;
+  animation:orbDrift1 13s ease-in-out infinite;
+}
+.cta-orb2 {
+  position:absolute; width:360px; height:360px; border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.16) 0%,transparent 65%);
+  bottom:-120px; right:-90px; pointer-events:none;
+  animation:orbDrift2 16s ease-in-out infinite;
+}
+.cta-particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.cta-particles span {
+  position:absolute; bottom:6%; width:5px; height:5px; border-radius:50%;
+  background:rgba(201,168,76,.65);
+  animation:particleFly var(--dur,5s) var(--delay,0s) ease-in infinite;
+}
+.cta-inner { position:relative; z-index:1; max-width:620px; margin:0 auto; }
+.cta-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:11px; font-weight:600; color:var(--or-clair);
+  letter-spacing:3px; text-transform:uppercase; margin-bottom:18px;
+}
+.cta-titre {
+  font-family:'Cormorant Garamond',serif; font-weight:700;
+  font-size:clamp(30px,4.5vw,46px); line-height:1.1; margin-bottom:16px;
+  color:#fff;
+}
+.cta-titre em {
+  font-style:normal;
+  background:linear-gradient(90deg,#c9a84c,#e8c97a,#c9a84c);
+  background-size:200% auto;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  animation:shimmerText 3.5s linear infinite;
+}
+.cta-texte { font-size:15.5px; color:rgba(255,255,255,.78); line-height:1.75; margin-bottom:32px; font-weight:300; }
+.cta-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--or); color:var(--noir);
+  padding:16px 40px; border-radius:var(--r);
+  text-decoration:none; font-weight:700; font-size:13px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  border:2px solid var(--or);
+  box-shadow:0 6px 28px rgba(201,168,76,.4);
+  transition:all .3s; animation:btnPulse 2.5s ease-in-out infinite;
+}
+.cta-btn:hover { background:var(--or-clair); border-color:var(--or-clair); transform:translateY(-4px) scale(1.03); box-shadow:0 14px 36px rgba(201,168,76,.5); }
+.cta-btn-arrow { font-size:16px; transition:transform .3s; }
+.cta-btn:hover .cta-btn-arrow { transform:translateX(5px); }
+
+@media(max-width:700px){
+  .cta-band { padding:56px 20px; }
+  .cta-btn { padding:14px 28px; font-size:12px; }
+}
+
 /* ===== FOOTER ===== */
 footer {
   background:var(--noir); color:white;
@@ -849,7 +899,6 @@ footer small { font-size:11.5px; color:rgba(255,255,255,.28); display:block; mar
   .btn-or, .btn-ghost { padding:12px 18px; font-size:11px; }
   .chiffres-inner { grid-template-columns:1fr 1fr; }
   .domaines-grid { grid-template-columns:1fr; }
-  .charts-2col { grid-template-columns:1fr; }
   .galerie-inner { height:220px; grid-template-columns:repeat(4,80vw); overflow-x:auto; }
   .galerie-header { padding:32px 16px 4px; }
   .galerie-titre { font-size:24px; }
