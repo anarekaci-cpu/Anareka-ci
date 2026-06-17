@@ -317,22 +317,6 @@
           plugins: { legend: { position: 'bottom', labels: { font:{size:11}, padding:12, boxWidth:12 } } }
         }
       });
-
-      makeChart('chartAxes', {
-        type: 'bar',
-        data: {
-          labels: ['Structuration','Emploi jeunes/femmes','Qualité produit','Promotion','Hygiène','Partenariats'],
-          datasets: [{ data: [9,8,9,7,8,7], backgroundColor: [V,OR,V,OR,V2,OR2], borderRadius: 4, borderSkipped: false }]
-        },
-        options: {
-          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { beginAtZero: true, max: 10, grid: { color: '#f0f0f0' }, ticks: { font:{size:11} } },
-            y: { grid: { display: false }, ticks: { font:{size:12} } }
-          }
-        }
-      });
     }
   }
 
