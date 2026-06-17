@@ -484,12 +484,27 @@ nav.scrolled {
 }
 .domaine-card:hover { transform:translateY(-8px); box-shadow:0 16px 40px rgba(26,61,43,.12); }
 .domaine-card:hover::after { transform:translate(0,0) scale(2); }
-.d-icon { font-size:30px; margin-bottom:16px; display:block; position:relative; z-index:1; }
+.d-icon { font-size:30px; margin-bottom:16px; display:block; position:relative; z-index:1; transition:transform .4s cubic-bezier(.34,1.56,.64,1); }
+.domaine-card:hover .d-icon { transform:scale(1.15) rotate(-6deg); }
 .domaine-card h4 { font-size:16px; font-weight:600; color:var(--vert); margin-bottom:10px; position:relative; z-index:1; }
 .domaine-card p, .domaine-card li { font-size:13.5px; color:var(--gris); line-height:1.65; position:relative; z-index:1; }
 .domaine-card ul { padding-left:16px; }
 .domaine-card ul li { margin-bottom:8px; }
 .domaine-card ul li:last-child { margin-bottom:0; }
+
+/* Bloc fusionné Missions/Domaines/Objectifs — entrée échelonnée des cartes au scroll */
+.axes-grid { row-gap:18px; }
+.axe-card {
+  opacity:0; transform:translateY(28px);
+  transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1), box-shadow .35s, background .35s;
+}
+.section.reveal.on .axe-card { opacity:1; transform:translateY(0); }
+.section.reveal.on .axe-card:nth-child(1) { transition-delay:.05s, .05s, 0s, 0s; }
+.section.reveal.on .axe-card:nth-child(2) { transition-delay:.15s, .15s, 0s, 0s; }
+.section.reveal.on .axe-card:nth-child(3) { transition-delay:.25s, .25s, 0s, 0s; }
+.section.reveal.on .axe-card:nth-child(4) { transition-delay:.35s, .35s, 0s, 0s; }
+.section.reveal.on .axe-card:nth-child(5) { transition-delay:.45s, .45s, 0s, 0s; }
+.section.reveal.on .axe-card:nth-child(6) { transition-delay:.55s, .55s, 0s, 0s; }
 
 /* ===== PARTENAIRES ===== */
 .part-titre { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--gris); margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid var(--bordure); }
