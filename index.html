@@ -23,8 +23,6 @@
 <meta name="google-site-verification" content="yyN6SvEZlWtEvxBEtE35NgU8Lm4S-heWE6uo8BOg0Y8">
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Chart.js n'est plus chargé ici : script.js le charge en lazy-load
-     uniquement quand la section #donnees devient visible. -->
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/jpeg" href="logo.jpg">
 <link rel="apple-touch-icon" href="logo.jpg">
@@ -69,7 +67,6 @@
       <a href="#equipe">Équipe</a>
       <a href="#missions">Missions</a>
       <a href="#partenaires">Partenaires</a>
-      <a href="#donnees">Données</a>
       <a href="#adhesion">Adhésion</a>
       <a href="#contact">Contact</a>
     </div>
@@ -468,30 +465,6 @@
     </div>
   </section>
 
-  <!-- DONNÉES -->
-  <section class="section reveal" id="donnees">
-    <div class="tag">📊 Données & Impact</div>
-    <h2 class="section-titre">Le secteur en chiffres</h2>
-    <div class="tiret"></div>
-    <div class="charts-2col">
-      <div class="chart-card full">
-        <div class="c-label">Évolution</div>
-        <div class="c-titre">Croissance de l'organisation depuis 1996</div>
-        <div class="chart-box"><canvas id="chartEvol"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <div class="c-label">Composition</div>
-        <div class="c-titre">Types de membres</div>
-        <div class="chart-box"><canvas id="chartMembres"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <div class="c-label">Activités</div>
-        <div class="c-titre">Domaines d'intervention</div>
-        <div class="chart-box"><canvas id="chartDomaines"></canvas></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ADHÉSION -->
   <section class="section reveal" id="adhesion">
     <div class="tag">🌿 Rejoignez-nous</div>
@@ -630,6 +603,32 @@
     </div>
   </section>
 
+</div>
+
+<!-- ===== BANDEAU CTA ANIMÉ — REJOIGNEZ-NOUS ===== -->
+<div class="cta-band">
+  <div class="cta-orb1"></div>
+  <div class="cta-orb2"></div>
+  <div class="cta-particles">
+    <span style="left:6%;  --dur:5s;  --delay:0s;"></span>
+    <span style="left:16%; --dur:6.5s;--delay:1s;"></span>
+    <span style="left:27%; --dur:4.5s;--delay:2.2s;"></span>
+    <span style="left:38%; --dur:7s;  --delay:.4s;"></span>
+    <span style="left:50%; --dur:5.5s;--delay:1.6s;"></span>
+    <span style="left:61%; --dur:6s;  --delay:2.8s;"></span>
+    <span style="left:72%; --dur:4.8s;--delay:.8s;"></span>
+    <span style="left:83%; --dur:6.8s;--delay:1.9s;"></span>
+    <span style="left:92%; --dur:5.2s;--delay:.2s;"></span>
+  </div>
+  <div class="cta-inner">
+    <span class="cta-eyebrow">🌿 Rejoignez le mouvement</span>
+    <h2 class="cta-titre">Rejoignez l'<em>ANAREKA-CI</em></h2>
+    <p class="cta-texte">Faites partie d'un réseau national qui valorise, protège et fait grandir la filière manioc(attiéké) — ensemble, structurons l'avenir de notre patrimoine culinaire.</p>
+    <a href="#adhesion" class="cta-btn">
+      <span>Devenir membre</span>
+      <span class="cta-btn-arrow">→</span>
+    </a>
+  </div>
 </div>
 
 <!-- FOOTER -->
