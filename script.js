@@ -19,7 +19,6 @@
     initTrainDuplication();
     initFloatingButton();
     initAdhesionForm();
-    lazyLoadCharts();  // Chargera Chart.js seulement si #donnees est visible
   });
 
   // ---------- NAVIGATION (scroll + menu mobile) ----------
@@ -229,95 +228,6 @@
       if (btn) btn.disabled = false;
       if (label) label.textContent = texteInitial;
     });
-  }
-
-  // ---------- CHARGEMENT PARESSEUX DE CHART.JS ----------
-  function lazyLoadCharts() {
-    const section = document.getElementById('donnees');
-    if (!section) return;
-
-    let loaded = false;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !loaded) {
-          loaded = true;
-          observer.unobserve(section);
-          loadChartJsThenInit();
-        }
-      });
-    }, { threshold: 0.1 });
-
-    observer.observe(section);
-
-    function loadChartJsThenInit() {
-      if (typeof Chart !== 'undefined') {
-        initCharts();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
-      script.onload = initCharts;
-      script.onerror = () => console.warn('Chart.js n’a pas pu être chargé.');
-      document.head.appendChild(script);
-    }
-
-    function initCharts() {
-      if (typeof Chart === 'undefined') return;
-
-      Chart.defaults.font.family = "'Outfit', sans-serif";
-      Chart.defaults.color = '#888';
-
-      const V = '#1a3d2b', V2 = '#2d6b4f', OR = '#c9a84c', OR2 = '#e8c97a';
-
-      function makeChart(id, config) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        try { new Chart(el, config); }
-        catch (err) { console.warn('Graphique ' + id + ' non rendu :', err); }
-      }
-
-      makeChart('chartEvol', {
-        type: 'line',
-        data: {
-          labels: ['1996','1998','2000','2005','2010','2015','2020','2025','2026'],
-          datasets: [{
-            data: [10,15,22,35,50,65,75,90,100],
-            borderColor: V, backgroundColor: 'rgba(26,61,43,0.06)',
-            borderWidth: 2.5, pointBackgroundColor: [V,V,V,V,V,V,V,OR,OR2],
-            pointRadius: 5, fill: true, tension: 0.4
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: { y: { display: false }, x: { grid: { display: false } } }
-        }
-      });
-
-      makeChart('chartMembres', {
-        type: 'doughnut',
-        data: {
-          labels: ['Restaurateurs','Kiosques','Producteurs','Vendeurs','Gestionnaires'],
-          datasets: [{ data: [35,28,18,12,7], backgroundColor: [V,OR,V2,OR2,'#5a9a78'], borderWidth: 3, borderColor: '#fff' }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false, cutout: '62%',
-          plugins: { legend: { position: 'bottom', labels: { font:{size:11}, padding:12, boxWidth:12 } } }
-        }
-      });
-
-      makeChart('chartDomaines', {
-        type: 'doughnut',
-        data: {
-          labels: ['Formation','Hygiène','Promotion','Défense','Partenariats'],
-          datasets: [{ data: [30,20,20,15,15], backgroundColor: [OR,V,V2,OR2,'#5a9a78'], borderWidth: 3, borderColor: '#fff' }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false, cutout: '62%',
-          plugins: { legend: { position: 'bottom', labels: { font:{size:11}, padding:12, boxWidth:12 } } }
-        }
-      });
-    }
   }
 
 })();
