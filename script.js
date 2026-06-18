@@ -167,7 +167,7 @@
     if (!form) return;
 
     const FORM_ENDPOINT = 'https://formspree.io/f/xbdezwjg';
-    const CONTACT_EMAIL = 'anarekaci@gmail.com';
+    const CONTACT_EMAIL = 'info@anarekaci.com';
 
     function afficherSucces(message) {
       const p = success.querySelector('p');
