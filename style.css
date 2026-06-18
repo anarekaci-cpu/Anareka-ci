@@ -938,3 +938,22 @@ footer small { font-size:11.5px; color:rgba(255,255,255,.28); display:block; mar
     scroll-behavior:auto !important;
   }
 }
+/* Aligner les logos de l'historique sur une seule ligne sur smartphone */
+@media (max-width: 768px) {
+    .hist-logos {
+        display: flex !important;
+        flex-direction: row !important; /* Force l'alignement horizontal */
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 15px !important; /* Espace entre les logos et la flèche */
+    }
+
+    .hist-logo-item img {
+        width: 60px !important; /* Réduit un peu la taille pour que tout tienne */
+        height: auto !important;
+    }
+    
+    .hist-fleche {
+        font-size: 20px !important; /* Ajuste la taille de la poignée de main */
+    }
+}
