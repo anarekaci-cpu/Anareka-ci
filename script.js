@@ -1,39 +1,42 @@
 /* =====================================================
-   ANAREKA-CI — SCRIPT UNIQUE OPTIMISÉ
+   ANAREKA-CI — SCRIPT UNIQUE OPTIMISÉ (v4)
    Chargé avec <script src="script.js" defer></script>
+
+   Corrections v4 :
+   - Lightbox en DÉLÉGATION d'événement : fonctionne désormais
+     pour les cartes originales ET dupliquées (le bug venait de
+     cloneNode qui ne copie pas les écouteurs).
+   - Les trois écouteurs de scroll (nav, retour-haut, bouton
+     flottant) sont fusionnés en UN SEUL, throttlé via
+     requestAnimationFrame + listener passif.
+   - Accessibilité clavier : ouverture lightbox au clic, Entrée
+     ou Espace ; fermeture à Échap ; focus restitué à la carte.
    ===================================================== */
 
-(function() {
-  // ---------- ÉLÉMENTS DU DOM (attendre qu'il soit prêt) ----------
+(function () {
+  // ---------- ATTENDRE QUE LE DOM SOIT PRÊT ----------
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
 
-  ready(function() {
-    initNavigation();
-    initBackToTop();
+  ready(function () {
+    initNavMenu();          // menu hamburger uniquement
+    initTrainDuplication(); // dupliquer AVANT la lightbox (délégation = ordre indifférent)
+    initLightbox();         // délégation : couvre originaux + clones
     initReveal();
     initCounter();
-    initLightbox();
-    initTrainDuplication();
-    initFloatingButton();
     initAdhesionForm();
+    initScrollEffects();    // un seul écouteur de scroll pour nav + retour-haut + bouton flottant
+    initBackToTopClick();
   });
 
-  // ---------- NAVIGATION (scroll + menu mobile) ----------
-  function initNavigation() {
-    const nav = document.getElementById('mainNav');
+  // ---------- MENU MOBILE (hamburger) ----------
+  function initNavMenu() {
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
-    if (!nav || !toggle || !links) return;
+    if (!toggle || !links) return;
 
-    // Changement de style au scroll
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    // Menu hamburger
     toggle.addEventListener('click', () => {
       const open = links.classList.toggle('open');
       toggle.classList.toggle('active', open);
@@ -41,23 +44,56 @@
     });
 
     // Fermer le menu après un clic sur un lien
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      links.classList.remove('open');
-      toggle.classList.remove('active');
-      toggle.setAttribute('aria-expanded', 'false');
-    }));
+    links.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      })
+    );
   }
 
-  // ---------- RETOUR EN HAUT ----------
-  function initBackToTop() {
-    const btn = document.getElementById('backTop');
-    if (!btn) return;
+  // ---------- EFFETS DE SCROLL CONSOLIDÉS (throttlés) ----------
+  function initScrollEffects() {
+    const nav = document.getElementById('mainNav');
+    const backTop = document.getElementById('backTop');
+    const btnFloat = document.getElementById('btnFloat');
+
+    // État initial du bouton flottant (caché tant qu'on n'a pas défilé)
+    if (btnFloat) {
+      btnFloat.style.opacity = '0';
+      btnFloat.style.pointerEvents = 'none';
+    }
+
+    let ticking = false;
+
+    function update() {
+      const y = window.scrollY;
+      if (nav) nav.classList.toggle('scrolled', y > 60);
+      if (backTop) backTop.classList.toggle('show', y > 300);
+      if (btnFloat) {
+        const visible = y > 200;
+        btnFloat.style.opacity = visible ? '1' : '0';
+        btnFloat.style.pointerEvents = visible ? 'auto' : 'none';
+      }
+      ticking = false;
+    }
 
     window.addEventListener('scroll', () => {
-      btn.classList.toggle('show', window.scrollY > 300);
-    });
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
 
-    btn.addEventListener('click', (e) => {
+    update(); // état correct dès le chargement (utile si la page n'est pas en haut)
+  }
+
+  // ---------- RETOUR EN HAUT (clic) ----------
+  function initBackToTopClick() {
+    const btn = document.getElementById('backTop');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -80,7 +116,7 @@
   // ---------- COMPTEUR DE CHIFFRES ----------
   function initCounter() {
     function animate(el) {
-      const target = parseInt(el.dataset.target);
+      const target = parseInt(el.dataset.target, 10);
       const suffix = el.dataset.suffix || '';
       const dur = 1800;
       const start = performance.now();
@@ -109,7 +145,15 @@
     document.querySelectorAll('.chiffres').forEach(el => observer.observe(el));
   }
 
-  // ---------- LIGHTBOX ----------
+  // ---------- DUPLICATION DES TRAINS (boucle infinie) ----------
+  function initTrainDuplication() {
+    document.querySelectorAll('.train-track').forEach(track => {
+      const cards = [...track.children];
+      cards.forEach(card => track.appendChild(card.cloneNode(true)));
+    });
+  }
+
+  // ---------- LIGHTBOX (délégation + clavier) ----------
   function initLightbox() {
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
@@ -118,45 +162,53 @@
     const closeBtn = document.getElementById('lightboxClose');
     if (!lb || !lbImg || !lbCap) return;
 
-    function open(src, cap) {
+    let lastFocused = null;
+
+    function open(src, cap, trigger) {
+      if (!src) return;
+      lastFocused = trigger || null;
       lbImg.src = src;
-      lbCap.textContent = cap;
+      lbImg.alt = cap || '';
+      lbCap.textContent = cap || '';
       lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      if (closeBtn) closeBtn.focus();
     }
 
     function close() {
       lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       lbImg.src = '';
+      // Restituer le focus à la carte d'origine (accessibilité)
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+      lastFocused = null;
     }
 
-    document.querySelectorAll('.train-card').forEach(card => {
-      card.addEventListener('click', () => open(card.dataset.src, card.dataset.cap));
+    // DÉLÉGATION : un seul écouteur sur le document couvre
+    // les cartes originales ET les clones de initTrainDuplication().
+    document.addEventListener('click', e => {
+      const card = e.target.closest('.train-card');
+      if (card) open(card.dataset.src, card.dataset.cap, card);
+    });
+
+    // Clavier : Entrée ou Espace sur une carte focalisée
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      const active = document.activeElement;
+      if (active && active.classList && active.classList.contains('train-card')) {
+        e.preventDefault();
+        open(active.dataset.src, active.dataset.cap, active);
+      }
     });
 
     overlay.addEventListener('click', close);
-    closeBtn.addEventListener('click', close);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  }
-
-  // ---------- DUPLICATION DES TRAINS (au lieu du HTML doublé) ----------
-  function initTrainDuplication() {
-    document.querySelectorAll('.train-track').forEach(track => {
-      const cards = [...track.children];
-      cards.forEach(card => track.appendChild(card.cloneNode(true)));
-    });
-  }
-
-  // ---------- BOUTON FLOTTANT ----------
-  function initFloatingButton() {
-    const btn = document.getElementById('btnFloat');
-    if (!btn) return;
-    btn.style.opacity = '0';
-    window.addEventListener('scroll', () => {
-      const visible = window.scrollY > 200;
-      btn.style.opacity = visible ? '1' : '0';
-      btn.style.pointerEvents = visible ? 'auto' : 'none';
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && lb.classList.contains('open')) close();
     });
   }
 
@@ -170,23 +222,23 @@
     const CONTACT_EMAIL = 'info@anarekaci.com';
 
     function afficherSucces(message) {
-      const p = success.querySelector('p');
+      const p = success ? success.querySelector('p') : null;
       if (message && p) p.textContent = message;
       form.style.display = 'none';
-      success.style.display = 'block';
+      if (success) success.style.display = 'block';
     }
 
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
       const btn = form.querySelector('.form-submit');
-      const label = btn?.querySelector('span');
+      const label = btn ? btn.querySelector('span') : null;
       const texteInitial = label ? label.textContent : '';
       if (btn) btn.disabled = true;
       if (label) label.textContent = 'Envoi en cours...';
 
       const data = new FormData(form);
 
-      // Essai d'envoi automatique
+      // Tentative d'envoi automatique (Formspree)
       if (FORM_ENDPOINT) {
         try {
           const res = await fetch(FORM_ENDPOINT, {
@@ -200,17 +252,17 @@
           }
           throw new Error('HTTP ' + res.status);
         } catch (err) {
-          console.warn('Envoi automatique échoué, fallback mailto.', err);
+          console.warn('Envoi automatique échoué, repli sur mailto.', err);
         }
       }
 
-      // Fallback : ouverture du client mail
+      // Repli : ouverture du client mail pré-rempli
       const champs = {
         'Nom'              : data.get('nom'),
         'Téléphone'        : data.get('tel'),
         'E-mail'           : data.get('email'),
         'Ville / Quartier' : data.get('ville'),
-        'Type d\'activité' : data.get('activite'),
+        "Type d'activité"  : data.get('activite'),
         'Établissement'    : data.get('etablissement'),
         'Message'          : data.get('message')
       };
