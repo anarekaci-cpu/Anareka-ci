@@ -3,164 +3,664 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aperçu — CTA · Vigne · Footer animés — ANAREKA-CI</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --noir:#0e1a12; --vert:#1a3d2b; --vert-clair:#2d6b4f;
-  --or:#c9a84c; --or-clair:#e8c97a; --ivoire:#f8f4ec; --gris:#7a7a7a;
-  --bordure:#e0e8e0; --r:6px;
+<script>document.documentElement.classList.add('js');</script>
+<title>ANAREKA-CI — Association Nationale des Restaurateurs et Kiosques d'Attiéké</title>
+<meta name="description" content="Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire (ANAREKA-CI). Valoriser, structurer et professionnaliser la filière manioc-attiéké depuis 1996.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1a3d2b">
+<link rel="canonical" href="https://anarekaci.com/">
+
+<!-- Partage sur les réseaux (Facebook, WhatsApp, LinkedIn...) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://anarekaci.com/">
+<meta property="og:title" content="ANAREKA-CI — Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire">
+<meta property="og:description" content="Valoriser, structurer et professionnaliser la filière manioc-attiéké de Côte d'Ivoire depuis 1996.">
+<meta property="og:image" content="https://anarekaci.com/logo.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ANAREKA-CI — Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire">
+<meta name="twitter:description" content="Valoriser, structurer et professionnaliser la filière manioc-attiéké de Côte d'Ivoire depuis 1996.">
+<meta name="twitter:image" content="https://anarekaci.com/logo.jpg">
+<meta name="google-site-verification" content="yyN6SvEZlWtEvxBEtE35NgU8Lm4S-heWE6uo8BOg0Y8">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/jpeg" href="logo.jpg">
+<link rel="apple-touch-icon" href="logo.jpg">
+
+<!-- Données structurées (SEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ANAREKA-CI",
+  "alternateName": "Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire",
+  "url": "https://anarekaci.com/",
+  "logo": "https://anarekaci.com/logo.jpg",
+  "email": "info@anarekaci.com",
+  "foundingDate": "2025",
+  "description": "Association valorisant, structurant et professionnalisant la filière manioc-attiéké de Côte d'Ivoire. Patrimoine fondé en 1996, association créée en 2025.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Cocody Riviera Bonoumin, Cité Syninfo",
+    "addressLocality": "Abidjan",
+    "addressCountry": "CI"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+225-27-22-51-74-97",
+    "contactType": "customer service",
+    "email": "info@anarekaci.com",
+    "areaServed": "CI",
+    "availableLanguage": "French"
+  },
+  "areaServed": { "@type": "Country", "name": "Côte d'Ivoire" }
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Outfit',sans-serif;background:var(--ivoire);color:var(--noir);overflow-x:hidden}
-
-/* petit rappel de la section précédente (ivoire) pour lire la transition */
-.pre-strip{max-width:900px;margin:0 auto;padding:54px 28px 64px;text-align:center}
-.pre-strip .tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--or);border-bottom:1px solid rgba(201,168,76,.25);padding-bottom:8px;margin-bottom:14px}
-.pre-strip p{color:var(--gris);font-size:14px}
-
-/* ============================================================
-   KEYFRAMES
-   ============================================================ */
-@keyframes orbDrift1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.1)}66%{transform:translate(-20px,20px) scale(.95)}}
-@keyframes orbDrift2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,20px) scale(.9)}66%{transform:translate(30px,-40px) scale(1.05)}}
-@keyframes shimmerText{0%{background-position:-200% center}100%{background-position:200% center}}
-@keyframes btnPulse{0%,100%{box-shadow:0 6px 28px rgba(201,168,76,.4),0 0 0 0 rgba(201,168,76,.5)}60%{box-shadow:0 6px 28px rgba(201,168,76,.4),0 0 0 12px rgba(201,168,76,0)}}
-/* grains d'attiéké qui montent (organique, irrégulier) */
-@keyframes grainRise{0%{transform:translateY(0) translateX(0) rotate(0);opacity:0}12%{opacity:.85}100%{transform:translateY(-150px) translateX(var(--dx,16px)) rotate(140deg);opacity:0}}
-/* halo conique tournant autour du bouton (au survol) */
-@keyframes haloSpin{to{transform:rotate(360deg)}}
-/* feuille de l'eyebrow qui oscille */
-@keyframes leafSway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
-/* étincelle dorée qui parcourt le filet du footer */
-@keyframes threadSweep{0%{left:-12%}100%{left:112%}}
-/* micro-interactions icônes sociales */
-@keyframes waPulse{0%,100%{transform:scale(1)}40%{transform:scale(1.18)}}
-@keyframes ringShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(6deg)}}
-
-/* ============================================================
-   BANDEAU CTA
-   ============================================================ */
-.cta-band{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--noir) 0%,var(--vert) 55%,var(--vert-clair) 100%);padding:78px 28px 86px;text-align:center}
-.cta-orb1{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.22) 0%,transparent 65%);top:-140px;left:-100px;pointer-events:none;animation:orbDrift1 13s ease-in-out infinite}
-.cta-orb2{position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.16) 0%,transparent 65%);bottom:-120px;right:-90px;pointer-events:none;animation:orbDrift2 16s ease-in-out infinite}
-
-/* grains d'attiéké */
-.cta-grains{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.cta-grains span{position:absolute;bottom:8%;width:7px;height:9px;border-radius:60% 60% 50% 50%;background:rgba(201,168,76,.7);box-shadow:0 0 6px rgba(201,168,76,.35);animation:grainRise var(--dur,5s) var(--delay,0s) ease-in infinite}
-
-.cta-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
-.cta-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:var(--or-clair);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px}
-.cta-eyebrow .leaf{display:inline-block;transform-origin:50% 90%;animation:leafSway 3.2s ease-in-out infinite}
-.cta-titre{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(30px,4.5vw,46px);line-height:1.1;margin-bottom:16px;color:#fff}
-.cta-titre em{font-style:normal;background:linear-gradient(90deg,#c9a84c,#e8c97a,#c9a84c);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmerText 3.5s linear infinite}
-.cta-texte{font-size:15.5px;color:rgba(255,255,255,.78);line-height:1.75;margin-bottom:32px;font-weight:300}
-
-.cta-btn{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:10px;background:var(--or);color:var(--noir);padding:16px 40px;border-radius:var(--r);text-decoration:none;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--or);box-shadow:0 6px 28px rgba(201,168,76,.4);transition:transform .3s,box-shadow .3s;animation:btnPulse 2.5s ease-in-out infinite}
-/* halo doré tournant : apparaît au survol */
-.cta-btn::before{content:'';position:absolute;inset:-3px;border-radius:8px;z-index:-1;background:conic-gradient(from 0deg,transparent 0deg,var(--or-clair) 60deg,#fff 90deg,var(--or-clair) 120deg,transparent 200deg,transparent 360deg);opacity:0;transition:opacity .35s;animation:haloSpin 3.5s linear infinite;animation-play-state:paused}
-.cta-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 14px 36px rgba(201,168,76,.5)}
-.cta-btn:hover::before{opacity:.95;animation-play-state:running}
-.cta-btn-arrow{font-size:16px;transition:transform .3s}
-.cta-btn:hover .cta-btn-arrow{transform:translateX(5px)}
-
-/* ============================================================
-   SIGNATURE — VIGNE DE MANIOC QUI SE DESSINE
-   ============================================================ */
-.vine-divider{position:relative;background:var(--noir);line-height:0;margin-top:-1px}
-.vine-divider svg{display:block;width:100%;height:auto}
-.vine-stem{fill:none;stroke:var(--or);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 0 3px rgba(201,168,76,.45))}
-.vine-divider.drawn .vine-stem{transition:stroke-dashoffset 2.1s cubic-bezier(.6,.02,.2,1);stroke-dashoffset:0}
-.vine-leaf{fill:var(--or-clair);opacity:0;transform:scale(.3);transform-box:fill-box;transform-origin:center bottom;transition:opacity .5s ease,transform .6s cubic-bezier(.34,1.56,.64,1)}
-.vine-divider.drawn .vine-leaf{opacity:.9;transform:scale(1)}
-.vine-divider.drawn .vine-leaf:nth-of-type(1){transition-delay:.5s}
-.vine-divider.drawn .vine-leaf:nth-of-type(2){transition-delay:.9s}
-.vine-divider.drawn .vine-leaf:nth-of-type(3){transition-delay:1.3s}
-.vine-divider.drawn .vine-leaf:nth-of-type(4){transition-delay:1.6s}
-.vine-divider.drawn .vine-leaf:nth-of-type(5){transition-delay:1.9s}
-.vine-seed{fill:var(--or);opacity:0;transition:opacity .4s ease}
-.vine-divider.drawn .vine-seed{opacity:.85;transition-delay:2.1s}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer{position:relative;background:var(--noir);color:#fff;text-align:center;padding:46px 20px 38px;overflow:hidden}
-footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.4),transparent)}
-/* étincelle dorée qui parcourt le filet supérieur */
-.foot-thread{position:absolute;top:-1px;left:-12%;width:14%;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--or-clair),#fff,var(--or-clair),transparent);filter:blur(.5px);animation:threadSweep 6s linear infinite;pointer-events:none}
-
-/* contenu : révélation au scroll */
-.footer-logo,.footer-tagline,.footer-nav,.footer-social{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
-footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s}
-footer.footer-in .footer-tagline{opacity:1;transform:none;transition-delay:.15s}
-footer.footer-in .footer-nav{opacity:1;transform:none;transition-delay:.25s}
-footer.footer-in .footer-social{opacity:1;transform:none;transition-delay:.35s}
-
-.footer-logo{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;margin-bottom:6px;letter-spacing:-.5px}
-.footer-logo span{background:linear-gradient(90deg,#c9a84c,#e8c97a,#c9a84c);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmerText 3.5s linear infinite}
-.footer-tagline{font-size:12.5px;color:rgba(255,255,255,.42);margin-bottom:26px;letter-spacing:.3px}
-
-.footer-nav{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-bottom:26px}
-/* contraste relevé (.45 -> .62) + soulignement doré au survol : lisibilité */
-.footer-nav a{position:relative;font-size:11px;color:rgba(255,255,255,.62);text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;font-weight:500;padding-bottom:4px;transition:color .25s}
-.footer-nav a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--or);transform:scaleX(0);transform-origin:center;transition:transform .3s cubic-bezier(.22,1,.36,1)}
-.footer-nav a:hover{color:var(--or-clair)}
-.footer-nav a:hover::after{transform:scaleX(1)}
-
-.footer-social{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 24px}
-.footer-social a{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;text-decoration:none;color:#fff;transition:transform .2s,box-shadow .2s}
-.footer-social a:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.28)}
-.footer-social svg{transition:transform .25s}
-.social-wa{background:#25D366}
-.social-mail{background:var(--or)}
-.social-tel{background:var(--vert)}
-.social-wa:hover svg{animation:waPulse .6s ease}
-.social-mail:hover svg{transform:translateY(-3px)}
-.social-tel:hover svg{transform-origin:top center;animation:ringShake .6s ease}
-
-.footer-hr{border:none;border-top:1px solid rgba(255,255,255,.08);max-width:300px;margin:0 auto 18px}
-footer small{font-size:11.5px;color:rgba(255,255,255,.3);display:block;margin-top:5px}
-
-/* ============================================================
-   ACCESSIBILITÉ — MOUVEMENT RÉDUIT
-   ============================================================ */
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation:none !important;transition-duration:.001ms !important}
-  .vine-stem{stroke-dashoffset:0 !important}
-  .vine-leaf,.vine-seed{opacity:.9 !important;transform:none !important}
-  .footer-logo,.footer-tagline,.footer-nav,.footer-social{opacity:1 !important;transform:none !important}
-}
-</style>
+</script>
 </head>
 <body>
 
-<div class="pre-strip">
-  <div class="tag">Aperçu</div>
-  <p>Fais défiler lentement jusqu'au bas, survole le bouton « Devenir membre » et les icônes sociales.</p>
+<a href="#" id="backTop" aria-label="Remonter en haut de la page">↑</a>
+
+<!-- BOUTON WHATSAPP FLOTTANT -->
+<a href="https://wa.me/2250710636254?text=Bonjour%20ANAREKA-CI%2C%20je%20souhaite%20avoir%20des%20informations." 
+   target="_blank" rel="noopener" class="whatsapp-float" id="whatsappFloat" aria-label="Nous contacter sur WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="wa-tooltip">Contactez-nous sur WhatsApp</span>
+</a>
+
+<a href="#adhesion" class="btn-float" id="btnFloat">
+  <span class="btn-float-icon">🌿</span>
+  <span class="btn-float-txt">Devenir membre</span>
+</a>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>🇨🇮 <strong>République de Côte d'Ivoire</strong></span>
+  <span>📍 <strong>Cocody Riviera Bonoumin, Cité Syninfo, Abidjan</strong></span>
+  <span>Fondée <strong>28 juin 1996</strong></span>
+  <span>✉ <strong>info@anarekaci.com</strong></span>
 </div>
 
-<!-- ===== BANDEAU CTA ===== -->
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="#accueil" class="nav-logo">
+      <img src="logo.jpg" alt="ANAREKA-CI">
+      <div class="nav-logo-text">ANAREKA-CI <small>Organisation Professionnelle Nationale</small></div>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#presentation">Présentation</a>
+      <a href="#histoire">Historique</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#missions">Missions</a>
+      <a href="#partenaires">Partenaires</a>
+      <a href="#adhesion">Adhésion</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="accueil">
+  <div class="hero-line-top"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-orb3"></div>
+  <!-- Particules dorées -->
+  <div class="hero-particles">
+    <span style="left:8%;  --dur:5s;  --delay:0s;   --dx:15px;"></span>
+    <span style="left:18%; --dur:7s;  --delay:1.2s; --dx:-20px;"></span>
+    <span style="left:30%; --dur:4.5s;--delay:2.4s; --dx:10px;"></span>
+    <span style="left:45%; --dur:6s;  --delay:0.6s; --dx:-12px;"></span>
+    <span style="left:58%; --dur:5.5s;--delay:3s;   --dx:18px;"></span>
+    <span style="left:70%; --dur:4s;  --delay:1.8s; --dx:-8px;"></span>
+    <span style="left:82%; --dur:6.5s;--delay:0.3s; --dx:22px;"></span>
+    <span style="left:91%; --dur:5s;  --delay:2.1s; --dx:-15px;"></span>
+    <span style="left:25%; --dur:8s;  --delay:4s;   --dx:12px; width:4px;height:4px;"></span>
+    <span style="left:65%; --dur:7s;  --delay:3.5s; --dx:-18px;width:4px;height:4px;"></span>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-logo-wrap">
+      <div class="hero-ring"></div>
+      <div class="hero-ring2"></div>
+      <img src="logo.jpg" class="hero-logo" alt="Logo ANAREKA-CI">
+    </div>
+    <p class="hero-eyebrow">Organisation Professionnelle Nationale</p>
+    <h1>ANAREKA<em>-CI</em></h1>
+    <p class="hero-sous">Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire</p>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">Valoriser, structurer et professionnaliser la filière manioc-attiéké — un patrimoine culinaire national au service du développement économique et social de la Côte d'Ivoire.</p>
+    <div class="hero-btns">
+      <a href="#missions" class="btn-or">Nos missions</a>
+      <a href="#contact" class="btn-ghost">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== L'ATTIÉKÉ — GALERIE GRAND FORMAT ===== -->
+<div class="galerie">
+  <div class="galerie-grains" aria-hidden="true">
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+    <span class="grain"></span><span class="grain"></span><span class="grain"></span>
+  </div>
+  <div class="galerie-header">
+    <div class="galerie-icon" aria-hidden="true">
+      <span class="steam s1"></span>
+      <span class="steam s2"></span>
+      <span class="steam s3"></span>
+      <span class="galerie-bowl">🍚</span>
+    </div>
+    <span class="galerie-tag">🌿 Patrimoine culinaire</span>
+    <h2 class="galerie-titre">L'Attiéké — Patrimoine culinaire ivoirien</h2>
+    <div class="galerie-rule"></div>
+    <p class="galerie-sous">L'attiéké — un savoir-faire transmis depuis des générations</p>
+  </div>
+  <div class="galerie-inner">
+    <div class="galerie-item">
+      <img src="attieke1.jpg" alt="Plants de manioc" loading="lazy" decoding="async">
+      <div class="galerie-label">🌿 Plants de manioc — La matière première</div>
+    </div>
+    <div class="galerie-item">
+      <img src="attieke3.jpg" alt="Épluchage du manioc" loading="lazy" decoding="async">
+      <div class="galerie-label">👩🏾 Femmes épluchant le manioc — Savoir-faire traditionnel</div>
+    </div>
+    <div class="galerie-item">
+      <img src="attieke4.jpg" alt="Cuisson de l'attiéké" loading="lazy" decoding="async">
+      <div class="galerie-label">🍲 Cuisson de l'attiéké — Savoir-faire ancestral</div>
+    </div>
+    <div class="galerie-item">
+      <img src="attieke2.jpg" alt="Attiéké Capitaine grillé" loading="lazy" decoding="async">
+      <div class="galerie-label">🔥 Attiéké Capitaine grillé — Saveur ivoirienne</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHIFFRES -->
+<div class="chiffres">
+  <div class="chiffres-inner">
+    <div class="chiffre-item"><span class="chiffre-val" data-target="1996">1996</span><span class="chiffre-label">Année de création</span></div>
+    <div class="chiffre-item"><span class="chiffre-val" data-target="30" data-suffix=" ans">30 ans</span><span class="chiffre-label">D'expérience</span></div>
+    <div class="chiffre-item"><span class="chiffre-val" data-target="6">6</span><span class="chiffre-label">Partenaires officiels</span></div>
+    <div class="chiffre-item"><span class="chiffre-val" data-target="7">7</span><span class="chiffre-label">Missions actives</span></div>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- PRÉSENTATION -->
+  <section class="section reveal" id="presentation">
+    <div class="tag">🌿 Qui sommes-nous</div>
+    <h2 class="section-titre">Présentation de l'ANAREKA-CI</h2>
+    <div class="tiret"></div>
+    <p class="pres-lead">Une organisation au cœur de la gastronomie ivoirienne, au service des acteurs de la filière manioc-attiéké depuis 1996.</p>
+    <p class="pres-body">L'Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire (ANAREKA-CI) rassemble les  producteurs, les restaurateurs, les vendeurs et les gestionnaires de kiosques d'attiéké sur toute l'étendue du territoire national.</p>
+    <p class="pres-body">Créée dans le but de valoriser l'attiéké comme <strong>marque collective protégée</strong> et <strong>patrimoine culinaire emblématique</strong> de la Côte d'Ivoire, l'ANAREKA-CI œuvre pour l'organisation, la professionnalisation et le développement durable du secteur. Siège social à <strong>Cocody Riviera Bonoumin, Cité Syninfo</strong> — Récépissé <strong>N° 0408/PA/SG/D1</strong>.</p>
+
+    <div class="vision-bloc">
+      <h3>Notre Vision</h3>
+      <p>Faire de la filière manioc-attiéké un secteur moderne, structuré, compétitif et reconnu à l'échelle nationale et internationale.</p>
+    </div>
+  </section>
+
+</div>
+<!-- Fin de .page : l'album ci-dessous doit s'étendre sur toute la largeur de l'écran -->
+
+<!-- ===== ALBUM PHOTO — TRAIN EN BOUCLE =====
+     Note : un seul exemplaire de chaque carte est présent ici.
+     La duplication nécessaire à la boucle infinie est faite par
+     initTrainDuplication() dans script.js (cloneNode). -->
+<div class="album-accueil" id="albumAccueil">
+  <div class="album-header">
+    <span class="album-tag">📸 Notre association en images</span>
+    <h2 class="album-titre">Moments forts de l'ANAREKA-CI</h2>
+    <div class="album-rule"></div>
+    <p class="album-sous">Cliquez sur une photo pour l'agrandir</p>
+  </div>
+
+  <!-- TRAIN LIGNE 1 — défile vers la gauche -->
+  <div class="train-wrap">
+    <div class="train-track" id="track1">
+      <div class="train-card" data-src="photo3.jpg" data-cap="Cérémonie officielle — remise de produits attiéké labellisés" role="button" tabindex="0" aria-label="Agrandir la photo : Cérémonie officielle — remise de produits attiéké labellisés"><img src="photo3.jpg" alt="Cérémonie officielle — remise de produits attiéké labellisés" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo4.jpg" data-cap="Rencontre avec les partenaires institutionnels — CAMPC" role="button" tabindex="0" aria-label="Agrandir la photo : Rencontre avec les partenaires institutionnels — CAMPC"><img src="photo4.jpg" alt="Rencontre avec les partenaires institutionnels — CAMPC" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo5.png" data-cap="Attestation IGP — Attiéké des Lagunes — OAPI" role="button" tabindex="0" aria-label="Agrandir la photo : Attestation IGP — Attiéké des Lagunes — OAPI"><img src="photo5.png" alt="Attestation IGP — Attiéké des Lagunes — OAPI" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo6.jpg" data-cap="Membres de l'ANAREKA-CI en mission sur le terrain" role="button" tabindex="0" aria-label="Agrandir la photo : Membres de l'ANAREKA-CI en mission sur le terrain"><img src="photo6.jpg" alt="Membres de l'ANAREKA-CI en mission sur le terrain" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo7.jpg" data-cap="L'ANAREKA-CI — fière de son identité visuelle" role="button" tabindex="0" aria-label="Agrandir la photo : L'ANAREKA-CI — fière de son identité visuelle"><img src="photo7.jpg" alt="L'ANAREKA-CI — fière de son identité visuelle" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo8.jpg" data-cap="Visite d'inspection et d'échange sur le terrain" role="button" tabindex="0" aria-label="Agrandir la photo : Visite d'inspection et d'échange sur le terrain"><img src="photo8.jpg" alt="Visite d'inspection et d'échange sur le terrain" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo9.jpg" data-cap="Rencontre partenariale — SYNAREK-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Rencontre partenariale — SYNAREK-CI"><img src="photo9.jpg" alt="Rencontre partenariale — SYNAREK-CI" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo10.jpg" data-cap="Déclaration à la presse — Centre de compétence E-Gouvernance" role="button" tabindex="0" aria-label="Agrandir la photo : Déclaration à la presse — Centre de compétence E-Gouvernance"><img src="photo10.jpg" alt="Déclaration à la presse — Centre de compétence E-Gouvernance" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo11.jpg" data-cap="Assemblée des membres fondateurs de l'ANAREKA-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Assemblée des membres fondateurs de l'ANAREKA-CI"><img src="photo11.jpg" alt="Assemblée des membres fondateurs de l'ANAREKA-CI" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo24.jpg" data-cap="Rencontre avec Luciole Média — partenariat médiatique" role="button" tabindex="0" aria-label="Agrandir la photo : Rencontre avec Luciole Média — partenariat médiatique"><img src="photo24.jpg" alt="Rencontre avec Luciole Média — partenariat médiatique" loading="lazy" decoding="async"></div>
+    </div>
+  </div>
+
+  <!-- TRAIN LIGNE 2 — défile vers la droite (sens inverse) -->
+  <div class="train-wrap">
+    <div class="train-track train-reverse" id="track2">
+      <div class="train-card" data-src="photo12.jpg" data-cap="Session plénière de l'association" role="button" tabindex="0" aria-label="Agrandir la photo : Session plénière de l'association"><img src="photo12.jpg" alt="Session plénière de l'association" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo13.jpg" data-cap="Présentation des produits attiéké certifiés IGP" role="button" tabindex="0" aria-label="Agrandir la photo : Présentation des produits attiéké certifiés IGP"><img src="photo13.jpg" alt="Présentation des produits attiéké certifiés IGP" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo14.jpg" data-cap="Réunion stratégique de l'association" role="button" tabindex="0" aria-label="Agrandir la photo : Réunion stratégique de l'association"><img src="photo14.jpg" alt="Réunion stratégique de l'association" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo15.jpg" data-cap="Remise de l'attestation IGP au siège de l'ANAREKA-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Remise de l'attestation IGP au siège de l'ANAREKA-CI"><img src="photo15.jpg" alt="Remise de l'attestation IGP au siège de l'ANAREKA-CI" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo16.jpg" data-cap="Inauguration du siège social — L'attiéké c'est notre affaire" role="button" tabindex="0" aria-label="Agrandir la photo : Inauguration du siège social — L'attiéké c'est notre affaire"><img src="photo16.jpg" alt="Inauguration du siège social — L'attiéké c'est notre affaire" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo17.jpg" data-cap="Concertation interne des membres dirigeants" role="button" tabindex="0" aria-label="Agrandir la photo : Concertation interne des membres dirigeants"><img src="photo17.jpg" alt="Concertation interne des membres dirigeants" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo18.jpg" data-cap="Session de formation avec les jeunes membres" role="button" tabindex="0" aria-label="Agrandir la photo : Session de formation avec les jeunes membres"><img src="photo18.jpg" alt="Session de formation avec les jeunes membres" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo19.jpg" data-cap="Prise de parole lors de l'assemblée des membres" role="button" tabindex="0" aria-label="Agrandir la photo : Prise de parole lors de l'assemblée des membres"><img src="photo19.jpg" alt="Prise de parole lors de l'assemblée des membres" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo20.jpg" data-cap="Mission collective — délégation ANAREKA-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Mission collective — délégation ANAREKA-CI"><img src="photo20.jpg" alt="Mission collective — délégation ANAREKA-CI" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo21.jpg" data-cap="Interview — Luciole Média France — Promotion de l'attiéké" role="button" tabindex="0" aria-label="Agrandir la photo : Interview — Luciole Média France — Promotion de l'attiéké"><img src="photo21.jpg" alt="Interview — Luciole Média France — Promotion de l'attiéké" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo22.jpg" data-cap="Tournage du reportage sur l'attiéké — France" role="button" tabindex="0" aria-label="Agrandir la photo : Tournage du reportage sur l'attiéké — France"><img src="photo22.jpg" alt="Tournage du reportage sur l'attiéké — France" loading="lazy" decoding="async"></div>
+      <div class="train-card" data-src="photo23.jpg" data-cap="Délégation ANAREKA-CI en France — rayonnement international" role="button" tabindex="0" aria-label="Agrandir la photo : Délégation ANAREKA-CI en France — rayonnement international"><img src="photo23.jpg" alt="Délégation ANAREKA-CI en France — rayonnement international" loading="lazy" decoding="async"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Reprise de .page pour le reste du contenu -->
+<div class="page">
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" aria-hidden="true">
+  <div class="lightbox-overlay" id="lightboxOverlay"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+    <img src="" alt="" id="lightboxImg">
+    <p class="lightbox-cap" id="lightboxCap"></p>
+  </div>
+</div>
+
+  <!-- HISTORIQUE -->
+  <section class="section reveal" id="histoire">
+    <div class="tag">📜 Historique</div>
+    <h2 class="section-titre">De SYNAREK-CI à ANAREKA-CI</h2>
+    <div class="tiret"></div>
+    <div class="hist-logos">
+      <div class="hist-logo-item">
+        <img src="logo-synarek.jpg" alt="Logo SYNAREK-CI" loading="lazy" decoding="async">
+        <p>SYNAREK-CI</p><small>Syndicat — depuis 1996</small>
+      </div>
+      <div class="hist-fleche" title="Deux entités partenaires, mêmes membres fondateurs">🤝</div>
+      <div class="hist-logo-item">
+        <img src="logo.jpg" alt="Logo ANAREKA-CI">
+        <p>ANAREKA-CI</p><small>Association — depuis 2025</small>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:13.5px;color:var(--gris);max-width:560px;margin:0 auto 8px;line-height:1.6;">
+      SYNAREK-CI et ANAREKA-CI sont deux entités distinctes, fondées par les mêmes membres fondateurs et travaillant ensemble : le syndicat SYNAREK-CI protège et défend les droits des membres, tandis que l'association ANAREKA-CI porte la valorisation et le développement de la filière.
+    </p>
+    <div class="timeline">
+      <div class="tl-item reveal-l delay-1">
+        <div class="tl-annee">28 juin<br>1996</div>
+        <div class="tl-point"></div>
+        <h4>Création de SYNAREK-CI</h4>
+        <p>Fondée par Monsieur Oté Kouassi Georges, Président fondateur, pour regrouper les acteurs de la restauration d'attiéké en Côte d'Ivoire.</p>
+      </div>
+      <div class="tl-item reveal-l delay-2">
+        <div class="tl-annee">27 mai<br>1997</div>
+        <div class="tl-point"></div>
+        <h4>Reconnaissance syndicale — SYNAREK-CI</h4>
+        <p>L'organisation est officiellement reconnue comme Syndicat National des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire.</p>
+      </div>
+      <div class="tl-item reveal-l delay-3">
+        <div class="tl-annee">3 juil.<br>2025</div>
+        <div class="tl-point"></div>
+        <h4>Passation officielle de charge </h4>
+        <p>Passation solennelle entre le Président fondateur Oté Kouassi Georges et son successeur, Monsieur Oté Jean Thierry.</p>
+      </div>
+      <div class="tl-item reveal-l">
+        <div class="tl-annee">2025</div>
+        <div class="tl-point" style="background:var(--or);box-shadow:0 0 0 2px var(--or);"></div>
+        <h4>Création de l'ANAREKA-CI ✦</h4>
+        <p>Les membres fondateurs du SYNAREK-CI créent l'ANAREKA-CI, une association distincte et partenaire dédiée à la valorisation et au développement de la filière manioc-attiéké. Le SYNAREK-CI poursuit en parallèle sa mission syndicale de protection des membres.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉQUIPE -->
+  <section class="section reveal" id="equipe">
+    <div class="tag">👤 Gouvernance</div>
+    <h2 class="section-titre">Équipe dirigeante</h2>
+    <div class="tiret"></div>
+    <div class="equipe-list">
+      <div class="equipe-card">
+        <div class="eq-avatar">OJT</div>
+        <div>
+          <div class="eq-role">Président de l'Association</div>
+          <div class="eq-nom">Monsieur Oté Jean Thierry</div>
+          <div class="eq-bio">Membre fondateur de l'ANAREKA-CI — à la tête de l'association depuis la passation de charges de juillet 2025.</div>
+        </div>
+      </div>
+      <div class="equipe-card">
+        <div class="eq-avatar">EL</div>
+        <div>
+          <div class="eq-role">Secrétaire Générale</div>
+          <div class="eq-nom">Madame Eynoux Ezia Lydie Marcelle</div>
+          <div class="eq-bio">Membre fondatrice — assure la coordination administrative et institutionnelle de l'association.</div>
+        </div>
+      </div>
+      <div class="equipe-card fondateur">
+        <div class="eq-avatar">OKG</div>
+        <div>
+          <div class="eq-role">Président Fondateur Historique</div>
+          <div class="eq-nom">Monsieur Oté Kouassi Georges</div>
+          <div class="eq-bio">Fondateur de l'organisation en 1996 — a présidé le SYNAREK-CI pendant près de 30 ans avant la passation de juillet 2025.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSIONS, DOMAINES D'ACTION & OBJECTIFS STRATÉGIQUES (fusionnés et consolidés) -->
+  <section class="section reveal" id="missions">
+    <div class="tag">🚀 Missions & Objectifs</div>
+    <h2 class="section-titre">Nos missions, domaines d'action &amp; objectifs stratégiques</h2>
+    <div class="tiret"></div>
+    <p class="pres-lead" style="font-size:16px;margin-bottom:32px;">Une feuille de route claire, organisée en six grands axes d'intervention au service de la filière manioc-attiéké.</p>
+
+    <div class="domaines-grid axes-grid">
+      <div class="domaine-card axe-card">
+        <span class="d-icon">🤝</span>
+        <h4>Organisation & structuration de la filière</h4>
+        <p>Organiser et fédérer les restaurateurs et kiosques d'attiéké de Côte d'Ivoire, et structurer durablement la filière manioc-attiéké à l'échelle nationale.</p>
+      </div>
+
+      <div class="domaine-card axe-card">
+        <span class="d-icon">🎓</span>
+        <h4>Formation, hygiène & accompagnement</h4>
+        <p>Former les acteurs aux bonnes pratiques d'hygiène, de gestion et de transformation alimentaire, avec des campagnes de salubrité et un accompagnement complet :</p>
+        <ul>
+          <li>Gestion des activités et formalisation des entreprises</li>
+          <li>Techniques de conservation et accès aux financements</li>
+          <li>Assainissement, recensement et modernisation des points de vente</li>
+        </ul>
+      </div>
+
+      <div class="domaine-card axe-card">
+        <span class="d-icon">🎭</span>
+        <h4>Promotion, qualité & image de l'attiéké</h4>
+        <p>Promouvoir l'attiéké comme produit culturel et économique ivoirien à travers événements culturels, foires et salons, tout en renforçant la qualité et l'image de l'attiéké ivoirien à l'international.</p>
+      </div>
+
+      <div class="domaine-card axe-card">
+        <span class="d-icon">👩🏾‍🤝‍👨🏾</span>
+        <h4>Inclusion des jeunes & des femmes</h4>
+        <p>Encourager l'entrepreneuriat féminin et l'autonomisation des jeunes, en créant des opportunités d'emplois durables pour les jeunes et les femmes du secteur.</p>
+      </div>
+
+      <div class="domaine-card axe-card">
+        <span class="d-icon">🏛️</span>
+        <h4>Défense des membres & partenariats</h4>
+        <p>Défendre les intérêts des membres auprès des institutions publiques et privées, et développer des partenariats avec les ministères, ONG, collectivités et partenaires techniques et financiers.</p>
+      </div>
+
+      <div class="domaine-card axe-card">
+        <span class="d-icon">📈</span>
+        <h4>Développement économique & social</h4>
+        <p>Améliorer les revenus des acteurs du secteur et contribuer au développement économique et social du pays grâce à une filière mieux valorisée.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENAIRES -->
+  <section class="section reveal" id="partenaires">
+    <div class="tag">🤝 Partenariats</div>
+    <h2 class="section-titre">Nos partenaires</h2>
+    <div class="tiret"></div>
+    <p class="part-titre">Partenaires actuels</p>
+    <div class="part-cards">
+
+      <a href="https://oipi.ci" target="_blank" class="part-card">
+        <div class="part-card-logo">
+          <span class="part-initiales">OIPI</span>
+        </div>
+        <div class="part-card-info">
+          <h4>OIPI</h4>
+          <p>Office Ivoirien de la Propriété Intellectuelle</p>
+          <span class="part-card-domaine">🏛️ Propriété intellectuelle</span>
+        </div>
+        <span class="part-card-lien">oipi.ci →</span>
+      </a>
+
+      <a href="https://www.inhp.ci" target="_blank" class="part-card">
+        <div class="part-card-logo inhp">
+          <span class="part-initiales">INHP</span>
+        </div>
+        <div class="part-card-info">
+          <h4>INHP</h4>
+          <p>Institut National d'Hygiène Publique</p>
+          <span class="part-card-domaine">🧬 Hygiène & Santé publique</span>
+        </div>
+        <span class="part-card-lien">inhp.ci →</span>
+      </a>
+
+      <a href="https://www.campc.net" target="_blank" class="part-card">
+        <div class="part-card-logo campc">
+          <span class="part-initiales">CAMPC</span>
+        </div>
+        <div class="part-card-info">
+          <h4>CAMPC</h4>
+          <p>Centre Africain de Management et de Perfectionnement des Cadres</p>
+          <span class="part-card-domaine">🎓 Formation & Management</span>
+        </div>
+        <span class="part-card-lien">campc.net →</span>
+      </a>
+
+      <a href="https://luciole-media.fr" target="_blank" class="part-card">
+        <div class="part-card-logo luciole">
+          <span class="part-initiales">LM</span>
+        </div>
+        <div class="part-card-info">
+          <h4>Luciole Média</h4>
+          <p>Luciole Média France</p>
+          <span class="part-card-domaine">📡 Communication & Média</span>
+        </div>
+        <span class="part-card-lien">France →</span>
+      </a>
+
+      <a href="https://abidjan.gouv.ci" target="_blank" class="part-card">
+        <div class="part-card-logo prefecture">
+          <span class="part-initiales">🏛️</span>
+        </div>
+        <div class="part-card-info">
+          <h4>Préfecture d'Abidjan</h4>
+          <p>Administration territoriale du District Autonome d'Abidjan</p>
+          <span class="part-card-domaine">🇨🇮 Institution publique</span>
+        </div>
+        <span class="part-card-lien">Abidjan →</span>
+      </a>
+
+      <a href="https://oapi.int" target="_blank" class="part-card">
+        <div class="part-card-logo oapi">
+          <span class="part-initiales">OAPI</span>
+        </div>
+        <div class="part-card-info">
+          <h4>OAPI</h4>
+          <p>Organisation Africaine de la Propriété Intellectuelle — 17 États membres</p>
+          <span class="part-card-domaine">🌍 Propriété intellectuelle africaine</span>
+        </div>
+        <span class="part-card-lien">oapi.int →</span>
+      </a>
+
+    </div>
+
+    <p class="part-titre" style="margin-top:44px;">Partenaires cibles</p>
+    <div class="part-row">
+      <span class="part-tag cible">Ministères & institutions</span>
+      <span class="part-tag cible">Mairies & collectivités</span>
+      <span class="part-tag cible">ONG internationales</span>
+      <span class="part-tag cible">Structures de microfinance</span>
+      <span class="part-tag cible">Entreprises privées</span>
+      <span class="part-tag cible">Secteur agroalimentaire</span>
+    </div>
+  </section>
+
+  <!-- ADHÉSION -->
+  <section class="section reveal" id="adhesion">
+    <div class="tag">🌿 Rejoignez-nous</div>
+    <h2 class="section-titre">Devenir membre de l'ANAREKA-CI</h2>
+    <div class="tiret"></div>
+
+    <div class="adhesion-wrap">
+      <!-- Avantages -->
+      <div class="adhesion-avantages">
+        <h3>Pourquoi nous rejoindre ?</h3>
+        <ul class="avantages-list">
+          <li><span class="av-icon">🏆</span><div><strong>Certification officielle</strong><p>Obtenez le label ANAREKA-CI et gagnez en crédibilité auprès de vos clients.</p></div></li>
+          <li><span class="av-icon">🎓</span><div><strong>Formations gratuites</strong><p>Accédez à des formations en hygiène, gestion et transformation alimentaire.</p></div></li>
+          <li><span class="av-icon">🤝</span><div><strong>Réseau professionnel</strong><p>Intégrez un réseau national de restaurateurs et kiosques d'attiéké.</p></div></li>
+          <li><span class="av-icon">💰</span><div><strong>Accès aux financements</strong><p>Bénéficiez d'un accompagnement pour obtenir des subventions et microcrédits.</p></div></li>
+          <li><span class="av-icon">📍</span><div><strong>Visibilité sur l'annuaire</strong><p>Votre kiosque référencé sur notre annuaire officiel en ligne.</p></div></li>
+          <li><span class="av-icon">🛡️</span><div><strong>Défense de vos droits</strong><p>L'association vous représente auprès des autorités et institutions.</p></div></li>
+        </ul>
+      </div>
+
+      <!-- Formulaire -->
+      <div class="adhesion-form-wrap">
+        <div class="form-header">
+          <h3>Comment nous rejoindre </h3>
+          <p>Remplissez ce formulaire et nous vous contacterons dans les 48h.</p>
+        </div>
+        <div id="formSuccess" class="form-success" style="display:none;">
+          <div class="success-icon">✅</div>
+          <h4>Demande envoyée !</h4>
+          <p>Merci pour votre intérêt. Notre équipe vous contactera dans les 48h au numéro indiqué.</p>
+        </div>
+        <form class="adhesion-form" id="adhesionForm" action="https://formspree.io/f/xbdezwjg" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prénom & Nom *</label>
+              <input type="text" name="nom" placeholder="Ex: Kouassi Marie" required>
+            </div>
+            <div class="form-group">
+              <label>Téléphone *</label>
+              <input type="tel" name="tel" placeholder="+225 07 XX XX XX XX" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>E-mail</label>
+              <input type="email" name="email" placeholder="votre@email.com">
+            </div>
+            <div class="form-group">
+              <label>Ville / Quartier *</label>
+              <input type="text" name="ville" placeholder="Ex: Abidjan – Cocody" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Type d'activité *</label>
+            <select name="activite" required>
+              <option value="">-- Choisissez --</option>
+              <option>Kiosque d'attiéké fixe</option>
+              <option>Restaurant traditionnel</option>
+              <option>Vendeur ambulant</option>
+              <option>Producteur d'attiéké</option>
+              <option>Maquis / Gargote</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nom de votre établissement</label>
+            <input type="text" name="etablissement" placeholder="Ex: Chez Mama Adjoua">
+          </div>
+          <div class="form-group">
+            <label>Message (facultatif)</label>
+            <textarea name="message" rows="3" placeholder="Parlez-nous de votre activité..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <span>Envoyer ma demande d'adhésion</span>
+            <span class="submit-arrow">→</span>
+          </button>
+          <p class="form-note">* Champs obligatoires — Vos données restent confidentielles.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section reveal" id="contact">
+    <div class="tag">📬 Contact</div>
+    <h2 class="section-titre">Nous contacter</h2>
+    <div class="tiret"></div>
+    <div class="contact-wrap">
+      <div class="contact-head">
+        <h3>ANAREKA-CI — Siège social</h3>
+        <p>Disponibles du lundi au vendredi, de 8h à 17h</p>
+      </div>
+      <div class="contact-corps">
+        <div class="c-row">
+          <div class="c-ico">📍</div>
+          <div><div class="c-lbl">Siège social</div><div class="c-val">Cocody Riviera Bonoumin, Cité Syninfo, Abidjan, Côte d'Ivoire</div></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico">✉️</div>
+          <div><div class="c-lbl">E-mail</div><div class="c-val"><a href="mailto:info@anarekaci.com">info@anarekaci.com</a></div></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico">📞</div>
+          <div><div class="c-lbl">Téléphone fixe</div><div class="c-val"><a href="tel:+2252722517497">+225 27 22 51 74 97</a></div></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico">📱</div>
+          <div><div class="c-lbl">Mobiles</div><div class="c-val"><a href="tel:+2250710636254">+225 07 10 63 62 54</a> &nbsp;—&nbsp; <a href="tel:+2250104773737">+225 01 04 77 37 37</a></div></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico">📋</div>
+          <div><div class="c-lbl">Récépissé officiel</div><div class="c-val">N° 0408/PA/SG/D1</div></div>
+        </div>
+        <a href="mailto:info@anarekaci.com" class="btn-contact">✉️ Envoyer un message</a>
+      </div>
+      <div class="contact-qr">
+        <div class="maps-wrap">
+          <iframe
+            src="https://www.google.com/maps?q=Cocody+Riviera+Bonoumin+Cit%C3%A9+Syninfo+Abidjan+C%C3%B4te+d%27Ivoire&output=embed"
+            width="100%" height="220" style="border:0;border-radius:12px;" allowfullscreen="" loading="lazy"
+            title="Localisation ANAREKA-CI — Cocody Riviera Bonoumin, Cité Syninfo, Abidjan"></iframe>
+        </div>
+        <div>
+          <h4>📍 Siège social — Cocody Riviera Bonoumin, Cité Syninfo</h4>
+          <p>Cocody Riviera Bonoumin, Cité Syninfo, Abidjan, Côte d'Ivoire</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Cocody+Riviera+Bonoumin+Cit%C3%A9+Syninfo+Abidjan" target="_blank" rel="noopener"
+             style="display:inline-block;margin-top:10px;color:var(--or);font-size:13px;font-weight:600;">
+            🗺️ Ouvrir dans Google Maps →
+          </a>
+        </div>
+        <div style="margin-top:18px;">
+          <img src="qrcode.jpg" alt="QR Code de localisation du siège ANAREKA-CI" loading="lazy" decoding="async" style="width:90px;border-radius:8px;">
+          <p style="font-size:12px;color:var(--gris);margin-top:6px;">Scannez pour nous localiser</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== BANDEAU CTA ANIMÉ — REJOIGNEZ-NOUS ===== -->
 <div class="cta-band">
   <div class="cta-orb1"></div>
   <div class="cta-orb2"></div>
   <div class="cta-grains" aria-hidden="true">
-    <span style="left:7%; --dur:5s;  --delay:0s;  --dx:14px"></span>
-    <span style="left:16%;--dur:6.5s;--delay:1s;  --dx:-18px"></span>
+    <span style="left:7%;--dur:5s;--delay:0s;--dx:14px"></span>
+    <span style="left:16%;--dur:6.5s;--delay:1s;--dx:-18px"></span>
     <span style="left:27%;--dur:4.6s;--delay:2.2s;--dx:10px"></span>
-    <span style="left:38%;--dur:7s;  --delay:.4s; --dx:-12px"></span>
+    <span style="left:38%;--dur:7s;--delay:.4s;--dx:-12px"></span>
     <span style="left:50%;--dur:5.4s;--delay:1.6s;--dx:16px"></span>
-    <span style="left:61%;--dur:6s;  --delay:2.8s;--dx:-9px"></span>
-    <span style="left:72%;--dur:4.8s;--delay:.8s; --dx:20px"></span>
+    <span style="left:61%;--dur:6s;--delay:2.8s;--dx:-9px"></span>
+    <span style="left:72%;--dur:4.8s;--delay:.8s;--dx:20px"></span>
     <span style="left:83%;--dur:6.8s;--delay:1.9s;--dx:-15px"></span>
-    <span style="left:92%;--dur:5.2s;--delay:.2s; --dx:12px"></span>
-    <span style="left:33%;--dur:8s;  --delay:3.4s;--dx:8px"></span>
+    <span style="left:92%;--dur:5.2s;--delay:.2s;--dx:12px"></span>
+    <span style="left:33%;--dur:8s;--delay:3.4s;--dx:8px"></span>
     <span style="left:66%;--dur:7.4s;--delay:2.4s;--dx:-16px"></span>
   </div>
   <div class="cta-inner">
     <span class="cta-eyebrow"><span class="leaf">🌿</span> Rejoignez le mouvement</span>
     <h2 class="cta-titre">Rejoignez l'<em>ANAREKA-CI</em></h2>
     <p class="cta-texte">Faites partie d'un réseau national qui valorise, protège et fait grandir la filière manioc-attiéké — ensemble, structurons l'avenir de notre patrimoine culinaire.</p>
-    <a href="#" class="cta-btn"><span>Devenir membre</span><span class="cta-btn-arrow">→</span></a>
+    <a href="#adhesion" class="cta-btn">
+      <span>Devenir membre</span>
+      <span class="cta-btn-arrow">→</span>
+    </a>
   </div>
 </div>
 
@@ -178,30 +678,30 @@ footer small{font-size:11.5px;color:rgba(255,255,255,.3);display:block;margin-to
   </svg>
 </div>
 
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer>
   <span class="foot-thread" aria-hidden="true"></span>
   <div class="footer-logo">ANAREKA<span>-CI</span></div>
-  <p class="footer-tagline">Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire</p>
+  <p class="tagline">Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire</p>
   <nav class="footer-nav">
-    <a href="#">Présentation</a>
-    <a href="#">Historique</a>
-    <a href="#">Équipe</a>
-    <a href="#">Missions</a>
-    <a href="#">Partenaires</a>
-    <a href="#">Contact</a>
+    <a href="#presentation">Présentation</a>
+    <a href="#histoire">Historique</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#missions">Missions</a>
+    <a href="#partenaires">Partenaires</a>
+    <a href="#contact">Contact</a>
   </nav>
   <div class="footer-social">
-    <a href="#" class="social-wa" aria-label="WhatsApp">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+    <a href="https://wa.me/2250710636254" target="_blank" rel="noopener" class="social-btn whatsapp" aria-label="WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       WhatsApp
     </a>
-    <a href="#" class="social-mail" aria-label="E-mail">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    <a href="mailto:info@anarekaci.com" class="social-btn email" aria-label="Email">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       E-mail
     </a>
-    <a href="#" class="social-tel" aria-label="Téléphone">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    <a href="tel:+2250710636254" class="social-btn tel" aria-label="Téléphone">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
       Appeler
     </a>
   </div>
@@ -210,21 +710,9 @@ footer small{font-size:11.5px;color:rgba(255,255,255,.3);display:block;margin-to
   <small>Filière fondée en 1996 — ANAREKA-CI créée en 2025, partenaire du syndicat SYNAREK-CI — Cocody Riviera Bonoumin, Cité Syninfo, Abidjan</small>
 </footer>
 
-<script>
-(function(){
-  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  // Vigne : se dessine quand elle entre dans le champ
-  var vine = document.querySelector('.vine-divider');
-  var foot = document.querySelector('footer');
-  if (mq.matches){ if(vine) vine.classList.add('drawn'); if(foot) foot.classList.add('footer-in'); return; }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add(e.target===foot?'footer-in':'drawn'); io.unobserve(e.target); }
-    });
-  },{threshold:.35});
-  if(vine) io.observe(vine);
-  if(foot) io.observe(foot);
-})();
-</script>
+<!-- Script unique : navigation, retour en haut, reveal, compteur,
+     lightbox, duplication des trains, bouton flottant, formulaire
+     d'adhésion et chargement paresseux des graphiques. -->
+<script src="script.js" defer></script>
 </body>
 </html>
