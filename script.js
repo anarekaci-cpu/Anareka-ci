@@ -14,6 +14,10 @@
    ===================================================== */
 
 (function () {
+  // Active le gating CSS « .js » (les révélations ne se déclenchent
+  // que si JS est présent ; sans JS, tout reste visible).
+  document.documentElement.classList.add('js');
+
   // ---------- ATTENDRE QUE LE DOM SOIT PRÊT ----------
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
@@ -29,6 +33,7 @@
     initAdhesionForm();
     initScrollEffects();    // un seul écouteur de scroll pour nav + retour-haut + bouton flottant
     initBackToTopClick();
+    initSignature();        // vigne qui se dessine + révélation du footer
   });
 
   // ---------- MENU MOBILE (hamburger) ----------
@@ -97,6 +102,32 @@
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  }
+
+  // ---------- SIGNATURE : VIGNE QUI SE DESSINE + RÉVÉLATION FOOTER ----------
+  function initSignature() {
+    const foot = document.querySelector('footer');
+    const vine = document.querySelector('.vine-divider');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Mouvement réduit ou pas d'IntersectionObserver : tout visible d'emblée
+    if (reduce || !('IntersectionObserver' in window)) {
+      if (vine) vine.classList.add('drawn');
+      if (foot) foot.classList.add('footer-in');
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(entry.target === foot ? 'footer-in' : 'drawn');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    if (vine) io.observe(vine);
+    if (foot) io.observe(foot);
   }
 
   // ---------- RÉVÉLATION AU DÉFILEMENT ----------
