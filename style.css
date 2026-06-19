@@ -957,3 +957,109 @@ footer small { font-size:11.5px; color:rgba(255,255,255,.28); display:block; mar
         font-size: 20px !important; /* Ajuste la taille de la poignée de main */
     }
 }
+
+/* ============================================================
+   ANAREKA-CI — ANIMATIONS v4 : CTA · Vigne signature · Footer
+   À COLLER À LA FIN de style.css (l'ordre garantit les overrides).
+   Garde-fou : les révélations ne s'activent que si <html class="js">
+   est présent — donc sans JS, tout reste visible.
+   ============================================================ */
+
+/* ---------- KEYFRAMES (nouveaux uniquement) ---------- */
+@keyframes grainRise   {0%{transform:translateY(0) translateX(0) rotate(0);opacity:0}12%{opacity:.85}100%{transform:translateY(-150px) translateX(var(--dx,16px)) rotate(140deg);opacity:0}}
+@keyframes haloSpin    {to{transform:rotate(360deg)}}
+@keyframes leafSway    {0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
+@keyframes threadSweep {0%{left:-12%}100%{left:112%}}
+@keyframes waPulse     {0%,100%{transform:scale(1)}40%{transform:scale(1.18)}}
+@keyframes ringShake   {0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(6deg)}}
+
+/* ---------- CTA : grains d'attiéké qui montent ---------- */
+.cta-grains{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cta-grains span{position:absolute;bottom:8%;width:7px;height:9px;border-radius:60% 60% 50% 50%;
+  background:rgba(201,168,76,.7);box-shadow:0 0 6px rgba(201,168,76,.35);
+  animation:grainRise var(--dur,5s) var(--delay,0s) ease-in infinite}
+
+/* ---------- CTA : feuille de l'eyebrow qui oscille ---------- */
+.cta-eyebrow .leaf{display:inline-block;transform-origin:50% 90%;animation:leafSway 3.2s ease-in-out infinite}
+
+/* ---------- CTA : halo doré tournant autour du bouton (au survol) ---------- */
+.cta-btn{position:relative;isolation:isolate}
+.cta-btn::before{content:'';position:absolute;inset:-3px;border-radius:8px;z-index:-1;
+  background:conic-gradient(from 0deg,transparent 0deg,var(--or-clair) 60deg,#fff 90deg,var(--or-clair) 120deg,transparent 200deg,transparent 360deg);
+  opacity:0;transition:opacity .35s;animation:haloSpin 3.5s linear infinite;animation-play-state:paused}
+.cta-btn:hover::before{opacity:.95;animation-play-state:running}
+
+/* ============================================================
+   SIGNATURE — VIGNE DE MANIOC QUI SE DESSINE
+   (s'insère entre .cta-band et <footer>)
+   ============================================================ */
+.vine-divider{position:relative;background:var(--noir);line-height:0;margin-top:-1px}
+.vine-divider svg{display:block;width:100%;height:auto}
+.vine-stem{fill:none;stroke:var(--or);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;
+  filter:drop-shadow(0 0 3px rgba(201,168,76,.45))}
+.vine-leaf{fill:var(--or-clair);transform-box:fill-box;transform-origin:center bottom}
+.vine-seed{fill:var(--or)}
+
+/* sans JS : vigne visible d'emblée */
+.vine-stem{stroke-dashoffset:0}
+.vine-leaf{opacity:.9}
+.vine-seed{opacity:.85}
+
+/* avec JS : on cache, puis on dessine à l'entrée dans le champ */
+.js .vine-stem{stroke-dashoffset:1}
+.js .vine-leaf{opacity:0;transform:scale(.3);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.js .vine-seed{opacity:0;transition:opacity .4s ease}
+.vine-divider.drawn .vine-stem{transition:stroke-dashoffset 2.1s cubic-bezier(.6,.02,.2,1);stroke-dashoffset:0}
+.vine-divider.drawn .vine-leaf{opacity:.9;transform:scale(1)}
+.vine-divider.drawn .vine-seed{opacity:.85;transition-delay:2.1s}
+.vine-divider.drawn .vine-leaf:nth-of-type(1){transition-delay:.5s}
+.vine-divider.drawn .vine-leaf:nth-of-type(2){transition-delay:.9s}
+.vine-divider.drawn .vine-leaf:nth-of-type(3){transition-delay:1.3s}
+.vine-divider.drawn .vine-leaf:nth-of-type(4){transition-delay:1.6s}
+.vine-divider.drawn .vine-leaf:nth-of-type(5){transition-delay:1.9s}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+/* étincelle dorée qui parcourt le filet supérieur */
+.foot-thread{position:absolute;top:-1px;left:-12%;width:14%;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,transparent,var(--or-clair),#fff,var(--or-clair),transparent);
+  filter:blur(.5px);animation:threadSweep 6s linear infinite;pointer-events:none;z-index:1}
+
+/* lisibilité : nav un peu plus contrastée (.45 -> .62) + soulignement doré */
+.footer-nav a{position:relative;color:rgba(255,255,255,.62);padding-bottom:4px}
+.footer-nav a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--or);
+  transform:scaleX(0);transform-origin:center;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.footer-nav a:hover{color:var(--or-clair)}
+.footer-nav a:hover::after{transform:scaleX(1)}
+
+/* wordmark : le "-CI" scintille (cohérent avec le hero) */
+.footer-logo span{background:linear-gradient(90deg,#c9a84c,#e8c97a,#c9a84c);background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmerText 3.5s linear infinite}
+
+/* micro-interactions des icônes sociales (au survol) */
+.social-btn svg{transition:transform .25s}
+.social-btn.whatsapp:hover svg{animation:waPulse .6s ease}
+.social-btn.email:hover svg{transform:translateY(-3px)}
+.social-btn.tel:hover svg{transform-origin:top center;animation:ringShake .6s ease}
+
+/* révélation du footer au scroll (gating .js : sinon visible) */
+.js footer .footer-logo,
+.js footer .tagline,
+.js footer .footer-nav,
+.js footer .footer-social{opacity:0;transform:translateY(16px);
+  transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+footer.footer-in .footer-logo  {opacity:1;transform:none;transition-delay:.05s}
+footer.footer-in .tagline      {opacity:1;transform:none;transition-delay:.15s}
+footer.footer-in .footer-nav   {opacity:1;transform:none;transition-delay:.25s}
+footer.footer-in .footer-social{opacity:1;transform:none;transition-delay:.35s}
+
+/* ---------- MOUVEMENT RÉDUIT ---------- */
+@media (prefers-reduced-motion: reduce){
+  .cta-grains span,.cta-eyebrow .leaf,.cta-btn::before,.foot-thread,.footer-logo span{animation:none !important}
+  .js .vine-stem{stroke-dashoffset:0 !important}
+  .js .vine-leaf,.js .vine-seed{opacity:.9 !important;transform:none !important}
+  .js footer .footer-logo,.js footer .tagline,.js footer .footer-nav,.js footer .footer-social{opacity:1 !important;transform:none !important}
+}
