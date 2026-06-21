@@ -25,8 +25,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<!-- ✅ CORRECTION : favicon en WebP avec fallback JPG -->
-<link rel="icon" type="image/webp" href="logo.webp">
+<!-- ✅ CORRECTION : favicon en jpg avec fallback JPG -->
+<link rel="icon" type="image/jpg" href="logo.jpg">
 <link rel="icon" type="image/jpeg" href="logo.jpg">
 <link rel="apple-touch-icon" href="logo.jpg">
 
@@ -88,9 +88,9 @@
 <nav id="mainNav">
   <div class="nav-inner">
     <a href="#accueil" class="nav-logo">
-      <!-- ✅ CORRECTION : logo nav en WebP avec fallback JPG -->
+      <!-- ✅ CORRECTION : logo nav en jpg avec fallback JPG -->
       <picture>
-        <source srcset="logo.webp" type="image/webp">
+        <source srcset="logo.jpg" type="image/jpg">
         <img src="logo.jpg" alt="ANAREKA-CI" width="44" height="44">
       </picture>
       <div class="nav-logo-text">ANAREKA-CI <small>Organisation Professionnelle Nationale</small></div>
@@ -132,9 +132,9 @@
     <div class="hero-logo-wrap">
       <div class="hero-ring"></div>
       <div class="hero-ring2"></div>
-      <!-- ✅ CORRECTION : logo hero en WebP — LCP critique, PAS de lazy loading intentionnellement -->
+      <!-- ✅ CORRECTION : logo hero en jpg — LCP critique, PAS de lazy loading intentionnellement -->
       <picture>
-        <source srcset="logo.webp" type="image/webp">
+        <source srcset="logo.jpg" type="image/jpg">
         <img src="logo.jpg" class="hero-logo" alt="Logo ANAREKA-CI" width="130" height="130" fetchpriority="high">
       </picture>
     </div>
@@ -171,31 +171,31 @@
     <p class="galerie-sous">L'attiéké — un savoir-faire transmis depuis des générations</p>
   </div>
   <div class="galerie-inner">
-    <!-- ✅ CORRECTION : toutes les images en <picture> WebP + lazy loading + dimensions -->
+    <!-- ✅ CORRECTION : toutes les images en <picture> jpg + lazy loading + dimensions -->
     <div class="galerie-item">
       <picture>
-        <source srcset="attieke1.webp" type="image/webp">
+        <source srcset="attieke1.jpg" type="image/jpg">
         <img src="attieke1.jpg" alt="Plants de manioc" loading="lazy" decoding="async" width="600" height="300">
       </picture>
       <div class="galerie-label">🌿 Plants de manioc — La matière première</div>
     </div>
     <div class="galerie-item">
       <picture>
-        <source srcset="attieke3.webp" type="image/webp">
+        <source srcset="attieke3.jpg" type="image/jpg">
         <img src="attieke3.jpg" alt="Épluchage du manioc" loading="lazy" decoding="async" width="600" height="300">
       </picture>
       <div class="galerie-label">👩🏾 Femmes épluchant le manioc — Savoir-faire traditionnel</div>
     </div>
     <div class="galerie-item">
       <picture>
-        <source srcset="attieke4.webp" type="image/webp">
+        <source srcset="attieke4.jpg" type="image/jpg">
         <img src="attieke4.jpg" alt="Cuisson de l'attiéké" loading="lazy" decoding="async" width="600" height="300">
       </picture>
       <div class="galerie-label">🍲 Cuisson de l'attiéké — Savoir-faire ancestral</div>
     </div>
     <div class="galerie-item">
       <picture>
-        <source srcset="attieke2.webp" type="image/webp">
+        <source srcset="attieke2.jpg" type="image/jpg">
         <img src="attieke2.jpg" alt="Attiéké Capitaine grillé" loading="lazy" decoding="async" width="600" height="300">
       </picture>
       <div class="galerie-label">🔥 Attiéké Capitaine grillé — Saveur ivoirienne</div>
@@ -245,36 +245,36 @@
   <!-- TRAIN LIGNE 1 -->
   <div class="train-wrap">
     <div class="train-track" id="track1">
-      <!-- ✅ CORRECTION : toutes les photos du train en WebP + lazy loading -->
+      <!-- ✅ CORRECTION : toutes les photos du train en jpg + lazy loading -->
       <div class="train-card" data-src="photo3.jpg" data-cap="Cérémonie officielle — remise de produits attiéké labellisés" role="button" tabindex="0" aria-label="Agrandir la photo : Cérémonie officielle">
-        <picture><source srcset="photo3.webp" type="image/webp"><img src="photo3.jpg" alt="Cérémonie officielle — remise de produits attiéké labellisés" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo3.jpg" type="image/jpg"><img src="photo3.jpg" alt="Cérémonie officielle — remise de produits attiéké labellisés" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo4.jpg" data-cap="Rencontre avec les partenaires institutionnels — CAMPC" role="button" tabindex="0" aria-label="Agrandir la photo : Rencontre CAMPC">
-        <picture><source srcset="photo4.webp" type="image/webp"><img src="photo4.jpg" alt="Rencontre avec les partenaires institutionnels — CAMPC" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo4.jpg" type="image/jpg"><img src="photo4.jpg" alt="Rencontre avec les partenaires institutionnels — CAMPC" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo5.png" data-cap="Attestation IGP — Attiéké des Lagunes — OAPI" role="button" tabindex="0" aria-label="Agrandir la photo : Attestation IGP OAPI">
-        <picture><source srcset="photo5.webp" type="image/webp"><img src="photo5.png" alt="Attestation IGP — Attiéké des Lagunes — OAPI" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo5.jpg" type="image/jpg"><img src="photo5.png" alt="Attestation IGP — Attiéké des Lagunes — OAPI" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo6.jpg" data-cap="Membres de l'ANAREKA-CI en mission sur le terrain" role="button" tabindex="0" aria-label="Agrandir la photo : Mission terrain">
-        <picture><source srcset="photo6.webp" type="image/webp"><img src="photo6.jpg" alt="Membres de l'ANAREKA-CI en mission sur le terrain" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo6.jpg" type="image/jpg"><img src="photo6.jpg" alt="Membres de l'ANAREKA-CI en mission sur le terrain" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo7.jpg" data-cap="L'ANAREKA-CI — fière de son identité visuelle" role="button" tabindex="0" aria-label="Agrandir la photo : Identité visuelle ANAREKA-CI">
-        <picture><source srcset="photo7.webp" type="image/webp"><img src="photo7.jpg" alt="L'ANAREKA-CI — fière de son identité visuelle" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo7.jpg" type="image/jpg"><img src="photo7.jpg" alt="L'ANAREKA-CI — fière de son identité visuelle" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo8.jpg" data-cap="Visite d'inspection et d'échange sur le terrain" role="button" tabindex="0" aria-label="Agrandir la photo : Visite inspection">
-        <picture><source srcset="photo8.webp" type="image/webp"><img src="photo8.jpg" alt="Visite d'inspection et d'échange sur le terrain" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo8.jpg" type="image/jpg"><img src="photo8.jpg" alt="Visite d'inspection et d'échange sur le terrain" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo9.jpg" data-cap="Rencontre partenariale — SYNAREK-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Rencontre SYNAREK-CI">
-        <picture><source srcset="photo9.webp" type="image/webp"><img src="photo9.jpg" alt="Rencontre partenariale — SYNAREK-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo9.jpg" type="image/jpg"><img src="photo9.jpg" alt="Rencontre partenariale — SYNAREK-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo10.jpg" data-cap="Déclaration à la presse — Centre de compétence E-Gouvernance" role="button" tabindex="0" aria-label="Agrandir la photo : Déclaration presse">
-        <picture><source srcset="photo10.webp" type="image/webp"><img src="photo10.jpg" alt="Déclaration à la presse — Centre de compétence E-Gouvernance" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo10.jpg" type="image/jpg"><img src="photo10.jpg" alt="Déclaration à la presse — Centre de compétence E-Gouvernance" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo11.jpg" data-cap="Assemblée des membres fondateurs de l'ANAREKA-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Assemblée membres fondateurs">
-        <picture><source srcset="photo11.webp" type="image/webp"><img src="photo11.jpg" alt="Assemblée des membres fondateurs de l'ANAREKA-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo11.jpg" type="image/jpg"><img src="photo11.jpg" alt="Assemblée des membres fondateurs de l'ANAREKA-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo24.jpg" data-cap="Rencontre avec Luciole Média — partenariat médiatique" role="button" tabindex="0" aria-label="Agrandir la photo : Partenariat Luciole Média">
-        <picture><source srcset="photo24.webp" type="image/webp"><img src="photo24.jpg" alt="Rencontre avec Luciole Média — partenariat médiatique" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo24.jpg" type="image/jpg"><img src="photo24.jpg" alt="Rencontre avec Luciole Média — partenariat médiatique" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
     </div>
   </div>
@@ -283,40 +283,40 @@
   <div class="train-wrap">
     <div class="train-track train-reverse" id="track2">
       <div class="train-card" data-src="photo12.jpg" data-cap="Session plénière de l'association" role="button" tabindex="0" aria-label="Agrandir la photo : Session plénière">
-        <picture><source srcset="photo12.webp" type="image/webp"><img src="photo12.jpg" alt="Session plénière de l'association" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo12.jpg" type="image/jpg"><img src="photo12.jpg" alt="Session plénière de l'association" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo13.jpg" data-cap="Présentation des produits attiéké certifiés IGP" role="button" tabindex="0" aria-label="Agrandir la photo : Produits IGP">
-        <picture><source srcset="photo13.webp" type="image/webp"><img src="photo13.jpg" alt="Présentation des produits attiéké certifiés IGP" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo13.jpg" type="image/jpg"><img src="photo13.jpg" alt="Présentation des produits attiéké certifiés IGP" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo14.jpg" data-cap="Réunion stratégique de l'association" role="button" tabindex="0" aria-label="Agrandir la photo : Réunion stratégique">
-        <picture><source srcset="photo14.webp" type="image/webp"><img src="photo14.jpg" alt="Réunion stratégique de l'association" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo14.jpg" type="image/jpg"><img src="photo14.jpg" alt="Réunion stratégique de l'association" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo15.jpg" data-cap="Remise de l'attestation IGP au siège de l'ANAREKA-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Remise attestation IGP">
-        <picture><source srcset="photo15.webp" type="image/webp"><img src="photo15.jpg" alt="Remise de l'attestation IGP au siège de l'ANAREKA-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo15.jpg" type="image/jpg"><img src="photo15.jpg" alt="Remise de l'attestation IGP au siège de l'ANAREKA-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo16.jpg" data-cap="Inauguration du siège social — L'attiéké c'est notre affaire" role="button" tabindex="0" aria-label="Agrandir la photo : Inauguration siège">
-        <picture><source srcset="photo16.webp" type="image/webp"><img src="photo16.jpg" alt="Inauguration du siège social — L'attiéké c'est notre affaire" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo16.jpg" type="image/jpg"><img src="photo16.jpg" alt="Inauguration du siège social — L'attiéké c'est notre affaire" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo17.jpg" data-cap="Concertation interne des membres dirigeants" role="button" tabindex="0" aria-label="Agrandir la photo : Concertation interne">
-        <picture><source srcset="photo17.webp" type="image/webp"><img src="photo17.jpg" alt="Concertation interne des membres dirigeants" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo17.jpg" type="image/jpg"><img src="photo17.jpg" alt="Concertation interne des membres dirigeants" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo18.jpg" data-cap="Session de formation avec les jeunes membres" role="button" tabindex="0" aria-label="Agrandir la photo : Session formation jeunes">
-        <picture><source srcset="photo18.webp" type="image/webp"><img src="photo18.jpg" alt="Session de formation avec les jeunes membres" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo18.jpg" type="image/jpg"><img src="photo18.jpg" alt="Session de formation avec les jeunes membres" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo19.jpg" data-cap="Prise de parole lors de l'assemblée des membres" role="button" tabindex="0" aria-label="Agrandir la photo : Prise de parole assemblée">
-        <picture><source srcset="photo19.webp" type="image/webp"><img src="photo19.jpg" alt="Prise de parole lors de l'assemblée des membres" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo19.jpg" type="image/jpg"><img src="photo19.jpg" alt="Prise de parole lors de l'assemblée des membres" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo20.jpg" data-cap="Mission collective — délégation ANAREKA-CI" role="button" tabindex="0" aria-label="Agrandir la photo : Mission collective">
-        <picture><source srcset="photo20.webp" type="image/webp"><img src="photo20.jpg" alt="Mission collective — délégation ANAREKA-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo20.jpg" type="image/jpg"><img src="photo20.jpg" alt="Mission collective — délégation ANAREKA-CI" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo21.jpg" data-cap="Interview — Luciole Média France — Promotion de l'attiéké" role="button" tabindex="0" aria-label="Agrandir la photo : Interview Luciole Média">
-        <picture><source srcset="photo21.webp" type="image/webp"><img src="photo21.jpg" alt="Interview — Luciole Média France — Promotion de l'attiéké" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo21.jpg" type="image/jpg"><img src="photo21.jpg" alt="Interview — Luciole Média France — Promotion de l'attiéké" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo22.jpg" data-cap="Tournage du reportage sur l'attiéké — France" role="button" tabindex="0" aria-label="Agrandir la photo : Tournage reportage France">
-        <picture><source srcset="photo22.webp" type="image/webp"><img src="photo22.jpg" alt="Tournage du reportage sur l'attiéké — France" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo22.jpg" type="image/jpg"><img src="photo22.jpg" alt="Tournage du reportage sur l'attiéké — France" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
       <div class="train-card" data-src="photo23.jpg" data-cap="Délégation ANAREKA-CI en France — rayonnement international" role="button" tabindex="0" aria-label="Agrandir la photo : Délégation France">
-        <picture><source srcset="photo23.webp" type="image/webp"><img src="photo23.jpg" alt="Délégation ANAREKA-CI en France — rayonnement international" loading="lazy" decoding="async" width="460" height="280"></picture>
+        <picture><source srcset="photo23.jpg" type="image/jpg"><img src="photo23.jpg" alt="Délégation ANAREKA-CI en France — rayonnement international" loading="lazy" decoding="async" width="460" height="280"></picture>
       </div>
     </div>
   </div>
@@ -342,18 +342,18 @@
     <div class="tiret"></div>
     <div class="hist-logos">
       <div class="hist-logo-item">
-        <!-- ✅ CORRECTION : logo SYNAREK en WebP + lazy loading + dimensions -->
+        <!-- ✅ CORRECTION : logo SYNAREK en jpg + lazy loading + dimensions -->
         <picture>
-          <source srcset="logo-synarek.webp" type="image/webp">
+          <source srcset="logo-synarek.jpg" type="image/jpg">
           <img src="logo-synarek.jpg" alt="Logo SYNAREK-CI" loading="lazy" decoding="async" width="96" height="96">
         </picture>
         <p>SYNAREK-CI</p><small>Syndicat — depuis 1996</small>
       </div>
       <div class="hist-fleche" title="Deux entités partenaires, mêmes membres fondateurs">🤝</div>
       <div class="hist-logo-item">
-        <!-- ✅ CORRECTION : logo ANAREKA en WebP + dimensions -->
+        <!-- ✅ CORRECTION : logo ANAREKA en jpg + dimensions -->
         <picture>
-          <source srcset="logo.webp" type="image/webp">
+          <source srcset="logo.jpg" type="image/jpg">
           <img src="logo.jpg" alt="Logo ANAREKA-CI" width="96" height="96">
         </picture>
         <p>ANAREKA-CI</p><small>Association — depuis 2025</small>
@@ -671,9 +671,9 @@
           </a>
         </div>
         <div style="margin-top:18px;">
-          <!-- ✅ CORRECTION : QR code en WebP + lazy loading -->
+          <!-- ✅ CORRECTION : QR code en jpg + lazy loading -->
           <picture>
-            <source srcset="qrcode.webp" type="image/webp">
+            <source srcset="qrcode.jpg" type="image/jpg">
             <img src="qrcode.jpg" alt="QR Code de localisation du siège ANAREKA-CI" loading="lazy" decoding="async" width="90" height="90" style="border-radius:8px;">
           </picture>
           <p style="font-size:12px;color:var(--gris);margin-top:6px;">Scannez pour nous localiser</p>
