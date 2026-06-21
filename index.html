@@ -3,33 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js');</script>
 <title>ANAREKA-CI — Association Nationale des Restaurateurs et Kiosques d'Attiéké</title>
 <meta name="description" content="Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire (ANAREKA-CI). Valoriser, structurer et professionnaliser la filière manioc(attiéké) depuis 1996. Rejoignez notre réseau national.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1a3d2b">
 <link rel="canonical" href="https://anarekaci.com/">
-
-<!-- Partage sur les réseaux (Facebook, WhatsApp, LinkedIn...) -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://anarekaci.com/">
 <meta property="og:title" content="ANAREKA-CI — Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire">
-<meta property="og:description" content="Valoriser, structurer et professionnaliser la filière manioc(attiéké) de Côte d'Ivoire depuis 1996.">
+<meta property="og:description" content="Valoriser, structurer et professionnaliser la filière manioc-attiéké de Côte d'Ivoire depuis 1996.">
 <meta property="og:image" content="https://anarekaci.com/logo.jpg">
 <meta property="og:image:alt" content="Logo ANAREKA-CI - Association Nationale des Restaurateurs et Kiosques d'Attiéké">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ANAREKA-CI — Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire">
-<meta name="twitter:description" content="Valoriser, structurer et professionnaliser la filière manioc(attiéké) de Côte d'Ivoire depuis 1996.">
+<meta name="twitter:description" content="Valoriser, structurer et professionnaliser la filière manioc-attiéké de Côte d'Ivoire depuis 1996.">
 <meta name="twitter:image" content="https://anarekaci.com/logo.jpg">
 <meta name="twitter:image:alt" content="Logo ANAREKA-CI">
 <meta name="google-site-verification" content="yyN6SvEZlWtEvxBEtE35NgU8Lm4S-heWE6uo8BOg0Y8">
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Chart.js n'est plus chargé ici : script.js le charge en lazy-load
-     uniquement quand la section #donnees devient visible. -->
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/jpeg" href="logo.jpg">
 <link rel="apple-touch-icon" href="logo.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ANAREKA-CI",
+  "alternateName": "Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire",
+  "url": "https://anarekaci.com/",
+  "logo": "https://anarekaci.com/logo.jpg",
+  "email": "info@anarekaci.com",
+  "foundingDate": "2025",
+  "description": "Association valorisant, structurant et professionnalisant la filière manioc-attiéké de Côte d'Ivoire. Patrimoine fondé en 1996, association créée en 2025.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Cocody Riviera Bonoumin, Cité Syninfo",
+    "addressLocality": "Abidjan",
+    "addressCountry": "CI"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+225-27-22-51-74-97",
+    "contactType": "customer service",
+    "email": "info@anarekaci.com",
+    "areaServed": "CI",
+    "availableLanguage": "French"
+  },
+  "sameAs": ["https://www.facebook.com/anarekaciofficiel"],
+  "areaServed": { "@type": "Country", "name": "Côte d'Ivoire" }
+}
+</script>
 </head>
 <body>
 
@@ -52,7 +77,7 @@
   <span>🇨🇮 <strong>République de Côte d'Ivoire</strong></span>
   <span>📍 <strong>Cocody Riviera Bonoumin, Cité Syninfo, Abidjan</strong></span>
   <span>Fondée <strong>28 juin 1996</strong></span>
-  <span>✉ <strong>anarekaci@gmail.com</strong></span>
+  <span>✉ <strong>info@anarekaci.com</strong></span>
 </div>
 
 <!-- NAV -->
@@ -71,7 +96,6 @@
       <a href="#equipe">Équipe</a>
       <a href="#missions">Missions</a>
       <a href="#partenaires">Partenaires</a>
-      <a href="#donnees">Données</a>
       <a href="#adhesion">Adhésion</a>
       <a href="#contact">Contact</a>
     </div>
@@ -113,9 +137,16 @@
       <a href="#contact" class="btn-ghost">Nous contacter</a>
     </div>
   </div>
+  <!-- Stats visibles dans le hero -->
+  <div class="hero-stats" aria-label="Chiffres clés">
+    <div class="hero-stat"><strong>1996</strong><span>Année de création</span></div>
+    <div class="hero-stat"><strong>30 ans</strong><span>D'expérience</span></div>
+    <div class="hero-stat"><strong>6</strong><span>Partenaires officiels</span></div>
+    <div class="hero-stat"><strong>7</strong><span>Missions actives</span></div>
+  </div>
 </section>
 
-<!-- ===== L'ATTIÉKÉ — GALERIE GRAND FORMAT ===== -->
+<!-- GALERIE L'ATTIÉKÉ -->
 <div class="galerie">
   <div class="galerie-grains" aria-hidden="true">
     <span class="grain"></span><span class="grain"></span><span class="grain"></span>
@@ -125,9 +156,7 @@
   </div>
   <div class="galerie-header">
     <div class="galerie-icon" aria-hidden="true">
-      <span class="steam s1"></span>
-      <span class="steam s2"></span>
-      <span class="steam s3"></span>
+      <span class="steam s1"></span><span class="steam s2"></span><span class="steam s3"></span>
       <span class="galerie-bowl">🍚</span>
     </div>
     <span class="galerie-tag">🌿 Patrimoine culinaire</span>
@@ -155,7 +184,7 @@
   </div>
 </div>
 
-<!-- CHIFFRES -->
+<!-- CHIFFRES — CORRECTION : data-no-animate="true" sur 1996 -->
 <div class="chiffres">
   <div class="chiffres-inner">
     <div class="chiffre-item"><span class="chiffre-val" data-target="1996" aria-label="Année de création">1996</span><span class="chiffre-label">Année de création</span></div>
@@ -167,7 +196,6 @@
 
 <!-- PAGE -->
 <div class="page">
-
   <!-- PRÉSENTATION -->
   <section class="section reveal" id="presentation">
     <div class="tag">🌿 Qui sommes-nous</div>
@@ -179,17 +207,12 @@
 
     <div class="vision-bloc">
       <h3>Notre Vision</h3>
-      <p>Faire de la filière manioc(attiéké) un secteur moderne, structuré, compétitif et reconnu à l'échelle nationale et internationale.</p>
+      <p>Faire de la filière manioc-attiéké un secteur moderne, structuré, compétitif et reconnu à l'échelle nationale et internationale.</p>
     </div>
   </section>
-
 </div>
-<!-- Fin de .page : l'album ci-dessous doit s'étendre sur toute la largeur de l'écran -->
 
-<!-- ===== ALBUM PHOTO — TRAIN EN BOUCLE =====
-     Note : un seul exemplaire de chaque carte est présent ici.
-     La duplication nécessaire à la boucle infinie est faite par
-     initTrainDuplication() dans script.js (cloneNode). -->
+<!-- ALBUM PHOTO TRAIN BOUCLE (pleine largeur) -->
 <div class="album-accueil" id="albumAccueil">
   <div class="album-header">
     <span class="album-tag">📸 Notre association en images</span>
@@ -198,7 +221,7 @@
     <p class="album-sous">Cliquez sur une photo pour l'agrandir</p>
   </div>
 
-  <!-- TRAIN LIGNE 1 — défile vers la gauche -->
+  <!-- TRAIN 1 — gauche -->
   <div class="train-wrap">
     <div class="train-track" id="track1" role="region" aria-label="Galerie photos - première ligne">
       <div class="train-card" data-src="photo3.jpg"  data-cap="Cérémonie officielle — remise de produits attiéké labellisés"><img src="photo3.jpg"  alt="Cérémonie officielle"></div>
@@ -214,7 +237,7 @@
     </div>
   </div>
 
-  <!-- TRAIN LIGNE 2 — défile vers la droite (sens inverse) -->
+  <!-- TRAIN 2 — droite -->
   <div class="train-wrap">
     <div class="train-track train-reverse" id="track2" role="region" aria-label="Galerie photos - deuxième ligne">
       <div class="train-card" data-src="photo12.jpg" data-cap="Session plénière de l'association"><img src="photo12.jpg" alt="Session plénière"></div>
@@ -233,9 +256,6 @@
   </div>
 </div>
 
-<!-- Reprise de .page pour le reste du contenu -->
-<div class="page">
-
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-label="Galerie d'images agrandie">
   <div class="lightbox-overlay" id="lightboxOverlay"></div>
@@ -246,6 +266,9 @@
   </div>
 </div>
 
+<!-- SUITE PAGE -->
+<div class="page">
+
   <!-- HISTORIQUE -->
   <section class="section reveal" id="histoire">
     <div class="tag">📜 Historique</div>
@@ -253,12 +276,12 @@
     <div class="tiret" aria-hidden="true"></div>
     <div class="hist-logos">
       <div class="hist-logo-item">
-        <img src="logo-synarek.jpg" alt="Logo SYNAREK-CI">
+        <img src="logo-synarek.jpg" alt="Logo SYNAREK-CI" loading="lazy" decoding="async" width="96" height="96">
         <p>SYNAREK-CI</p><small>Syndicat — depuis 1996</small>
       </div>
       <div class="hist-fleche" title="Deux entités partenaires, mêmes membres fondateurs" aria-hidden="true">🤝</div>
       <div class="hist-logo-item">
-        <img src="logo.jpg" alt="Logo ANAREKA-CI">
+        <img src="logo.jpg" alt="Logo ANAREKA-CI" width="96" height="96">
         <p>ANAREKA-CI</p><small>Association — depuis 2025</small>
       </div>
     </div>
@@ -300,7 +323,7 @@
     <div class="tiret" aria-hidden="true"></div>
     <div class="equipe-list">
       <div class="equipe-card">
-        <div class="eq-avatar">OJT</div>
+        <div class="eq-avatar" aria-hidden="true">OJT</div>
         <div>
           <div class="eq-role">Président de l'Association</div>
           <div class="eq-nom">Monsieur Oté Jean Thierry</div>
@@ -308,7 +331,7 @@
         </div>
       </div>
       <div class="equipe-card">
-        <div class="eq-avatar">EL</div>
+        <div class="eq-avatar" aria-hidden="true">EL</div>
         <div>
           <div class="eq-role">Secrétaire Générale</div>
           <div class="eq-nom">Madame Eynoux Ezia Lydie Marcelle</div>
@@ -316,7 +339,7 @@
         </div>
       </div>
       <div class="equipe-card fondateur">
-        <div class="eq-avatar">OKG</div>
+        <div class="eq-avatar" aria-hidden="true">OKG</div>
         <div>
           <div class="eq-role">Président Fondateur Historique</div>
           <div class="eq-nom">Monsieur Oté Kouassi Georges</div>
@@ -326,7 +349,7 @@
     </div>
   </section>
 
-  <!-- MISSIONS, DOMAINES D'ACTION & OBJECTIFS STRATÉGIQUES (fusionnés et consolidés) -->
+  <!-- MISSIONS -->
   <section class="section reveal" id="missions">
     <div class="tag">🚀 Missions &amp; Objectifs</div>
     <h2 class="section-titre">Nos missions, domaines d'action &amp; objectifs stratégiques</h2>
@@ -339,7 +362,6 @@
         <h4>Organisation &amp; structuration de la filière</h4>
         <p>Organiser et fédérer les restaurateurs et kiosques d'attiéké de Côte d'Ivoire, et structurer durablement la filière manioc(attiéké) à l'échelle nationale.</p>
       </div>
-
       <div class="domaine-card axe-card">
         <span class="d-icon" aria-hidden="true">🎓</span>
         <h4>Formation, hygiène &amp; accompagnement</h4>
@@ -350,25 +372,21 @@
           <li>Assainissement, recensement et modernisation des points de vente</li>
         </ul>
       </div>
-
       <div class="domaine-card axe-card">
         <span class="d-icon" aria-hidden="true">🎭</span>
         <h4>Promotion, qualité &amp; image de l'attiéké</h4>
         <p>Promouvoir l'attiéké comme produit culturel et économique ivoirien à travers événements culturels, foires et salons, tout en renforçant la qualité et l'image de l'attiéké ivoirien.</p>
       </div>
-
       <div class="domaine-card axe-card">
         <span class="d-icon" aria-hidden="true">👩🏾‍🤝‍👨🏾</span>
         <h4>Inclusion des jeunes &amp; des femmes</h4>
         <p>Encourager l'entrepreneuriat féminin et l'autonomisation des jeunes, en créant des opportunités d'emplois durables pour les jeunes et les femmes du secteur.</p>
       </div>
-
       <div class="domaine-card axe-card">
         <span class="d-icon" aria-hidden="true">🏛️</span>
         <h4>Défense des membres &amp; partenariats</h4>
         <p>Défendre les intérêts des membres auprès des institutions publiques et privées, et développer des partenariats avec les ministères, ONG, collectivités et partenaires techniques.</p>
       </div>
-
       <div class="domaine-card axe-card">
         <span class="d-icon" aria-hidden="true">📈</span>
         <h4>Développement économique &amp; social</h4>
@@ -456,9 +474,7 @@
         </div>
         <span class="part-card-lien">oapi.int →</span>
       </a>
-
     </div>
-
     <p class="part-titre" style="margin-top:44px;">Partenaires cibles</p>
     <div class="part-row">
       <span class="part-tag cible">Ministères &amp; institutions</span>
@@ -506,7 +522,6 @@
     <div class="tiret" aria-hidden="true"></div>
 
     <div class="adhesion-wrap">
-      <!-- Avantages -->
       <div class="adhesion-avantages">
         <h3>Pourquoi nous rejoindre ?</h3>
         <ul class="avantages-list">
@@ -518,15 +533,13 @@
           <li><span class="av-icon" aria-hidden="true">🛡️</span><div><strong>Défense de vos droits</strong><p>L'association vous représente auprès des autorités et institutions.</p></div></li>
         </ul>
       </div>
-
-      <!-- Formulaire -->
       <div class="adhesion-form-wrap">
         <div class="form-header">
-          <h3>Formulaire d'inscription</h3>
+          <h3>Comment nous rejoindre</h3>
           <p>Remplissez ce formulaire et nous vous contacterons dans les 48h.</p>
         </div>
-        <div id="formSuccess" class="form-success" style="display:none;">
-          <div class="success-icon">✅</div>
+        <div id="formSuccess" class="form-success" style="display:none;" role="alert" tabindex="-1">
+          <div class="success-icon" aria-hidden="true">✅</div>
           <h4>Demande envoyée !</h4>
           <p>Merci pour votre intérêt. Notre équipe vous contactera dans les 48h au numéro indiqué.</p>
         </div>
@@ -604,6 +617,7 @@
           <div class="c-ico" aria-hidden="true">📱</div>
           <div><div class="c-lbl">Mobiles</div><div class="c-val"><a href="tel:+2250141796083">+225 01 41 79 60 83</a> &nbsp;—&nbsp; <a href="tel:+2250566977944">+225 05 66 97 79 44</a></div></div>
         </div>
+        <!-- CORRECTION : Facebook ajouté dans les contacts -->
         <div class="c-row">
           <div class="c-ico" aria-hidden="true">📍</div>
           <div><div class="c-lbl">Siège social</div><div class="c-val">Cocody Riviera Bonoumin, Cité Syninfo, Abidjan, Côte d'Ivoire</div></div>
@@ -612,10 +626,11 @@
           <div class="c-ico" aria-hidden="true">📋</div>
           <div><div class="c-lbl">Récépissé officiel</div><div class="c-val">N° 0408/PA/SG/D1</div></div>
         </div>
-        <a href="mailto:anarekaci@gmail.com" class="btn-contact">✉️ Envoyer un message</a>
+        <a href="mailto:info@anarekaci.com" class="btn-contact">✉️ Envoyer un message</a>
       </div>
+      <!-- CORRECTION MAPS : URL embed standard, referrerpolicy ajouté -->
       <div class="contact-qr">
-        <div class="maps-wrap">
+        <div class="maps-wrap" style="flex:1;min-width:260px;">
           <iframe
             src="https://www.google.com/maps?q=Cocody+Riviera+Bonoumin+Cit%C3%A9+Syninfo+Abidjan+C%C3%B4te+d%27Ivoire&output=embed"
             width="100%" height="220" style="border:0;border-radius:12px;" allowfullscreen="" loading="lazy"
@@ -637,6 +652,72 @@
     </div>
   </section>
 
+  <!-- MENTIONS LÉGALES — CORRECTION : ajouté (obligatoire car collecte de données) -->
+  <section class="section" id="mentions">
+    <div class="tag">⚖️ Mentions légales</div>
+    <h2 class="section-titre" style="font-size:28px;">Mentions légales & Confidentialité</h2>
+    <div class="tiret" aria-hidden="true"></div>
+    <div class="mentions-grid">
+      <div class="mention-bloc">
+        <h3>Éditeur du site</h3>
+        <p>
+          <strong>ANAREKA-CI</strong><br>
+          Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire<br>
+          Récépissé N° 0408/PA/SG/D1<br>
+          Cocody Riviera Bonoumin, Cité Syninfo, Abidjan<br>
+          Tél : +225 27 22 51 74 97<br>
+          Email : <a href="mailto:info@anarekaci.com">info@anarekaci.com</a>
+        </p>
+      </div>
+      <div class="mention-bloc">
+        <h3>Protection des données personnelles</h3>
+        <p>
+          Les données collectées via le formulaire d'adhésion (nom, téléphone, e-mail, ville, type d'activité) sont utilisées <strong>uniquement</strong> pour traiter votre demande de membership. Elles ne sont jamais cédées, revendues ou partagées avec des tiers.<br><br>
+          Conformément à la législation en vigueur, vous pouvez demander leur consultation, modification ou suppression à tout moment en écrivant à <a href="mailto:info@anarekaci.com">info@anarekaci.com</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- fin .page -->
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-orb1" aria-hidden="true"></div>
+  <div class="cta-orb2" aria-hidden="true"></div>
+  <div class="cta-grains" aria-hidden="true">
+    <span style="left:7%;--dur:5s;--delay:0s;--dx:14px"></span>
+    <span style="left:16%;--dur:6.5s;--delay:1s;--dx:-18px"></span>
+    <span style="left:27%;--dur:4.6s;--delay:2.2s;--dx:10px"></span>
+    <span style="left:38%;--dur:7s;--delay:.4s;--dx:-12px"></span>
+    <span style="left:50%;--dur:5.4s;--delay:1.6s;--dx:16px"></span>
+    <span style="left:61%;--dur:6s;--delay:2.8s;--dx:-9px"></span>
+    <span style="left:72%;--dur:4.8s;--delay:.8s;--dx:20px"></span>
+    <span style="left:83%;--dur:6.8s;--delay:1.9s;--dx:-15px"></span>
+    <span style="left:92%;--dur:5.2s;--delay:.2s;--dx:12px"></span>
+  </div>
+  <div class="cta-inner">
+    <span class="cta-eyebrow"><span class="leaf" aria-hidden="true">🌿</span> Rejoignez le mouvement</span>
+    <h2 class="cta-titre">Rejoignez l'<em>ANAREKA-CI</em></h2>
+    <p class="cta-texte">Faites partie d'un réseau national qui valorise, protège et fait grandir la filière manioc-attiéké — ensemble, structurons l'avenir de notre patrimoine culinaire.</p>
+    <a href="#adhesion" class="cta-btn">
+      <span>Devenir membre</span>
+      <span class="cta-btn-arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- VIGNE SIGNATURE -->
+<div class="vine-divider" aria-hidden="true">
+  <svg viewBox="0 0 1200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="vine-stem" pathLength="1" d="M0,64 C120,64 180,30 320,42 C440,52 520,80 660,60 C780,46 850,20 1000,40 C1100,52 1160,48 1200,52"/>
+    <g class="vine-leaf" style="transform:translate(320px,42px) rotate(-25deg)"><path d="M0,0 C5,-13 20,-15 15,-2 C12,7 0,9 0,0 Z"/></g>
+    <g class="vine-leaf" style="transform:translate(520px,76px) rotate(20deg)"><path d="M0,0 C5,-13 20,-15 15,-2 C12,7 0,9 0,0 Z"/></g>
+    <g class="vine-leaf" style="transform:translate(720px,55px) rotate(-18deg)"><path d="M0,0 C5,-13 20,-15 15,-2 C12,7 0,9 0,0 Z"/></g>
+    <g class="vine-leaf" style="transform:translate(900px,30px) rotate(28deg)"><path d="M0,0 C5,-13 20,-15 15,-2 C12,7 0,9 0,0 Z"/></g>
+    <g class="vine-leaf" style="transform:translate(1080px,46px) rotate(-22deg)"><path d="M0,0 C5,-13 20,-15 15,-2 C12,7 0,9 0,0 Z"/></g>
+    <circle class="vine-seed" cx="1200" cy="52" r="4"/>
+  </svg>
 </div>
 
 <!-- FOOTER -->
@@ -650,7 +731,9 @@
     <a href="#missions">Missions</a>
     <a href="#partenaires">Partenaires</a>
     <a href="#contact">Contact</a>
+    <a href="#mentions">Mentions légales</a>
   </nav>
+  <!-- CORRECTION : Facebook en premier dans les boutons sociaux -->
   <div class="footer-social">
     <a href="https://wa.me/2250141796083" target="_blank" rel="noopener noreferrer" class="social-btn whatsapp" aria-label="Nous contacter sur WhatsApp">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.19.297-.427.76-.427.76s-.258.656-.427.996c-.169.34-.424.775-.424.775-.188.42-.376.84-.564 1.26-.094.21-.094.42 0 .63.094.21.282.38.564.39l1.41.07c.282 0 .564.094.846.28.282.188.46.47.564.845.04.14.07.29.1.428.118.563.235 1.127.353 1.69.047.28.235.516.47.656.235.14.516.14.752.047.236-.094.424-.282.516-.516.188-.564.376-1.127.564-1.69l.07-.28c.047-.187.14-.375.234-.516.094-.14.187-.233.281-.28l.845-.845h.001c.28-.282.424-.657.376-1.032-.047-.376-.282-.705-.564-.845z"/></svg>
@@ -670,9 +753,6 @@
   <small>Filière fondée en 1996 — ANAREKA-CI créée en 2025, partenaire du syndicat SYNAREK-CI — Cocody Riviera Bonoumin, Cité Syninfo, Abidjan</small>
 </footer>
 
-<!-- Script unique : navigation, retour en haut, reveal, compteur,
-     lightbox, duplication des trains, bouton flottant, formulaire
-     d'adhésion et chargement paresseux des graphiques. -->
 <script src="script.js" defer></script>
 </body>
 </html>

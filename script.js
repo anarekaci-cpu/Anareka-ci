@@ -12,21 +12,20 @@
     else document.addEventListener('DOMContentLoaded', fn);
   }
 
-  ready(function() {
-    initNavigation();
-    initBackToTop();
+  ready(function () {
+    initNavMenu();
+    initTrainDuplication();
+    initLightbox();
     initReveal();
     initCounter();
-    initLightbox();
-    initTrainDuplication();
-    initFloatingButton();
     initAdhesionForm();
-    lazyLoadCharts();  // Chargera Chart.js seulement si #donnees est visible
+    initScrollEffects();
+    initBackToTopClick();
+    initSignature();
   });
 
-  // ---------- NAVIGATION (scroll + menu mobile) ----------
-  function initNavigation() {
-    const nav = document.getElementById('mainNav');
+  /* ---------- MENU MOBILE ---------- */
+  function initNavMenu() {
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
     
@@ -41,7 +40,7 @@
     toggle.addEventListener('click', () => {
       const open = links.classList.toggle('open');
       toggle.classList.toggle('active', open);
-      toggle.setAttribute('aria-expanded', open);
+      toggle.setAttribute('aria-expanded', String(open));
     });
 
     // Fermer le menu après un clic sur un lien
@@ -63,23 +62,78 @@
     });
   }
 
-  // ---------- RETOUR EN HAUT ----------
-  function initBackToTop() {
-    const btn = document.getElementById('backTop');
-    if (!btn) return;
+  /* ---------- SCROLL (un seul listener) ---------- */
+  function initScrollEffects() {
+    const nav      = document.getElementById('mainNav');
+    const backTop  = document.getElementById('backTop');
+    const btnFloat = document.getElementById('btnFloat');
+
+    if (btnFloat) {
+      btnFloat.style.opacity = '0';
+      btnFloat.style.pointerEvents = 'none';
+    }
+
+    let ticking = false;
+    function update() {
+      const y = window.scrollY;
+      if (nav)      nav.classList.toggle('scrolled', y > 60);
+      if (backTop)  backTop.classList.toggle('show', y > 300);
+      if (btnFloat) {
+        const vis = y > 200;
+        btnFloat.style.opacity       = vis ? '1' : '0';
+        btnFloat.style.pointerEvents = vis ? 'auto' : 'none';
+      }
+      ticking = false;
+    }
 
     window.addEventListener('scroll', debounce(() => {
       btn.classList.toggle('show', window.scrollY > 300);
     }, 10));
 
-    btn.addEventListener('click', (e) => {
+    update();
+  }
+
+  /* ---------- RETOUR EN HAUT ---------- */
+  function initBackToTopClick() {
+    const btn = document.getElementById('backTop');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  // ---------- RÉVÉLATION AU DÉFILEMENT ----------
+  /* ---------- VIGNE + FOOTER ---------- */
+  function initSignature() {
+    const foot = document.querySelector('footer');
+    const vine = document.querySelector('.vine-divider');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduce || !('IntersectionObserver' in window)) {
+      if (vine) vine.classList.add('drawn');
+      if (foot) foot.classList.add('footer-in');
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(entry.target === foot ? 'footer-in' : 'drawn');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    if (vine) io.observe(vine);
+    if (foot) io.observe(foot);
+  }
+
+  /* ---------- RÉVÉLATION AU SCROLL ---------- */
   function initReveal() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal, .reveal-l').forEach(el => el.classList.add('on'));
+      return;
+    }
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -92,16 +146,15 @@
     document.querySelectorAll('.reveal, .reveal-l').forEach(el => observer.observe(el));
   }
 
-  // ---------- COMPTEUR DE CHIFFRES ----------
+  /* ---------- COMPTEUR DE CHIFFRES ---------- */
   function initCounter() {
     function animate(el) {
       const target = parseInt(el.dataset.target, 10);
       const suffix = el.dataset.suffix || '';
       const dur = 1800;
       const start = performance.now();
-
       function run(now) {
-        const p = Math.min((now - start) / dur, 1);
+        const p    = Math.min((now - start) / dur, 1);
         const ease = 1 - Math.pow(1 - p, 3);
         el.textContent = Math.round(target * ease) + suffix;
         if (p < 1) requestAnimationFrame(run);
@@ -113,6 +166,7 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.querySelectorAll('[data-target]').forEach(el => {
+            // CORRECTION : ne pas animer "1996" (data-no-animate="true")
             if (el.dataset.noAnimate === 'true') return;
             animate(el);
           });
@@ -124,11 +178,19 @@
     document.querySelectorAll('.chiffres').forEach(el => observer.observe(el));
   }
 
-  // ---------- LIGHTBOX ----------
+  /* ---------- DUPLICATION DES TRAINS ---------- */
+  function initTrainDuplication() {
+    document.querySelectorAll('.train-track').forEach(track => {
+      const cards = [...track.children];
+      cards.forEach(card => track.appendChild(card.cloneNode(true)));
+    });
+  }
+
+  /* ---------- LIGHTBOX (délégation + clavier + accessibilité) ---------- */
   function initLightbox() {
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightboxImg');
-    const lbCap = document.getElementById('lightboxCap');
+    const lb      = document.getElementById('lightbox');
+    const lbImg   = document.getElementById('lightboxImg');
+    const lbCap   = document.getElementById('lightboxCap');
     const overlay = document.getElementById('lightboxOverlay');
     const closeBtn = document.getElementById('lightboxClose');
     
@@ -140,12 +202,14 @@
       lbImg.alt = cap;
       lbCap.textContent = cap;
       lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEscape);
     }
 
     function close() {
       lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       lbImg.src = '';
       lbImg.alt = '';
@@ -185,7 +249,6 @@
         track.appendChild(clone);
       });
     });
-  }
 
   // ---------- BOUTON FLOTTANT ----------
   function initFloatingButton() {
@@ -200,15 +263,15 @@
     }, 10));
   }
 
-  // ---------- FORMULAIRE ADHÉSION ----------
+  /* ---------- FORMULAIRE ADHÉSION ---------- */
   function initAdhesionForm() {
-    const form = document.getElementById('adhesionForm');
+    const form    = document.getElementById('adhesionForm');
     const success = document.getElementById('formSuccess');
     
     if (!form) return;
 
-    const FORM_ENDPOINT = 'https://formspree.io/f/xbdezwjg';
-    const CONTACT_EMAIL = 'anarekaci@gmail.com';
+    const FORM_ENDPOINT  = 'https://formspree.io/f/xbdezwjg';
+    const CONTACT_EMAIL  = 'info@anarekaci.com';
 
     function afficherSucces(message) {
       if (success) {
@@ -230,7 +293,7 @@
       }
     }
 
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
       
       const btn = form.querySelector('.form-submit');
@@ -262,6 +325,9 @@
         } catch (err) {
           console.warn('Envoi automatique échoué, fallback mailto.', err);
         }
+        throw new Error('HTTP ' + res.status);
+      } catch (err) {
+        console.warn('Formspree indisponible, repli sur mailto.', err);
       }
 
       // Fallback : ouverture du client mail avec pré-remplissage
