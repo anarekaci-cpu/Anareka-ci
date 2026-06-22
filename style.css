@@ -975,3 +975,119 @@ footer.footer-in .footer-social { opacity:1; transform:none; transition-delay:.3
   .mentions-grid { grid-template-columns:1fr; }
   .contact-qr { flex-direction:column; padding:20px; }
 }
+
+
+/* ============================================================
+   ANIMATIONS ENRICHIES (fusionnées depuis enhancements.css)
+   Surcouche premium légère — transform / opacity / filter.
+   Neutralisée par prefers-reduced-motion (voir fin de fichier).
+   ============================================================ */
+
+
+/* ---- Nouvelles keyframes ---- */
+@keyframes vineGlowPulse {
+  0%,100% { filter: drop-shadow(0 0 3px rgba(201,168,76,.45)); }
+  50%     { filter: drop-shadow(0 0 11px rgba(201,168,76,.9)); }
+}
+@keyframes vineLeafSway {
+  0%,100% { transform: scale(1)    rotate(var(--rot,0deg)); }
+  50%     { transform: scale(1.09) rotate(calc(var(--rot,0deg) + 7deg)); }
+}
+@keyframes seedTwinkle {
+  0%,100% { opacity:.85; transform: scale(1); }
+  50%     { opacity:1;   transform: scale(1.4); }
+}
+@keyframes haloBreath {
+  0%,100% { transform: scale(1);    opacity:.8; }
+  50%     { transform: scale(1.07); opacity:1; }
+}
+@keyframes ruleShine {
+  0%,100% { box-shadow: 0 0 0 rgba(201,168,76,0); }
+  50%     { box-shadow: 0 0 14px rgba(201,168,76,.75); }
+}
+@keyframes ctaTextGlow {
+  0%,100% { text-shadow: 0 0 0 rgba(201,168,76,0); }
+  50%     { text-shadow: 0 0 26px rgba(201,168,76,.4); }
+}
+
+/* ============================================================
+   1) VIGNE SIGNATURE — animation refaite (vit en continu après le tracé)
+   ============================================================ */
+.vine-divider.drawn .vine-stem {
+  animation: vineGlowPulse 3.6s ease-in-out 2.1s infinite;
+  stroke-width: 2.4;
+}
+.vine-divider.drawn .vine-leaf {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: vineLeafSway 4.5s ease-in-out infinite;
+}
+.vine-divider.drawn .vine-leaf:nth-of-type(1) { --rot:-25deg; animation-delay:2.4s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(2) { --rot: 20deg; animation-delay:2.8s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(3) { --rot:-18deg; animation-delay:3.2s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(4) { --rot: 28deg; animation-delay:3.6s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(5) { --rot:-22deg; animation-delay:4.0s; }
+.vine-divider.drawn .vine-seed {
+  animation: seedTwinkle 2.8s ease-in-out 2.4s infinite;
+}
+
+/* ============================================================
+   2) SECTION CAPTURÉE — CTA plus vivant + footer plus lisible
+   ============================================================ */
+
+/* Titre du CTA : léger halo qui respire (texte blanc, sûr) */
+.cta-titre { animation: ctaTextGlow 5s ease-in-out infinite; }
+
+/* Bouton CTA : halo rotatif déjà présent — activé en continu, doux */
+.cta-btn::before { animation-play-state: running !important; opacity:.5; }
+.cta-btn:hover::before { opacity:.95; }
+
+/* FOOTER : navigation rendue nettement plus lisible (point faible de la capture) */
+.footer-nav a {
+  color: rgba(255,255,255,.82) !important;
+  font-weight: 600;
+}
+.footer-nav a:hover { color: var(--or-clair) !important; }
+
+/* ============================================================
+   3) ACCUEIL (HERO) — animation amplifiée mais peu coûteuse
+   ============================================================ */
+
+/* Halo doré qui respire derrière le logo (un seul élément) */
+.hero-logo-wrap::after {
+  content:''; position:absolute; inset:-46px; border-radius:50%; z-index:-1;
+  background: radial-gradient(circle, rgba(201,168,76,.22) 0%, transparent 68%);
+  animation: haloBreath 5.5s ease-in-out infinite;
+  pointer-events:none;
+}
+
+/* Filet doré du hero : léger scintillement */
+.hero-rule { animation: ruleExpand .8s 1s both, ruleShine 4s ease-in-out 2s infinite; }
+
+/* Anneaux du logo un peu plus présents */
+.hero-ring  { border-color: rgba(201,168,76,.55); }
+.hero-ring2 { border-color: rgba(201,168,76,.22); }
+
+/* ============================================================
+   4) FILET SOUS LES TITRES — petit éclat à la révélation (sûr, contenu)
+   ============================================================ */
+.section.reveal.on .tiret { animation: ruleShine 2.6s ease-in-out 1; }
+
+/* Indice de compositing pour la fluidité au survol */
+.part-card, .equipe-card, .domaine-card, .train-card { will-change: transform; }
+
+/* ============================================================
+   ACCESSIBILITÉ — on coupe TOUT si l'utilisateur réduit le mouvement
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .vine-divider.drawn .vine-stem,
+  .vine-divider.drawn .vine-leaf,
+  .vine-divider.drawn .vine-seed,
+  .cta-titre,
+  .cta-btn::before,
+  .hero-logo-wrap::after,
+  .hero-rule,
+  .section.reveal.on .tiret {
+    animation: none !important;
+  }
+}
