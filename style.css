@@ -1091,3 +1091,71 @@ footer.footer-in .footer-social { opacity:1; transform:none; transition-delay:.3
     animation: none !important;
   }
 }
+
+
+/* ============================================================
+   ANIMATIONS v2 — entrées échelonnées + brillance des boutons
+   Sûr : on n'utilise que des @keyframes (jamais la propriété
+   "transition" des cartes), donc les effets de survol restent intacts.
+   ============================================================ */
+
+@keyframes fadeInSoft { from{opacity:0} to{opacity:1} }
+@keyframes btnShine   { 0%{left:-130%} 100%{left:170%} }
+
+/* -- Cartes : fondu échelonné (opacité seule => survol préservé) -- */
+.section.reveal.on .equipe-card,
+.section.reveal.on .part-card { animation: fadeInSoft .7s both; }
+
+.section.reveal.on .equipe-card:nth-child(1),
+.section.reveal.on .part-card:nth-child(1) { animation-delay:.05s; }
+.section.reveal.on .equipe-card:nth-child(2),
+.section.reveal.on .part-card:nth-child(2) { animation-delay:.13s; }
+.section.reveal.on .equipe-card:nth-child(3),
+.section.reveal.on .part-card:nth-child(3) { animation-delay:.21s; }
+.section.reveal.on .part-card:nth-child(4) { animation-delay:.29s; }
+.section.reveal.on .part-card:nth-child(5) { animation-delay:.37s; }
+.section.reveal.on .part-card:nth-child(6) { animation-delay:.45s; }
+
+/* -- Listes : fondu + léger glissement (aucun transform au survol ici) -- */
+.section.reveal.on .avantages-list li,
+.section.reveal.on .contact-corps .c-row,
+.section.reveal.on .hist-logo-item { animation: fadeUp .7s both; }
+
+.section.reveal.on .avantages-list li:nth-child(1),
+.section.reveal.on .contact-corps .c-row:nth-child(1),
+.section.reveal.on .hist-logo-item:nth-child(1) { animation-delay:.05s; }
+.section.reveal.on .avantages-list li:nth-child(2),
+.section.reveal.on .contact-corps .c-row:nth-child(2) { animation-delay:.13s; }
+.section.reveal.on .avantages-list li:nth-child(3),
+.section.reveal.on .contact-corps .c-row:nth-child(3),
+.section.reveal.on .hist-logo-item:nth-child(3) { animation-delay:.21s; }
+.section.reveal.on .avantages-list li:nth-child(4),
+.section.reveal.on .contact-corps .c-row:nth-child(4) { animation-delay:.29s; }
+.section.reveal.on .avantages-list li:nth-child(5),
+.section.reveal.on .contact-corps .c-row:nth-child(5) { animation-delay:.37s; }
+.section.reveal.on .avantages-list li:nth-child(6),
+.section.reveal.on .contact-corps .c-row:nth-child(6) { animation-delay:.45s; }
+
+/* -- Boutons : brillance qui balaie au survol -- */
+.btn-or, .form-submit, .btn-contact { position:relative; overflow:hidden; }
+.btn-or::after, .form-submit::after, .btn-contact::after {
+  content:''; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.45), transparent);
+  transform:skewX(-20deg); pointer-events:none;
+}
+.btn-or:hover::after, .form-submit:hover::after, .btn-contact:hover::after {
+  animation: btnShine .85s ease;
+}
+
+/* -- Accessibilité : on neutralise ces nouvelles entrées si mouvement réduit -- */
+@media (prefers-reduced-motion: reduce) {
+  .section.reveal.on .equipe-card,
+  .section.reveal.on .part-card,
+  .section.reveal.on .avantages-list li,
+  .section.reveal.on .contact-corps .c-row,
+  .section.reveal.on .hist-logo-item {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  .btn-or:hover::after, .form-submit:hover::after, .btn-contact:hover::after { animation: none !important; }
+}
