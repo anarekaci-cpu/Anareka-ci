@@ -37,6 +37,13 @@ body {
   overflow-x: hidden;
 }
 
+/* ===== CORRECTIF <picture> WebP =====
+   Neutralise le <picture> en mise en page : l'<img> se comporte
+   comme enfant direct de son conteneur (.train-card, .galerie-item).
+   Sans cette ligne, le dimensionnement width/height:100% des images
+   se calcule par rapport au <picture> inline et casse la grille. */
+picture { display: contents; }
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-track { background:var(--ivoire); }
