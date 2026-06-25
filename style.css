@@ -1166,3 +1166,19 @@ footer.footer-in .footer-social { opacity:1; transform:none; transition-delay:.3
   }
   .btn-or:hover::after, .form-submit:hover::after, .btn-contact:hover::after { animation: none !important; }
 }
+/* =====================================================
+   PATCH v5.1 — Corrections techniques (à ajouter à la fin de style.css)
+   ===================================================== */
+
+/* --- #backTop : reset complet pour un <button> --- */
+/* (remplace les styles du <a> précédent) */
+#backTop {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  line-height: 1;
+  outline-offset: 3px;
+}
+#backTop:focus-visible {
+  outline: 2px solid var(--or);
+}
