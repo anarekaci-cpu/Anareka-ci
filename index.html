@@ -8,6 +8,8 @@
 <meta name="description" content="Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire (ANAREKA-CI). Valoriser, structurer et professionnaliser la filière manioc-attiéké depuis 1996.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1a3d2b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="canonical" href="https://anarekaci.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://anarekaci.com/">
@@ -22,6 +24,8 @@
 <meta name="twitter:description" content="Valoriser, structurer et professionnaliser la filière manioc-attiéké de Côte d'Ivoire depuis 1996.">
 <meta name="twitter:image" content="https://anarekaci.com/og-image.jpg">
 <meta name="google-site-verification" content="yyN6SvEZlWtEvxBEtE35NgU8Lm4S-heWE6uo8BOg0Y8">
+<link rel="dns-prefetch" href="https://formspree.io">
+<link rel="dns-prefetch" href="https://wa.me">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.jpg" fetchpriority="high">
@@ -61,11 +65,10 @@
 </head>
 <body>
 
-<a href="#" id="backTop" aria-label="Remonter en haut de la page">↑</a>
+<button id="backTop" aria-label="Remonter en haut de la page" type="button">↑</button>
 
-<!-- BOUTON WHATSAPP FLOTTANT -->
 <a href="https://wa.me/2250710636254?text=Bonjour%20ANAREKA-CI%2C%20je%20souhaite%20avoir%20des%20informations."
-   target="_blank" rel="noopener" class="whatsapp-float" id="whatsappFloat" aria-label="Nous contacter sur WhatsApp">
+   target="_blank" rel="noopener noreferrer" class="whatsapp-float" id="whatsappFloat" aria-label="Nous contacter sur WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   <span class="wa-tooltip">Contactez-nous sur WhatsApp</span>
 </a>
@@ -75,7 +78,6 @@
   <span class="btn-float-txt">Devenir membre</span>
 </a>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <span>🇨🇮 <strong>République de Côte d'Ivoire</strong></span>
   <span>📍 <strong>Cocody Riviera Bonoumin, Cité Syninfo, Abidjan</strong></span>
@@ -83,11 +85,10 @@
   <span>✉ <strong>info@anarekaci.com</strong></span>
 </div>
 
-<!-- NAV -->
 <nav id="mainNav">
   <div class="nav-inner">
     <a href="#accueil" class="nav-logo">
-      <img src="logo.jpg" alt="ANAREKA-CI" width="44" height="44">
+      <img src="logo.jpg" alt="ANAREKA-CI" width="44" height="44" loading="eager" decoding="sync">
       <div class="nav-logo-text">ANAREKA-CI <small>Organisation Professionnelle Nationale</small></div>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
@@ -105,7 +106,6 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="accueil">
   <div class="hero-line-top"></div>
   <div class="hero-orb1" aria-hidden="true"></div>
@@ -127,7 +127,6 @@
     <div class="hero-logo-wrap">
       <div class="hero-ring" aria-hidden="true"></div>
       <div class="hero-ring2" aria-hidden="true"></div>
-      <!-- LCP critique : PAS de lazy loading, fetchpriority="high" -->
       <img src="logo.jpg" class="hero-logo" alt="Logo ANAREKA-CI" width="130" height="130" fetchpriority="high">
     </div>
     <p class="hero-eyebrow">Organisation Professionnelle Nationale</p>
@@ -140,7 +139,6 @@
       <a href="#contact" class="btn-ghost">Nous contacter</a>
     </div>
   </div>
-  <!-- Stats visibles dans le hero -->
   <div class="hero-stats" aria-label="Chiffres clés">
     <div class="hero-stat"><strong>1996</strong><span>Filière fondée</span></div>
     <div class="hero-stat"><strong>30 ans</strong><span>D'expérience</span></div>
@@ -149,7 +147,6 @@
   </div>
 </section>
 
-<!-- GALERIE L'ATTIÉKÉ -->
 <div class="galerie">
   <div class="galerie-grains" aria-hidden="true">
     <span class="grain"></span><span class="grain"></span><span class="grain"></span>
@@ -187,9 +184,7 @@
   </div>
 </div>
 
-<!-- PAGE -->
 <div class="page">
-  <!-- PRÉSENTATION -->
   <section class="section reveal" id="presentation">
     <div class="tag">🌿 Qui sommes-nous</div>
     <h2 class="section-titre">Présentation de l'ANAREKA-CI</h2>
@@ -204,7 +199,6 @@
   </section>
 </div>
 
-<!-- ALBUM PHOTO TRAIN BOUCLE (pleine largeur) -->
 <div class="album-accueil" id="albumAccueil">
   <div class="album-header">
     <span class="album-tag">📸 Notre association en images</span>
@@ -212,8 +206,6 @@
     <div class="album-rule" aria-hidden="true"></div>
     <p class="album-sous">Cliquez sur une photo pour l'agrandir</p>
   </div>
-
-  <!-- TRAIN 1 — gauche -->
   <div class="train-wrap">
     <div class="train-track" id="track1">
       <div class="train-card" data-src="photo3.jpg"  data-cap="Cérémonie officielle — remise de produits attiéké labellisés"   role="button" tabindex="0" aria-label="Agrandir : Cérémonie officielle"><img src="photo3.jpg"  alt="Cérémonie officielle — remise de produits attiéké labellisés"   loading="lazy" decoding="async" width="460" height="280"></div>
@@ -228,8 +220,6 @@
       <div class="train-card" data-src="photo24.jpg" data-cap="Rencontre avec Luciole Média — partenariat médiatique"            role="button" tabindex="0" aria-label="Agrandir : Luciole Média"><img src="photo24.jpg" alt="Rencontre avec Luciole Média — partenariat médiatique"            loading="lazy" decoding="async" width="460" height="280"></div>
     </div>
   </div>
-
-  <!-- TRAIN 2 — droite -->
   <div class="train-wrap">
     <div class="train-track train-reverse" id="track2">
       <div class="train-card" data-src="photo12.jpg" data-cap="Session plénière de l'association"                                role="button" tabindex="0" aria-label="Agrandir : Session plénière"><img src="photo12.jpg" alt="Session plénière de l'association"                                loading="lazy" decoding="async" width="460" height="280"></div>
@@ -248,7 +238,6 @@
   </div>
 </div>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" aria-hidden="true">
   <div class="lightbox-overlay" id="lightboxOverlay"></div>
   <div class="lightbox-content">
@@ -258,10 +247,8 @@
   </div>
 </div>
 
-<!-- SUITE PAGE -->
 <div class="page">
 
-  <!-- HISTORIQUE -->
   <section class="section reveal" id="histoire">
     <div class="tag">📜 Historique</div>
     <h2 class="section-titre">De SYNAREK-CI à ANAREKA-CI</h2>
@@ -308,7 +295,6 @@
     </div>
   </section>
 
-  <!-- ÉQUIPE -->
   <section class="section reveal" id="equipe">
     <div class="tag">👤 Gouvernance</div>
     <h2 class="section-titre">Équipe dirigeante</h2>
@@ -341,7 +327,6 @@
     </div>
   </section>
 
-  <!-- MISSIONS -->
   <section class="section reveal" id="missions">
     <div class="tag">🚀 Missions & Objectifs</div>
     <h2 class="section-titre">Nos missions, domaines d'action &amp; objectifs stratégiques</h2>
@@ -386,39 +371,38 @@
     </div>
   </section>
 
-  <!-- PARTENAIRES -->
   <section class="section reveal" id="partenaires">
     <div class="tag">🤝 Partenariats</div>
     <h2 class="section-titre">Nos partenaires</h2>
     <div class="tiret" aria-hidden="true"></div>
     <p class="part-titre">Partenaires actuels</p>
     <div class="part-cards">
-      <a href="https://oipi.ci" target="_blank" rel="noopener" class="part-card">
+      <a href="https://oipi.ci" target="_blank" rel="noopener noreferrer" class="part-card">
         <div class="part-card-logo"><span class="part-initiales">OIPI</span></div>
         <div class="part-card-info"><h4>OIPI</h4><p>Office Ivoirien de la Propriété Intellectuelle</p><span class="part-card-domaine">🏛️ Propriété intellectuelle</span></div>
         <span class="part-card-lien" aria-hidden="true">oipi.ci →</span>
       </a>
-      <a href="https://www.inhp.ci" target="_blank" rel="noopener" class="part-card">
+      <a href="https://www.inhp.ci" target="_blank" rel="noopener noreferrer" class="part-card">
         <div class="part-card-logo inhp"><span class="part-initiales">INHP</span></div>
         <div class="part-card-info"><h4>INHP</h4><p>Institut National d'Hygiène Publique</p><span class="part-card-domaine">🧬 Hygiène & Santé publique</span></div>
         <span class="part-card-lien" aria-hidden="true">inhp.ci →</span>
       </a>
-      <a href="https://www.campc.net" target="_blank" rel="noopener" class="part-card">
+      <a href="https://www.campc.net" target="_blank" rel="noopener noreferrer" class="part-card">
         <div class="part-card-logo campc"><span class="part-initiales">CAMPC</span></div>
         <div class="part-card-info"><h4>CAMPC</h4><p>Centre Africain de Management et de Perfectionnement des Cadres</p><span class="part-card-domaine">🎓 Formation & Management</span></div>
         <span class="part-card-lien" aria-hidden="true">campc.net →</span>
       </a>
-      <a href="https://luciole-media.fr" target="_blank" rel="noopener" class="part-card">
+      <a href="https://luciole-media.fr" target="_blank" rel="noopener noreferrer" class="part-card">
         <div class="part-card-logo luciole"><span class="part-initiales">LM</span></div>
         <div class="part-card-info"><h4>Luciole Média</h4><p>Luciole Média France</p><span class="part-card-domaine">📡 Communication & Média</span></div>
         <span class="part-card-lien" aria-hidden="true">France →</span>
       </a>
-      <a href="https://abidjan.gouv.ci" target="_blank" rel="noopener" class="part-card">
+      <a href="https://abidjan.gouv.ci" target="_blank" rel="noopener noreferrer" class="part-card">
         <div class="part-card-logo prefecture"><span class="part-initiales">🏛️</span></div>
         <div class="part-card-info"><h4>Préfecture d'Abidjan</h4><p>Administration territoriale du District Autonome d'Abidjan</p><span class="part-card-domaine">🇨🇮 Institution publique</span></div>
         <span class="part-card-lien" aria-hidden="true">Abidjan →</span>
       </a>
-      <a href="https://oapi.int" target="_blank" rel="noopener" class="part-card">
+      <a href="https://oapi.int" target="_blank" rel="noopener noreferrer" class="part-card">
         <div class="part-card-logo oapi"><span class="part-initiales">OAPI</span></div>
         <div class="part-card-info"><h4>OAPI</h4><p>Organisation Africaine de la Propriété Intellectuelle — 17 États membres</p><span class="part-card-domaine">🌍 Propriété intellectuelle africaine</span></div>
         <span class="part-card-lien" aria-hidden="true">oapi.int →</span>
@@ -435,7 +419,6 @@
     </div>
   </section>
 
-  <!-- ADHÉSION -->
   <section class="section reveal" id="adhesion">
     <div class="tag">🌿 Rejoignez-nous</div>
     <h2 class="section-titre">Devenir membre de l'ANAREKA-CI</h2>
@@ -463,16 +446,15 @@
           <p>Merci pour votre intérêt. Notre équipe vous contactera dans les 48h au numéro indiqué.</p>
         </div>
         <form class="adhesion-form" id="adhesionForm" action="https://formspree.io/f/xbdezwjg" method="POST" novalidate>
-          <!-- Honeypot anti-spam : ne doit pas être rempli par un humain -->
           <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
           <div class="form-row">
             <div class="form-group">
               <label for="f-nom">Prénom & Nom <span aria-label="champ obligatoire">*</span></label>
-              <input id="f-nom" type="text" name="nom" placeholder="Ex: Kouassi Marie" required autocomplete="name">
+              <input id="f-nom" type="text" name="nom" placeholder="Ex: Kouassi Marie" required aria-required="true" autocomplete="name">
             </div>
             <div class="form-group">
               <label for="f-tel">Téléphone <span aria-label="champ obligatoire">*</span></label>
-              <input id="f-tel" type="tel" name="tel" placeholder="+225 07 XX XX XX XX" required autocomplete="tel">
+              <input id="f-tel" type="tel" name="tel" placeholder="+225 07 XX XX XX XX" required aria-required="true" autocomplete="tel">
             </div>
           </div>
           <div class="form-row">
@@ -482,12 +464,12 @@
             </div>
             <div class="form-group">
               <label for="f-ville">Ville / Quartier <span aria-label="champ obligatoire">*</span></label>
-              <input id="f-ville" type="text" name="ville" placeholder="Ex: Abidjan – Cocody" required>
+              <input id="f-ville" type="text" name="ville" placeholder="Ex: Abidjan – Cocody" required aria-required="true">
             </div>
           </div>
           <div class="form-group">
             <label for="f-activite">Type d'activité <span aria-label="champ obligatoire">*</span></label>
-            <select id="f-activite" name="activite" required>
+            <select id="f-activite" name="activite" required aria-required="true">
               <option value="">-- Choisissez --</option>
               <option>Kiosque d'attiéké fixe</option>
               <option>Restaurant traditionnel</option>
@@ -515,7 +497,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section class="section reveal" id="contact">
     <div class="tag">📬 Contact</div>
     <h2 class="section-titre">Nous contacter</h2>
@@ -544,7 +525,7 @@
         </div>
         <div class="c-row">
           <div class="c-ico" aria-hidden="true">📘</div>
-          <div><div class="c-lbl">Page Facebook</div><div class="c-val"><a href="https://www.facebook.com/profile.php?id=61590843546703" target="_blank" rel="noopener">Anarekaci Officiel</a></div></div>
+          <div><div class="c-lbl">Page Facebook</div><div class="c-val"><a href="https://www.facebook.com/profile.php?id=61590843546703" target="_blank" rel="noopener noreferrer">Anarekaci Officiel</a></div></div>
         </div>
         <div class="c-row">
           <div class="c-ico" aria-hidden="true">📋</div>
@@ -564,7 +545,7 @@
             title="Localisation ANAREKA-CI — Cocody Riviera Bonoumin, Cité Syninfo, Abidjan">
           </iframe>
           <p style="margin-top:10px;">
-            <a href="https://www.google.com/maps/search/?api=1&query=5.3724499,-3.9676843" target="_blank" rel="noopener"
+            <a href="https://www.google.com/maps/search/?api=1&query=5.3724499,-3.9676843" target="_blank" rel="noopener noreferrer"
                style="color:var(--or);font-size:13px;font-weight:600;">🗺️ Ouvrir dans Google Maps →</a>
           </p>
         </div>
@@ -579,7 +560,6 @@
     </div>
   </section>
 
-  <!-- MENTIONS LÉGALES (obligatoire car collecte de données) -->
   <section class="section" id="mentions">
     <div class="tag">⚖️ Mentions légales</div>
     <h2 class="section-titre" style="font-size:28px;">Mentions légales & Confidentialité</h2>
@@ -606,9 +586,8 @@
     </div>
   </section>
 
-</div><!-- fin .page -->
+</div>
 
-<!-- CTA BAND -->
 <div class="cta-band">
   <div class="cta-orb1" aria-hidden="true"></div>
   <div class="cta-orb2" aria-hidden="true"></div>
@@ -634,7 +613,6 @@
   </div>
 </div>
 
-<!-- VIGNE SIGNATURE -->
 <div class="vine-divider" aria-hidden="true">
   <svg viewBox="0 0 1200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path class="vine-stem" pathLength="1" d="M0,64 C120,64 180,30 320,42 C440,52 520,80 660,60 C780,46 850,20 1000,40 C1100,52 1160,48 1200,52"/>
@@ -647,7 +625,6 @@
   </svg>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <span class="foot-thread" aria-hidden="true"></span>
   <div class="footer-logo">ANAREKA<span>-CI</span></div>
@@ -662,11 +639,11 @@
     <a href="#mentions">Mentions légales</a>
   </nav>
   <div class="footer-social">
-    <a href="https://www.facebook.com/profile.php?id=61590843546703" target="_blank" rel="noopener" class="social-btn social-fb" aria-label="Suivez-nous sur Facebook">
+    <a href="https://www.facebook.com/profile.php?id=61590843546703" target="_blank" rel="noopener noreferrer" class="social-btn social-fb" aria-label="Suivez-nous sur Facebook">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
       Facebook
     </a>
-    <a href="https://wa.me/2250710636254" target="_blank" rel="noopener" class="social-btn whatsapp" aria-label="Contactez-nous sur WhatsApp">
+    <a href="https://wa.me/2250710636254" target="_blank" rel="noopener noreferrer" class="social-btn whatsapp" aria-label="Contactez-nous sur WhatsApp">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       WhatsApp
     </a>
