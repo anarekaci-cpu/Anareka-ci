@@ -1,12 +1,8 @@
 /* =====================================================
-   ANAREKA-CI — SCRIPT v5 (corrigé & optimisé)
-   Corrections :
-   - Lightbox : délégation d'événement (originaux + clones)
-   - Compteur 1996 : data-no-animate="true" pour éviter l'animation absurde
-   - Scroll : un seul listener throttlé via rAF
-   - Formulaire : honeypot anti-spam + validation accessible
-   - Retour au top : smooth scroll
-   - Vigne + footer : IntersectionObserver avec fallback
+   ANAREKA-CI — SCRIPT v5.1 (corrigé & optimisé)
+   Corrections v5.1 :
+   - backTop : <button> au lieu de <a> (accessibilité)
+   - e.preventDefault() retiré du backTop (button n'en a pas besoin)
    ===================================================== */
 
 (function () {
@@ -86,8 +82,8 @@
   function initBackToTopClick() {
     const btn = document.getElementById('backTop');
     if (!btn) return;
-    btn.addEventListener('click', e => {
-      e.preventDefault();
+    // CORRECTION v5.1 : c'est maintenant un <button>, pas de e.preventDefault() nécessaire
+    btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
@@ -155,7 +151,6 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.querySelectorAll('[data-target]').forEach(el => {
-            // CORRECTION : ne pas animer "1996" (data-no-animate="true")
             if (el.dataset.noAnimate === 'true') return;
             animate(el);
           });
@@ -202,7 +197,6 @@
       lb.classList.remove('open');
       lb.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      // On vide src après la transition pour éviter le flash
       setTimeout(() => { lbImg.src = ''; }, 350);
       if (lastFocused && typeof lastFocused.focus === 'function') {
         lastFocused.focus();
@@ -210,13 +204,11 @@
       lastFocused = null;
     }
 
-    // CORRECTION : délégation d'événement — couvre originaux ET clones
     document.addEventListener('click', e => {
       const card = e.target.closest('.train-card');
       if (card) open(card.dataset.src, card.dataset.cap, card);
     });
 
-    // Clavier : Entrée ou Espace sur une carte focalisée
     document.addEventListener('keydown', e => {
       if (e.key !== 'Enter' && e.key !== ' ') return;
       const active = document.activeElement;
@@ -256,7 +248,6 @@
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      // Honeypot anti-spam
       const honeypot = form.querySelector('[name="_gotcha"]');
       if (honeypot && honeypot.value) return;
 
@@ -269,7 +260,6 @@
 
       const data = new FormData(form);
 
-      // Tentative Formspree
       try {
         const res = await fetch(FORM_ENDPOINT, {
           method: 'POST',
@@ -285,7 +275,6 @@
         console.warn('Formspree indisponible, repli sur mailto.', err);
       }
 
-      // Repli mailto
       const champs = {
         'Nom'             : data.get('nom'),
         'Téléphone'       : data.get('tel'),
