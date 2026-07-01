@@ -35,6 +35,13 @@ body {
   line-height: 1.6;
 }
 
+/* ===== CORRECTIF <picture> WebP =====
+   Neutralise le <picture> en mise en page : l'<img> se comporte
+   comme enfant direct de son conteneur (.train-card, .galerie-item).
+   Sans cette ligne, le dimensionnement width/height:100% des images
+   se calcule par rapport au <picture> inline et casse la grille. */
+picture { display: contents; }
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-track { background:var(--ivoire); }
@@ -2023,4 +2030,204 @@ footer small {
 @media(max-width:700px){
   .mentions-grid { grid-template-columns:1fr; }
   .contact-qr { flex-direction:column; padding:20px; }
+}
+
+
+/* ============================================================
+   ANIMATIONS ENRICHIES (fusionnées depuis enhancements.css)
+   Surcouche premium légère — transform / opacity / filter.
+   Neutralisée par prefers-reduced-motion (voir fin de fichier).
+   ============================================================ */
+
+
+/* ---- Nouvelles keyframes ---- */
+@keyframes vineGlowPulse {
+  0%,100% { filter: drop-shadow(0 0 3px rgba(201,168,76,.45)); }
+  50%     { filter: drop-shadow(0 0 11px rgba(201,168,76,.9)); }
+}
+@keyframes vineLeafSway {
+  0%,100% { transform: scale(1)    rotate(var(--rot,0deg)); }
+  50%     { transform: scale(1.09) rotate(calc(var(--rot,0deg) + 7deg)); }
+}
+@keyframes seedTwinkle {
+  0%,100% { opacity:.85; transform: scale(1); }
+  50%     { opacity:1;   transform: scale(1.4); }
+}
+@keyframes haloBreath {
+  0%,100% { transform: scale(1);    opacity:.8; }
+  50%     { transform: scale(1.07); opacity:1; }
+}
+@keyframes ruleShine {
+  0%,100% { box-shadow: 0 0 0 rgba(201,168,76,0); }
+  50%     { box-shadow: 0 0 14px rgba(201,168,76,.75); }
+}
+@keyframes ctaTextGlow {
+  0%,100% { text-shadow: 0 0 0 rgba(201,168,76,0); }
+  50%     { text-shadow: 0 0 26px rgba(201,168,76,.4); }
+}
+
+/* ============================================================
+   1) VIGNE SIGNATURE — animation refaite (vit en continu après le tracé)
+   ============================================================ */
+.vine-divider.drawn .vine-stem {
+  animation: vineGlowPulse 3.6s ease-in-out 2.1s infinite;
+  stroke-width: 2.4;
+}
+.vine-divider.drawn .vine-leaf {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: vineLeafSway 4.5s ease-in-out infinite;
+}
+.vine-divider.drawn .vine-leaf:nth-of-type(1) { --rot:-25deg; animation-delay:2.4s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(2) { --rot: 20deg; animation-delay:2.8s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(3) { --rot:-18deg; animation-delay:3.2s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(4) { --rot: 28deg; animation-delay:3.6s; }
+.vine-divider.drawn .vine-leaf:nth-of-type(5) { --rot:-22deg; animation-delay:4.0s; }
+.vine-divider.drawn .vine-seed {
+  animation: seedTwinkle 2.8s ease-in-out 2.4s infinite;
+}
+
+/* ============================================================
+   2) SECTION CAPTURÉE — CTA plus vivant + footer plus lisible
+   ============================================================ */
+
+/* Titre du CTA : léger halo qui respire (texte blanc, sûr) */
+.cta-titre { animation: ctaTextGlow 5s ease-in-out infinite; }
+
+/* Bouton CTA : halo rotatif déjà présent — activé en continu, doux */
+.cta-btn::before { animation-play-state: running !important; opacity:.5; }
+.cta-btn:hover::before { opacity:.95; }
+
+/* FOOTER : navigation rendue nettement plus lisible (point faible de la capture) */
+.footer-nav a {
+  color: rgba(255,255,255,.82) !important;
+  font-weight: 600;
+}
+.footer-nav a:hover { color: var(--or-clair) !important; }
+
+/* ============================================================
+   3) ACCUEIL (HERO) — animation amplifiée mais peu coûteuse
+   ============================================================ */
+
+/* Halo doré qui respire derrière le logo (un seul élément) */
+.hero-logo-wrap::after {
+  content:''; position:absolute; inset:-46px; border-radius:50%; z-index:-1;
+  background: radial-gradient(circle, rgba(201,168,76,.22) 0%, transparent 68%);
+  animation: haloBreath 5.5s ease-in-out infinite;
+  pointer-events:none;
+}
+
+/* Filet doré du hero : léger scintillement */
+.hero-rule { animation: ruleExpand .8s 1s both, ruleShine 4s ease-in-out 2s infinite; }
+
+/* Anneaux du logo un peu plus présents */
+.hero-ring  { border-color: rgba(201,168,76,.55); }
+.hero-ring2 { border-color: rgba(201,168,76,.22); }
+
+/* ============================================================
+   4) FILET SOUS LES TITRES — petit éclat à la révélation (sûr, contenu)
+   ============================================================ */
+.section.reveal.on .tiret { animation: ruleShine 2.6s ease-in-out 1; }
+
+/* Indice de compositing pour la fluidité au survol */
+.part-card, .equipe-card, .domaine-card, .train-card { will-change: transform; }
+
+/* ============================================================
+   ACCESSIBILITÉ — on coupe TOUT si l'utilisateur réduit le mouvement
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .vine-divider.drawn .vine-stem,
+  .vine-divider.drawn .vine-leaf,
+  .vine-divider.drawn .vine-seed,
+  .cta-titre,
+  .cta-btn::before,
+  .hero-logo-wrap::after,
+  .hero-rule,
+  .section.reveal.on .tiret {
+    animation: none !important;
+  }
+}
+
+
+/* ============================================================
+   ANIMATIONS v2 — entrées échelonnées + brillance des boutons
+   Sûr : on n'utilise que des @keyframes (jamais la propriété
+   "transition" des cartes), donc les effets de survol restent intacts.
+   ============================================================ */
+
+@keyframes fadeInSoft { from{opacity:0} to{opacity:1} }
+@keyframes btnShine   { 0%{left:-130%} 100%{left:170%} }
+
+/* -- Cartes : fondu échelonné (opacité seule => survol préservé) -- */
+.section.reveal.on .equipe-card,
+.section.reveal.on .part-card { animation: fadeInSoft .7s both; }
+
+.section.reveal.on .equipe-card:nth-child(1),
+.section.reveal.on .part-card:nth-child(1) { animation-delay:.05s; }
+.section.reveal.on .equipe-card:nth-child(2),
+.section.reveal.on .part-card:nth-child(2) { animation-delay:.13s; }
+.section.reveal.on .equipe-card:nth-child(3),
+.section.reveal.on .part-card:nth-child(3) { animation-delay:.21s; }
+.section.reveal.on .part-card:nth-child(4) { animation-delay:.29s; }
+.section.reveal.on .part-card:nth-child(5) { animation-delay:.37s; }
+.section.reveal.on .part-card:nth-child(6) { animation-delay:.45s; }
+
+/* -- Listes : fondu + léger glissement (aucun transform au survol ici) -- */
+.section.reveal.on .avantages-list li,
+.section.reveal.on .contact-corps .c-row,
+.section.reveal.on .hist-logo-item { animation: fadeUp .7s both; }
+
+.section.reveal.on .avantages-list li:nth-child(1),
+.section.reveal.on .contact-corps .c-row:nth-child(1),
+.section.reveal.on .hist-logo-item:nth-child(1) { animation-delay:.05s; }
+.section.reveal.on .avantages-list li:nth-child(2),
+.section.reveal.on .contact-corps .c-row:nth-child(2) { animation-delay:.13s; }
+.section.reveal.on .avantages-list li:nth-child(3),
+.section.reveal.on .contact-corps .c-row:nth-child(3),
+.section.reveal.on .hist-logo-item:nth-child(3) { animation-delay:.21s; }
+.section.reveal.on .avantages-list li:nth-child(4),
+.section.reveal.on .contact-corps .c-row:nth-child(4) { animation-delay:.29s; }
+.section.reveal.on .avantages-list li:nth-child(5),
+.section.reveal.on .contact-corps .c-row:nth-child(5) { animation-delay:.37s; }
+.section.reveal.on .avantages-list li:nth-child(6),
+.section.reveal.on .contact-corps .c-row:nth-child(6) { animation-delay:.45s; }
+
+/* -- Boutons : brillance qui balaie au survol -- */
+.btn-or, .form-submit, .btn-contact { position:relative; overflow:hidden; }
+.btn-or::after, .form-submit::after, .btn-contact::after {
+  content:''; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.45), transparent);
+  transform:skewX(-20deg); pointer-events:none;
+}
+.btn-or:hover::after, .form-submit:hover::after, .btn-contact:hover::after {
+  animation: btnShine .85s ease;
+}
+
+/* -- Accessibilité : on neutralise ces nouvelles entrées si mouvement réduit -- */
+@media (prefers-reduced-motion: reduce) {
+  .section.reveal.on .equipe-card,
+  .section.reveal.on .part-card,
+  .section.reveal.on .avantages-list li,
+  .section.reveal.on .contact-corps .c-row,
+  .section.reveal.on .hist-logo-item {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  .btn-or:hover::after, .form-submit:hover::after, .btn-contact:hover::after { animation: none !important; }
+}
+/* =====================================================
+   PATCH v5.1 — Corrections techniques (à ajouter à la fin de style.css)
+   ===================================================== */
+
+/* --- #backTop : reset complet pour un <button> --- */
+/* (remplace les styles du <a> précédent) */
+#backTop {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  line-height: 1;
+  outline-offset: 3px;
+}
+#backTop:focus-visible {
+  outline: 2px solid var(--or);
 }

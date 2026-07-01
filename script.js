@@ -1,7 +1,11 @@
 /* =====================================================
-   ANAREKA-CI ��� SCRIPT UNIQUE OPTIMISÉ
+   ANAREKA-CI — SCRIPT v5.1 (corrigé & optimisé)
    Chargé avec <script src="script.js" defer></script>
-   ===================================================== */
+   
+   Corrections v5.1 :
+   - backTop : <button> au lieu de <a> (accessibilité)
+   - e.preventDefault() retiré du backTop
+===================================================== */
 
 (function() {
   'use strict';
@@ -97,8 +101,8 @@
   function initBackToTopClick() {
     const btn = document.getElementById('backTop');
     if (!btn) return;
-    btn.addEventListener('click', e => {
-      e.preventDefault();
+    // CORRECTION v5.1 : c'est maintenant un <button>, pas de e.preventDefault() nécessaire
+    btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
@@ -166,7 +170,6 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.querySelectorAll('[data-target]').forEach(el => {
-            // CORRECTION : ne pas animer "1996" (data-no-animate="true")
             if (el.dataset.noAnimate === 'true') return;
             animate(el);
           });
@@ -211,6 +214,7 @@
       lb.classList.remove('open');
       lb.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+ fix/bug-fixes-and-improvements
       lbImg.src = '';
       lbImg.alt = '';
       document.removeEventListener('keydown', handleEscape);
@@ -234,6 +238,27 @@
           open(src, cap);
         }
       });
+
+      setTimeout(() => { lbImg.src = ''; }, 350);
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+      lastFocused = null;
+    }
+
+    document.addEventListener('click', e => {
+      const card = e.target.closest('.train-card');
+      if (card) open(card.dataset.src, card.dataset.cap, card);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const active = document.activeElement;
+      if (active && active.classList.contains('train-card')) {
+        e.preventDefault();
+        open(active.dataset.src, active.dataset.cap, active);
+      }
+ main
     });
 
     overlay.addEventListener('click', close);
@@ -295,6 +320,7 @@
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+ fix/bug-fixes-and-improvements
       
       const btn = form.querySelector('.form-submit');
       const label = btn?.querySelector('span');
@@ -324,13 +350,40 @@
           throw new Error('HTTP ' + res.status);
         } catch (err) {
           console.warn('Envoi automatique échoué, fallback mailto.', err);
+
+
+      const honeypot = form.querySelector('[name="_gotcha"]');
+      if (honeypot && honeypot.value) return;
+
+      const btn   = form.querySelector('.form-submit');
+      const label = btn ? btn.querySelector('span:first-child') : null;
+      const texteInitial = label ? label.textContent : '';
+
+      if (btn)   btn.disabled = true;
+      if (label) label.textContent = 'Envoi en cours…';
+
+      const data = new FormData(form);
+
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        });
+        if (res.ok) {
+          showSuccess();
+          return;
+ main
         }
         throw new Error('HTTP ' + res.status);
       } catch (err) {
         console.warn('Formspree indisponible, repli sur mailto.', err);
       }
 
+ fix/bug-fixes-and-improvements
       // Fallback : ouverture du client mail avec pré-remplissage
+
+ main
       const champs = {
         'Nom'              : data.get('nom') || '',
         'Téléphone'        : data.get('tel') || '',
