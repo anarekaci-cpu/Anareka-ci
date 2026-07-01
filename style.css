@@ -20,8 +20,10 @@
   --gris:       #7a7a7a;
   --gris-clair: #f0f2ee;
   --bordure:    #e0e8e0;
-  --max:        900px;
-  --r:          6px;
+  --max:        920px;
+  --r:          10px;
+  --ombre:      0 6px 24px rgba(26,61,43,.08);
+  --ombre-hov:  0 16px 40px rgba(26,61,43,.14);
 }
 
 /* ===== RESET ===== */
@@ -247,7 +249,10 @@ nav.scrolled {
 
 /* ===== HERO ===== */
 .hero {
-  background:var(--noir);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(45,107,79,.55) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(201,168,76,.14) 0%, transparent 50%),
+    linear-gradient(160deg, #0e1a12 0%, #14261a 45%, #1a3d2b 100%);
   min-height:100svh;
   display:flex;
   flex-direction:column;
@@ -260,12 +265,19 @@ nav.scrolled {
 .hero::before {
   content:'';
   position:absolute;
-  inset:-50%;
-  width:200%;
-  height:200%;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
-  animation:grain 8s steps(2) infinite;
-  opacity:.4;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='0.6' opacity='0.14'%3E%3Cpath d='M40 200 C40 140 70 100 120 90 C170 100 200 140 200 200'/%3E%3Cpath d='M120 90 L120 210'/%3E%3Cpath d='M120 130 L80 110 M120 130 L160 110 M120 160 L75 150 M120 160 L165 150'/%3E%3Ccircle cx='120' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:280px 280px;
+  background-repeat:repeat;
+  opacity:.5;
+  pointer-events:none;
+  z-index:0;
+}
+.hero::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at center, transparent 30%, rgba(14,26,18,.65) 100%);
   pointer-events:none;
   z-index:0;
 }
@@ -702,9 +714,11 @@ nav.scrolled {
   letter-spacing:2.5px;
   text-transform:uppercase;
   color:var(--or);
-  margin-bottom:16px;
-  padding-bottom:10px;
-  border-bottom:1px solid rgba(201,168,76,.25);
+  background:var(--or-pale);
+  margin-bottom:18px;
+  padding:8px 16px;
+  border-radius:20px;
+  border:1px solid rgba(201,168,76,.25);
 }
 .section-titre {
   font-family:'Cormorant Garamond',serif;
@@ -954,6 +968,7 @@ nav.scrolled {
   border-top:3px solid var(--vert);
   position:relative;
   overflow:hidden;
+  box-shadow:var(--ombre);
   transition:all .35s cubic-bezier(.22,1,.36,1);
 }
 .domaine-card::after {
@@ -970,7 +985,7 @@ nav.scrolled {
 }
 .domaine-card:hover {
   transform:translateY(-8px);
-  box-shadow:0 16px 40px rgba(26,61,43,.12);
+  box-shadow:var(--ombre-hov);
 }
 .domaine-card:hover::after { transform:translate(0,0) scale(2); }
 .d-icon {
