@@ -1,9 +1,11 @@
 /* ============================================================
-   ANAREKA-CI — Design Premium v6
+   ANAREKA-CI — Design Premium v6.1 (corrigé)
    Thème   : Luxe africain / Éditorial raffiné
    Palette : Ivoire profond · Or chaud · Vert forêt · Terre
-   Refonte : Album "Moments forts" en cartes rectangulaires
-             lumineuses + améliorations CSS globales
+   Corrections v6.1 :
+   - Bloc .chiffres restauré (1996 / 30 ans / 6 / 6)
+   - Album "Moments forts" : légendes texte supprimées,
+     photos plus lumineuses / éclatantes, effet brillance renforcé
    ============================================================ */
 
 /* ===== VARIABLES ===== */
@@ -104,6 +106,12 @@ picture { display:contents; }
 @keyframes cardShine {
   0%   { transform: translateX(-120%) skewX(-15deg); }
   100% { transform: translateX(220%)  skewX(-15deg); }
+}
+
+/* ---- Album : scintillement doux permanent ---- */
+@keyframes cardGlowPulse {
+  0%,100% { box-shadow:0 8px 26px rgba(0,0,0,.4), 0 0 0 1px rgba(201,168,76,.18), 0 0 18px rgba(201,168,76,.08); }
+  50%     { box-shadow:0 8px 26px rgba(0,0,0,.4), 0 0 0 1px rgba(201,168,76,.32), 0 0 30px rgba(201,168,76,.18); }
 }
 
 /* ---- Vigne ---- */
@@ -301,6 +309,53 @@ nav.scrolled {
 .galerie-label { position:absolute; bottom:0; left:0; right:0; z-index:1; padding:24px 16px 14px; color:white; font-size:12px; font-weight:500; transform:translateY(100%); transition:transform .35s cubic-bezier(.22,1,.36,1); letter-spacing:.3px; }
 .galerie-item:hover .galerie-label { transform:translateY(0); }
 
+/* ===== CHIFFRES (restauré) ===== */
+.chiffres {
+  background:var(--vert-med);
+  position:relative;
+  overflow:hidden;
+}
+.chiffres::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.015) 40px,rgba(255,255,255,.015) 41px);
+}
+.chiffres-inner {
+  max-width:var(--max);
+  margin:0 auto;
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.chiffre-item {
+  padding:36px 24px;
+  text-align:center;
+  border-right:1px solid rgba(255,255,255,.08);
+  transition:background .3s;
+  cursor:default;
+}
+.chiffre-item:last-child { border-right:none; }
+.chiffre-item:hover { background:rgba(255,255,255,.04); }
+.chiffre-val {
+  font-family:'Cormorant Garamond',serif;
+  font-size:44px;
+  font-weight:700;
+  color:var(--or-clair);
+  display:block;
+  line-height:1;
+  margin-bottom:10px;
+  transition:transform .3s;
+}
+.chiffre-item:hover .chiffre-val { transform:scale(1.06); }
+.chiffre-label {
+  font-size:10.5px;
+  color:rgba(255,255,255,.5);
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-weight:500;
+}
+
 /* ===== PAGE & SECTION ===== */
 .page { max-width:var(--max); margin:0 auto; padding:0 28px 100px; }
 .section { padding:72px 0; border-bottom:1px solid var(--bordure); }
@@ -455,8 +510,7 @@ nav.scrolled {
 .mention-bloc a:hover { text-decoration:underline; }
 
 /* ============================================================
-   ██████  ALBUM "MOMENTS FORTS" — REFONTE COMPLÈTE
-   Cartes rectangulaires larges, éclairées, lumineuses
+   ALBUM "MOMENTS FORTS" — photos sans légende, plus lumineuses
    ============================================================ */
 .album-accueil {
   background:linear-gradient(180deg, #071410 0%, #0d2218 40%, #122a1e 100%);
@@ -540,7 +594,7 @@ nav.scrolled {
 .train-track.train-reverse  { animation:trainRight 50s linear infinite; }
 .train-wrap:hover .train-track { animation-play-state:paused; }
 
-/* ---- CARTES RECTANGULAIRES ---- */
+/* ---- CARTES RECTANGULAIRES : plus lumineuses / brillantes ---- */
 .train-card {
   position:relative;
   width:var(--card-w);
@@ -553,12 +607,9 @@ nav.scrolled {
   flex-grow:0;
   display:block;
 
-  /* Bordure or lumineuse */
-  border:1.5px solid rgba(201,168,76,.2);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,.45),
-    0 2px 6px rgba(0,0,0,.3),
-    inset 0 0 0 0 rgba(201,168,76,0);
+  /* Bordure or lumineuse, scintillement permanent doux */
+  border:1.5px solid rgba(201,168,76,.3);
+  animation:cardGlowPulse 4.5s ease-in-out infinite;
 
   transition:
     transform    .4s cubic-bezier(.22,1,.36,1),
@@ -568,18 +619,18 @@ nav.scrolled {
   will-change:transform;
 }
 
-/* Survol : carte soulevée + lumière dorée */
+/* Survol : carte soulevée + lumière dorée intensifiée */
 .train-card:hover {
-  transform:translateY(-10px) scale(1.03);
-  border-color:rgba(201,168,76,.75);
+  transform:translateY(-10px) scale(1.035);
+  border-color:rgba(201,168,76,.9);
+  animation-play-state:paused;
   box-shadow:
-    0 24px 56px rgba(0,0,0,.6),
-    0 0 0 1px rgba(201,168,76,.4),
-    0 0 28px rgba(201,168,76,.18),
-    inset 0 0 0 0 rgba(201,168,76,0);
+    0 26px 60px rgba(0,0,0,.55),
+    0 0 0 1.5px rgba(201,168,76,.55),
+    0 0 40px rgba(201,168,76,.28);
 }
 
-/* ---- Image ---- */
+/* ---- Image : luminosité et éclat renforcés ---- */
 .train-card img {
   width:100% !important;
   height:100% !important;
@@ -589,39 +640,32 @@ nav.scrolled {
   margin:0 !important;
   border-radius:0 !important;
 
-  /* Image bien éclairée dès le départ */
-  filter:brightness(.82) saturate(1.05) contrast(1.04);
+  /* Photos claires et éclatantes dès le départ (plus de voile sombre) */
+  filter:brightness(1.08) saturate(1.28) contrast(1.1);
   transition:transform .55s cubic-bezier(.22,1,.36,1), filter .45s;
 }
 .train-card:hover img {
-  transform:scale(1.07);
-  filter:brightness(1) saturate(1.15) contrast(1.06);
+  transform:scale(1.08);
+  filter:brightness(1.18) saturate(1.4) contrast(1.14);
 }
 
-/* ---- Dégradé de bas ---- */
+/* ---- Léger dégradé bas, très discret, sans texte à protéger ---- */
 .train-card::before {
   content:'';
   position:absolute; inset:0; z-index:1;
-  background:
-    linear-gradient(
-      to top,
-      rgba(8,20,12,.85) 0%,
-      rgba(8,20,12,.35) 42%,
-      transparent 68%
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(8,20,12,.25) 0%,
-      transparent 28%
-    );
+  background:linear-gradient(
+    to top,
+    rgba(8,20,12,.28) 0%,
+    transparent 30%
+  );
   pointer-events:none;
 }
 
-/* ---- Éclat lumineux sur hover ---- */
+/* ---- Éclat lumineux diagonal sur hover ---- */
 .train-card::after {
   content:'';
   position:absolute; inset:0; z-index:2;
-  background:linear-gradient(130deg, rgba(255,255,255,.22) 0%, transparent 55%);
+  background:linear-gradient(130deg, rgba(255,255,255,.3) 0%, transparent 55%);
   opacity:0;
   transition:opacity .4s;
   pointer-events:none;
@@ -633,67 +677,34 @@ nav.scrolled {
 .train-card .card-shine {
   position:absolute; top:0; bottom:0;
   left:-130%; width:55%;
-  background:linear-gradient(120deg, transparent, rgba(255,255,255,.22), transparent);
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
   transform:skewX(-15deg);
   z-index:3; pointer-events:none;
   opacity:0;
 }
 .train-card:hover .card-shine { animation:cardShine .8s ease forwards; }
 
-/* ---- Légende ---- */
-.train-card-caption {
-  position:absolute;
-  bottom:0; left:0; right:0;
-  z-index:4;
-  padding:28px 18px 16px;
-  background:linear-gradient(to top, rgba(8,20,12,.9) 0%, transparent 100%);
-
-  /* Toujours visible mais plus visible au survol */
-  opacity:.85;
-  transform:translateY(4px);
-  transition:opacity .35s, transform .35s cubic-bezier(.22,1,.36,1);
-}
-.train-card:hover .train-card-caption {
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* Badge numéro (optionnel, injecté par JS si présent) */
-.card-num {
-  display:inline-block;
-  font-size:9.5px; font-weight:700;
-  letter-spacing:2px; text-transform:uppercase;
-  color:var(--or-clair);
-  background:rgba(201,168,76,.15);
-  border:1px solid rgba(201,168,76,.3);
-  padding:3px 9px; border-radius:20px;
-  margin-bottom:8px;
-}
-
-.card-label-text {
-  font-size:12.5px; font-weight:500;
-  color:rgba(255,255,255,.92);
-  line-height:1.45; letter-spacing:.2px;
-  display:block;
-  text-shadow:0 1px 4px rgba(0,0,0,.5);
-}
-
-/* Icône agrandir (apparaît en bas à droite) */
+/* Icône agrandir (apparaît en haut à droite au survol) */
 .card-expand {
   position:absolute;
   top:14px; right:14px;
   z-index:4;
   width:32px; height:32px;
   border-radius:50%;
-  background:rgba(255,255,255,.12);
+  background:rgba(255,255,255,.16);
   backdrop-filter:blur(4px);
-  border:1px solid rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.28);
   display:flex; align-items:center; justify-content:center;
-  font-size:13px; color:rgba(255,255,255,.7);
+  font-size:13px; color:rgba(255,255,255,.85);
   opacity:0; transform:scale(.75);
   transition:opacity .3s, transform .35s cubic-bezier(.34,1.56,.64,1);
 }
 .train-card:hover .card-expand { opacity:1; transform:scale(1); }
+
+/* Légendes texte désactivées : plus aucun titre affiché sur les photos */
+.train-card-caption,
+.card-num,
+.card-label-text { display:none !important; }
 
 /* ============================================================
    LIGHTBOX
@@ -723,6 +734,7 @@ nav.scrolled {
   border-radius:14px;
   box-shadow:0 24px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(201,168,76,.25);
   object-fit:contain; display:block;
+  filter:brightness(1.05) saturate(1.15);
 }
 .lightbox-cap {
   color:var(--or-clair);
@@ -730,6 +742,7 @@ nav.scrolled {
   text-align:center; max-width:80vw;
   line-height:1.5;
   text-shadow:0 1px 4px rgba(0,0,0,.5);
+  display:none; /* légendes masquées aussi dans la lightbox */
 }
 .lightbox-close {
   position:absolute; top:-16px; right:-16px;
@@ -853,6 +866,9 @@ footer.footer-in .footer-social{ opacity:1; transform:none; transition-delay:.35
 @media(max-width:900px){
   :root { --card-w:320px; --card-h:210px; }
 }
+@media(max-width:768px){
+  .chiffres-inner { grid-template-columns:repeat(2,1fr); }
+}
 @media(max-width:700px){
   :root { --card-w:260px; --card-h:175px; }
   .hero h1 { font-size:40px; }
@@ -897,5 +913,5 @@ footer.footer-in .footer-social{ opacity:1; transform:none; transition-delay:.35
   .js .vine-stem { stroke-dashoffset:0 !important; }
   .js .vine-leaf, .js .vine-seed { opacity:.9 !important; transform:none !important; }
   .js footer .footer-logo,.js footer .tagline,.js footer .footer-nav,.js footer .footer-social { opacity:1 !important; transform:none !important; }
-  .train-card img { filter:brightness(.9) saturate(1.05) !important; }
+  .train-card img { filter:brightness(1.05) saturate(1.2) !important; }
 }
