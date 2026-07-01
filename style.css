@@ -263,7 +263,7 @@ nav.scrolled {
   inset:-50%;
   width:200%;
   height:200%;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOcta[...]
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
   animation:grain 8s steps(2) infinite;
   opacity:.4;
   pointer-events:none;
@@ -1812,11 +1812,14 @@ footer small {
 .lightbox {
   position:fixed;
   inset:0;
-  display:flex;
+  display:none;
   align-items:center;
   justify-content:center;
   z-index:1000;
   padding:20px;
+}
+.lightbox.open {
+  display:flex;
 }
 .lightbox-overlay {
   position:absolute;
