@@ -1771,11 +1771,15 @@ footer small {
   margin-bottom:40px;
 }
 .train-track {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  display:flex;
+  flex-wrap:nowrap;
+  width:max-content;
   gap:16px;
   padding:20px;
   animation:trainLeft 40s linear infinite;
+}
+.train-track:hover {
+  animation-play-state:paused;
 }
 .train-reverse {
   animation:trainRight 40s linear infinite;
@@ -1784,6 +1788,8 @@ footer small {
   position:relative;
   overflow:hidden;
   cursor:pointer;
+  flex-shrink:0;
+  width:220px;
   min-width:180px;
   height:200px;
   border-radius:var(--r);
