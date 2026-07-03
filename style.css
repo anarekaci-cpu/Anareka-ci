@@ -2,10 +2,9 @@
    ANAREKA-CI — Design Premium v6.1 (corrigé)
    Thème   : Luxe africain / Éditorial raffiné
    Palette : Ivoire profond · Or chaud · Vert forêt · Terre
-   Corrections v6.1 :
-   - Bloc .chiffres restauré (1996 / 30 ans / 6 / 6)
-   - Album "Moments forts" : légendes texte supprimées,
-     photos plus lumineuses / éclatantes, effet brillance renforcé
+   Corrections v6.2 :
+   - Slogan repositionné plus haut dans la page
+   - Bouton WhatsApp flottant corrigé (position, taille, responsive)
    ============================================================ */
 
 /* ===== VARIABLES ===== */
@@ -531,7 +530,7 @@ nav.scrolled {
 .mention-bloc a { color:var(--vert); }
 .mention-bloc a:hover { text-decoration:underline; }
 
-/* ===== BANDEAU SLOGAN ===== */
+/* ===== BANDEAU SLOGAN (repositionné plus haut dans la page) ===== */
 .slogan-band {
   background:linear-gradient(150deg, var(--noir) 0%, var(--vert) 60%, var(--vert-clair) 100%);
   padding:64px 28px;
@@ -912,17 +911,61 @@ footer.footer-in .footer-social{ opacity:1; transform:none; transition-delay:.35
 .btn-float:hover { background:var(--or); color:var(--noir); transform:translateY(-4px) scale(1.04); box-shadow:0 12px 32px rgba(201,168,76,.4); }
 .btn-float-icon { font-size:16px; }
 
-/* ===== WHATSAPP ===== */
+/* ===== WHATSAPP FLOAT (corrigé : mieux positionné, responsive) ===== */
 .whatsapp-float {
-  position:fixed; bottom:90px; left:24px;
-  width:56px; height:56px; background:#25D366; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 4px 16px rgba(37,211,102,.45);
-  z-index:999; transition:transform .2s, box-shadow .2s; text-decoration:none;
+  position:fixed;
+  bottom:28px;
+  right:28px;
+  width:56px;
+  height:56px;
+  background:#25D366;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.45);
+  z-index:998;
+  transition:transform .25s, box-shadow .25s;
+  text-decoration:none;
 }
-.whatsapp-float:hover { transform:scale(1.1); box-shadow:0 6px 24px rgba(37,211,102,.6); }
-.wa-tooltip { position:absolute; left:66px; background:var(--noir); color:#fff; font-size:12px; padding:6px 12px; border-radius:6px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; }
+.whatsapp-float:hover {
+  transform:scale(1.12);
+  box-shadow:0 8px 28px rgba(37,211,102,.6);
+}
+.wa-tooltip {
+  position:absolute;
+  right:68px;
+  background:var(--noir);
+  color:#fff;
+  font-size:12px;
+  padding:7px 14px;
+  border-radius:8px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+}
 .whatsapp-float:hover .wa-tooltip { opacity:1; }
+
+/* Ajustement responsive pour le WhatsApp float */
+@media(max-width:700px){
+  .whatsapp-float {
+    bottom:20px;
+    right:16px;
+    width:50px;
+    height:50px;
+  }
+  .whatsapp-float svg {
+    width:24px;
+    height:24px;
+  }
+  .wa-tooltip {
+    right:60px;
+    font-size:11px;
+    padding:6px 10px;
+  }
+  .whatsapp-float:hover .wa-tooltip { display:none; } /* Cache le tooltip sur mobile */
+}
 
 /* ============================================================
    RESPONSIVE
