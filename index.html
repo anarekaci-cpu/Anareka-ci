@@ -42,8 +42,16 @@
   "url": "https://anarekaci.com/",
   "logo": "https://anarekaci.com/logo.jpg",
   "email": "info@anarekaci.com",
-  "foundingDate": "2025",
-  "description": "Association valorisant, structurant et professionnalisant la filière manioc-attiéké de Côte d'Ivoire. Patrimoine fondé en 1996, association créée en 2025.",
+  "foundingDate": "1996",
+  "description": "Filière fondée en 1996. L'association ANAREKA-CI a été officiellement créée en 2025 pour valoriser et structurer la filière manioc-attiéké de Côte d'Ivoire.",
+  "foundingLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Abidjan",
+      "addressCountry": "CI"
+    }
+  },
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Cocody Riviera Bonoumin, Cité Syninfo",
@@ -78,10 +86,13 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
 <button id="backTop" aria-label="Remonter en haut de la page" type="button">↑</button>
 
 <a href="https://wa.me/2250710636254?text=Bonjour%20ANAREKA-CI%2C%20je%20souhaite%20avoir%20des%20informations."
-   target="_blank" rel="noopener noreferrer" class="whatsapp-float" id="whatsappFloat" aria-label="Nous contacter sur WhatsApp">
+   target="_blank" rel="noopener noreferrer" class="whatsapp-float" id="whatsappFloat"
+   aria-label="Contactez ANAREKA-CI sur WhatsApp (ouvre une nouvelle conversation)">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67-.099-.196.035-.636.189-.909.089-.281-.1-.922-.537-1.697-1.344-.778-.806-1.248-1.247-1.357-1.443-.106-.196-.035-.303.068-.401.066-.066.148-.172.222-.258.074-.086.123-.148.185-.247.061-.1.031-.186-.016-.247-.047-.061-.422-1.045-.578-1.432-.149-.379-.3-.328-.422-.328-.113 0-.24-.015-.367-.015-.127 0-.335.061-.511.304-.176.243-.671.655-.671 1.596 0 .941.687 1.856.781 1.987.094.131 1.318 2.015 3.19 2.824 2.001.89 2.242.893 3.05.748.779-.134 1.751-.714 1.997-1.403.246-.69.246-1.28.172-1.403-.074-.122-.272-.194-.57-.339m-5.421-7.403h-.004a9.87 9.87 0 00-4.782 1.146c-1.503.734-2.88 1.823-3.956 3.12C1.066 10.638.3 12.493.3 14.5c0 4.766 3.898 8.65 8.68 8.65 1.467 0 2.85-.356 4.082-1.01l4.269.667-.687-4.266a8.624 8.624 0 001.344-4.846c0-4.766-3.898-8.65-8.68-8.65"/>
   </svg>
@@ -121,11 +132,25 @@
   </div>
 </nav>
 
+<main id="main-content">
 <section class="hero" id="accueil">
   <div class="hero-line-top"></div>
   <div class="hero-orb1" aria-hidden="true"></div>
   <div class="hero-orb2" aria-hidden="true"></div>
   <div class="hero-orb3" aria-hidden="true"></div>
+
+  <!-- Losanges africains flottants -->
+  <div class="hero-diamonds" aria-hidden="true">
+    <div class="hero-diamond"></div>
+    <div class="hero-diamond"></div>
+    <div class="hero-diamond"></div>
+    <div class="hero-diamond"></div>
+    <div class="hero-diamond"></div>
+    <div class="hero-diamond"></div>
+    <div class="hero-diamond"></div>
+    <div class="hero-diamond"></div>
+  </div>
+
   <div class="hero-particles" aria-hidden="true">
     <span style="left:8%;  --dur:5s;  --delay:0s;   --dx:15px;"></span>
     <span style="left:18%; --dur:7s;  --delay:1.2s; --dx:-20px;"></span>
@@ -138,6 +163,7 @@
     <span style="left:25%; --dur:8s;  --delay:4s;   --dx:12px; width:4px;height:4px;"></span>
     <span style="left:65%; --dur:7s;  --delay:3.5s; --dx:-18px;width:4px;height:4px;"></span>
   </div>
+
   <div class="hero-inner">
     <div class="hero-logo-wrap">
       <div class="hero-ring" aria-hidden="true"></div>
@@ -172,8 +198,7 @@
     <h2 class="galerie-titre">L'Attiéké — Patrimoine culinaire ivoirien</h2>
     <div class="galerie-rule" aria-hidden="true"></div>
     <p class="galerie-sous">L'attiéké — un savoir-faire transmis depuis des générations</p>
-    
-    <!-- Texte slogan simple, centré, animé -->
+
     <div class="galerie-slogan">
       <p class="galerie-slogan-texte">
         🌿 <strong>Notre engagement</strong><br>
@@ -184,19 +209,19 @@
   </div>
   <div class="galerie-inner" role="region" aria-label="Galerie d'images de l'attiéké">
     <div class="galerie-item">
-      <img src="attieke1.jpg" alt="Plants de manioc - la matière première de l'attiéké">
+      <img src="attieke1.jpg" alt="Plants de manioc - la matière première de l'attiéké" loading="lazy">
       <div class="galerie-label">🌿 Plants de manioc — La matière première</div>
     </div>
     <div class="galerie-item">
-      <img src="attieke3.jpg" alt="Femmes épluchant le manioc - savoir-faire traditionnel">
+      <img src="attieke3.jpg" alt="Femmes épluchant le manioc - savoir-faire traditionnel" loading="lazy">
       <div class="galerie-label">👩🏾 Femmes épluchant le manioc — Savoir-faire traditionnel</div>
     </div>
     <div class="galerie-item">
-      <img src="attieke4.jpg" alt="Cuisson de l'attiéké - savoir-faire ancestral">
+      <img src="attieke4.jpg" alt="Cuisson de l'attiéké - savoir-faire ancestral" loading="lazy">
       <div class="galerie-label">🍲 Cuisson de l'attiéké — Savoir-faire ancestral</div>
     </div>
     <div class="galerie-item">
-      <img src="attieke2.jpg" alt="Attiéké Capitaine grillé - saveur ivoirienne authentique">
+      <img src="attieke2.jpg" alt="Attiéké Capitaine grillé - saveur ivoirienne authentique" loading="lazy">
       <div class="galerie-label">🔥 Attiéké Capitaine grillé — Saveur ivoirienne</div>
     </div>
   </div>
@@ -235,32 +260,32 @@
   </div>
   <div class="train-wrap">
     <div class="train-track" id="track1" role="region" aria-label="Galerie photos - première ligne">
-      <div class="train-card" data-src="photo3.jpg"  data-cap="Cérémonie officielle — remise de produits attiéké labellisés" tabindex="0" role="button"><img src="photo3.jpg"  alt="Cérémonie officielle"></div>
-      <div class="train-card" data-src="photo4.jpg"  data-cap="Rencontre avec les partenaires institutionnels — CAMPC" tabindex="0" role="button"><img src="photo4.jpg"  alt="Rencontre partenaires"></div>
-      <div class="train-card" data-src="photo5.png"  data-cap="Attestation IGP — Attiéké des Lagunes — OAPI" tabindex="0" role="button"><img src="photo5.png"  alt="Attestation IGP OAPI"></div>
-      <div class="train-card" data-src="photo6.jpg"  data-cap="Membres de l'ANAREKA-CI en mission sur le terrain" tabindex="0" role="button"><img src="photo6.jpg"  alt="Mission sur le terrain"></div>
-      <div class="train-card" data-src="photo7.jpg"  data-cap="L'ANAREKA-CI — fière de son identité visuelle" tabindex="0" role="button"><img src="photo7.jpg"  alt="Identité visuelle ANAREKA-CI"></div>
-      <div class="train-card" data-src="photo8.jpg"  data-cap="Visite d'inspection et d'échange sur le terrain" tabindex="0" role="button"><img src="photo8.jpg"  alt="Visite inspection terrain"></div>
-      <div class="train-card" data-src="photo9.jpg"  data-cap="Rencontre partenariale — SYNAREK-CI" tabindex="0" role="button"><img src="photo9.jpg"  alt="Partenariat SYNAREK-CI"></div>
-      <div class="train-card" data-src="photo10.jpg" data-cap="Déclaration à la presse — Centre de compétence E-Gouvernance" tabindex="0" role="button"><img src="photo10.jpg" alt="Déclaration presse"></div>
-      <div class="train-card" data-src="photo11.jpg" data-cap="Assemblée des membres fondateurs de l'ANAREKA-CI" tabindex="0" role="button"><img src="photo11.jpg" alt="Assemblée membres fondateurs"></div>
-      <div class="train-card" data-src="photo24.jpg" data-cap="Rencontre avec Luciole Média — partenariat médiatique" tabindex="0" role="button"><img src="photo24.jpg" alt="Partenariat Luciole Média"></div>
+      <div class="train-card" data-src="photo3.jpg"  data-cap="Cérémonie officielle — remise de produits attiéké labellisés" tabindex="0" role="button" aria-label="Cérémonie officielle"><img src="photo3.jpg"  alt="Cérémonie officielle" loading="lazy"></div>
+      <div class="train-card" data-src="photo4.jpg"  data-cap="Rencontre avec les partenaires institutionnels — CAMPC" tabindex="0" role="button" aria-label="Rencontre partenaires"><img src="photo4.jpg"  alt="Rencontre partenaires" loading="lazy"></div>
+      <div class="train-card" data-src="photo5.png"  data-cap="Attestation IGP — Attiéké des Lagunes — OAPI" tabindex="0" role="button" aria-label="Attestation IGP OAPI"><img src="photo5.png"  alt="Attestation IGP OAPI" loading="lazy"></div>
+      <div class="train-card" data-src="photo6.jpg"  data-cap="Membres de l'ANAREKA-CI en mission sur le terrain" tabindex="0" role="button" aria-label="Mission sur le terrain"><img src="photo6.jpg"  alt="Mission sur le terrain" loading="lazy"></div>
+      <div class="train-card" data-src="photo7.jpg"  data-cap="L'ANAREKA-CI — fière de son identité visuelle" tabindex="0" role="button" aria-label="Identité visuelle ANAREKA-CI"><img src="photo7.jpg"  alt="Identité visuelle ANAREKA-CI" loading="lazy"></div>
+      <div class="train-card" data-src="photo8.jpg"  data-cap="Visite d'inspection et d'échange sur le terrain" tabindex="0" role="button" aria-label="Visite inspection terrain"><img src="photo8.jpg"  alt="Visite inspection terrain" loading="lazy"></div>
+      <div class="train-card" data-src="photo9.jpg"  data-cap="Rencontre partenariale — SYNAREK-CI" tabindex="0" role="button" aria-label="Partenariat SYNAREK-CI"><img src="photo9.jpg"  alt="Partenariat SYNAREK-CI" loading="lazy"></div>
+      <div class="train-card" data-src="photo10.jpg" data-cap="Déclaration à la presse — Centre de compétence E-Gouvernance" tabindex="0" role="button" aria-label="Déclaration presse"><img src="photo10.jpg" alt="Déclaration presse" loading="lazy"></div>
+      <div class="train-card" data-src="photo11.jpg" data-cap="Assemblée des membres fondateurs de l'ANAREKA-CI" tabindex="0" role="button" aria-label="Assemblée membres fondateurs"><img src="photo11.jpg" alt="Assemblée membres fondateurs" loading="lazy"></div>
+      <div class="train-card" data-src="photo24.jpg" data-cap="Rencontre avec Luciole Média — partenariat médiatique" tabindex="0" role="button" aria-label="Partenariat Luciole Média"><img src="photo24.jpg" alt="Partenariat Luciole Média" loading="lazy"></div>
     </div>
   </div>
   <div class="train-wrap">
     <div class="train-track train-reverse" id="track2" role="region" aria-label="Galerie photos - deuxième ligne">
-      <div class="train-card" data-src="photo12.jpg" data-cap="Session plénière de l'association" tabindex="0" role="button"><img src="photo12.jpg" alt="Session plénière"></div>
-      <div class="train-card" data-src="photo13.jpg" data-cap="Présentation des produits attiéké certifiés IGP" tabindex="0" role="button"><img src="photo13.jpg" alt="Produits certifiés IGP"></div>
-      <div class="train-card" data-src="photo14.jpg" data-cap="Réunion stratégique de l'association" tabindex="0" role="button"><img src="photo14.jpg" alt="Réunion stratégique"></div>
-      <div class="train-card" data-src="photo15.jpg" data-cap="Remise de l'attestation IGP au siège de l'ANAREKA-CI" tabindex="0" role="button"><img src="photo15.jpg" alt="Remise attestation IGP"></div>
-      <div class="train-card" data-src="photo16.jpg" data-cap="Inauguration du siège social — L'attiéké c'est notre affaire" tabindex="0" role="button"><img src="photo16.jpg" alt="Inauguration siège social"></div>
-      <div class="train-card" data-src="photo17.jpg" data-cap="Concertation interne des membres dirigeants" tabindex="0" role="button"><img src="photo17.jpg" alt="Concertation membres"></div>
-      <div class="train-card" data-src="photo18.jpg" data-cap="Session de formation avec les jeunes membres" tabindex="0" role="button"><img src="photo18.jpg" alt="Formation jeunes membres"></div>
-      <div class="train-card" data-src="photo19.jpg" data-cap="Prise de parole lors de l'assemblée des membres" tabindex="0" role="button"><img src="photo19.jpg" alt="Assemblée générale"></div>
-      <div class="train-card" data-src="photo20.jpg" data-cap="Mission collective — délégation ANAREKA-CI" tabindex="0" role="button"><img src="photo20.jpg" alt="Mission délégation"></div>
-      <div class="train-card" data-src="photo21.jpg" data-cap="Interview — Luciole Média France — Promotion de l'attiéké" tabindex="0" role="button"><img src="photo21.jpg" alt="Interview Luciole Média"></div>
-      <div class="train-card" data-src="photo22.jpg" data-cap="Tournage du reportage sur l'attiéké — France" tabindex="0" role="button"><img src="photo22.jpg" alt="Tournage reportage France"></div>
-      <div class="train-card" data-src="photo23.jpg" data-cap="Délégation ANAREKA-CI en France — rayonnement international" tabindex="0" role="button"><img src="photo23.jpg" alt="Délégation ANAREKA-CI France"></div>
+      <div class="train-card" data-src="photo12.jpg" data-cap="Session plénière de l'association" tabindex="0" role="button" aria-label="Session plénière"><img src="photo12.jpg" alt="Session plénière" loading="lazy"></div>
+      <div class="train-card" data-src="photo13.jpg" data-cap="Présentation des produits attiéké certifiés IGP" tabindex="0" role="button" aria-label="Produits certifiés IGP"><img src="photo13.jpg" alt="Produits certifiés IGP" loading="lazy"></div>
+      <div class="train-card" data-src="photo14.jpg" data-cap="Réunion stratégique de l'association" tabindex="0" role="button" aria-label="Réunion stratégique"><img src="photo14.jpg" alt="Réunion stratégique" loading="lazy"></div>
+      <div class="train-card" data-src="photo15.jpg" data-cap="Remise de l'attestation IGP au siège de l'ANAREKA-CI" tabindex="0" role="button" aria-label="Remise attestation IGP"><img src="photo15.jpg" alt="Remise attestation IGP" loading="lazy"></div>
+      <div class="train-card" data-src="photo16.jpg" data-cap="Inauguration du siège social — L'attiéké c'est notre affaire" tabindex="0" role="button" aria-label="Inauguration siège social"><img src="photo16.jpg" alt="Inauguration siège social" loading="lazy"></div>
+      <div class="train-card" data-src="photo17.jpg" data-cap="Concertation interne des membres dirigeants" tabindex="0" role="button" aria-label="Concertation membres"><img src="photo17.jpg" alt="Concertation membres" loading="lazy"></div>
+      <div class="train-card" data-src="photo18.jpg" data-cap="Session de formation avec les jeunes membres" tabindex="0" role="button" aria-label="Formation jeunes membres"><img src="photo18.jpg" alt="Formation jeunes membres" loading="lazy"></div>
+      <div class="train-card" data-src="photo19.jpg" data-cap="Prise de parole lors de l'assemblée des membres" tabindex="0" role="button" aria-label="Assemblée générale"><img src="photo19.jpg" alt="Assemblée générale" loading="lazy"></div>
+      <div class="train-card" data-src="photo20.jpg" data-cap="Mission collective — délégation ANAREKA-CI" tabindex="0" role="button" aria-label="Mission délégation"><img src="photo20.jpg" alt="Mission délégation" loading="lazy"></div>
+      <div class="train-card" data-src="photo21.jpg" data-cap="Interview — Luciole Média France — Promotion de l'attiéké" tabindex="0" role="button" aria-label="Interview Luciole Média"><img src="photo21.jpg" alt="Interview Luciole Média" loading="lazy"></div>
+      <div class="train-card" data-src="photo22.jpg" data-cap="Tournage du reportage sur l'attiéké — France" tabindex="0" role="button" aria-label="Tournage reportage France"><img src="photo22.jpg" alt="Tournage reportage France" loading="lazy"></div>
+      <div class="train-card" data-src="photo23.jpg" data-cap="Délégation ANAREKA-CI en France — rayonnement international" tabindex="0" role="button" aria-label="Délégation ANAREKA-CI France"><img src="photo23.jpg" alt="Délégation ANAREKA-CI France" loading="lazy"></div>
     </div>
   </div>
 </div>
@@ -505,7 +530,7 @@
           <div class="form-row">
             <div class="form-group">
               <label for="f-nom">Prénom &amp; Nom <span aria-label="champ obligatoire">*</span></label>
-              <input id="f-nom" type="text" name="nom" placeholder="Ex: Kouassi Marie" required aria-required="true" autocomplete="name">
+              <input id="f-nom" type="text" name="prenom_nom" placeholder="Ex: Kouassi Marie" required aria-required="true" autocomplete="name">
             </div>
             <div class="form-group">
               <label for="f-tel">Téléphone <span aria-label="champ obligatoire">*</span></label>
@@ -564,7 +589,7 @@
       <div class="contact-corps">
         <div class="c-row">
           <div class="c-ico" aria-hidden="true">✉️</div>
-          <div><div class="c-lbl">E-mail</div><div class="c-val"><a href="mailto:info@anarekaci.com">info@anarekaci.com</a></div></div>
+          <div><div class="c-lbl">E-mail</div><div class="c-val"><a href="mailto:info@anarekaci.com">info<!-- @ -->@anarekaci.com</a></div></div>
         </div>
         <div class="c-row">
           <div class="c-ico" aria-hidden="true">📞</div>
@@ -675,6 +700,7 @@
     <circle class="vine-seed" cx="1200" cy="52" r="4"/>
   </svg>
 </div>
+</main>
 
 <footer role="contentinfo">
   <div class="footer-logo">ANAREKA<span>-CI</span></div>
@@ -707,7 +733,7 @@
     </a>
   </div>
   <hr class="footer-hr">
-  <small>© 2026 ANAREKA-CI — Tous droits réservés — Récépissé N° 0408/PA/SG/D1</small>
+  <small>© <span class="footer-year">2025</span> ANAREKA-CI — Tous droits réservés — Récépissé N° 0408/PA/SG/D1</small>
   <small>Filière fondée en 1996 (SYNAREK-CI) — ANAREKA-CI créée en 2025, partenaire du syndicat SYNAREK-CI — Cocody Riviera Bonoumin, Cité Syninfo, Abidjan</small>
 </footer>
 
