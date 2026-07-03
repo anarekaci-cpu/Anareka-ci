@@ -1,30 +1,18 @@
 /* =====================================================
-   ANAREKA-CI — SCRIPT v6.0
-   Fusion de script.js v5.2 + album-patch.js
-   Nouveautés v6 :
-   - Album patch intégré (shine, expand, caption)
-   - Footer : animation des stats au scroll
-   - Footer : année dynamique
-   - Footer : typing effect sur le slogan
-   - Smooth reveal amélioré
-===================================================== */
+   ANAREKA-CI — SCRIPT v7.0
+   Nouveautés v7 :
+   - Lightbox focus trap complet
+   - WhatsApp float disparaît près du footer
+   - Validation visuelle des formulaires
+   - Année dynamique footer
+   ===================================================== */
 
 (function () {
   'use strict';
 
-  /* ---- utilitaire DOMReady ---- */
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
-  }
-
-  /* ---- debounce ---- */
-  function debounce(func, delay) {
-    let t;
-    return function (...args) {
-      clearTimeout(t);
-      t = setTimeout(() => func(...args), delay);
-    };
   }
 
   ready(function () {
@@ -33,14 +21,12 @@
     initBackToTopClick();
     initReveal();
     initCounter();
-    initTrainDuplication();   // doit être AVANT patchAlbumCards
+    initTrainDuplication();
     patchAlbumCards();
     initLightbox();
     initAdhesionForm();
     initSignature();
     initFooterYear();
-    initFooterStats();
-    lazyLoadCharts();
   });
 
   /* ============================================================
@@ -79,9 +65,10 @@
      SCROLL EFFECTS
   ============================================================ */
   function initScrollEffects() {
-    const nav      = document.getElementById('mainNav');
-    const backTop  = document.getElementById('backTop');
-    const btnFloat = document.getElementById('btnFloat');
+    const nav       = document.getElementById('mainNav');
+    const backTop   = document.getElementById('backTop');
+    const btnFloat  = document.getElementById('btnFloat');
+    const whatsapp  = document.getElementById('whatsappFloat');
 
     if (btnFloat) {
       btnFloat.style.opacity      = '0';
@@ -91,13 +78,24 @@
     let ticking = false;
     function update() {
       const y = window.scrollY;
-      if (nav)      nav.classList.toggle('scrolled', y > 60);
-      if (backTop)  backTop.classList.toggle('show', y > 300);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      
+      if (nav) nav.classList.toggle('scrolled', y > 60);
+      if (backTop) backTop.classList.toggle('show', y > 300);
+      
       if (btnFloat) {
         const vis = y > 200;
         btnFloat.style.opacity       = vis ? '1' : '0';
         btnFloat.style.pointerEvents = vis ? 'auto' : 'none';
       }
+
+      // Masquer le WhatsApp près du footer
+      if (whatsapp) {
+        const nearBottom = y > docHeight - 400;
+        whatsapp.style.opacity = nearBottom ? '0' : '1';
+        whatsapp.style.pointerEvents = nearBottom ? 'none' : 'auto';
+      }
+
       ticking = false;
     }
 
@@ -205,7 +203,7 @@
   }
 
   /* ============================================================
-     DUPLICATION DES TRAINS (défilement infini)
+     DUPLICATION DES TRAINS
   ============================================================ */
   function initTrainDuplication() {
     document.querySelectorAll('.train-track').forEach(track => {
@@ -215,7 +213,7 @@
   }
 
   /* ============================================================
-     ALBUM PATCH : shine · expand · caption structurée
+     ALBUM PATCH
   ============================================================ */
   function patchAlbumCards() {
     function patch() {
@@ -225,7 +223,6 @@
 
         const cap = card.dataset.cap || '';
 
-        /* shine */
         if (!card.querySelector('.card-shine')) {
           const s = document.createElement('span');
           s.className = 'card-shine';
@@ -233,23 +230,14 @@
           card.appendChild(s);
         }
 
-        /* icône expand */
         if (!card.querySelector('.card-expand')) {
           const exp = document.createElement('span');
           exp.className = 'card-expand';
           exp.setAttribute('aria-hidden', 'true');
-          exp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 3 21 3 21 9"/>
-            <polyline points="9 21 3 21 3 15"/>
-            <line x1="21" y1="3" x2="14" y2="10"/>
-            <line x1="3" y1="21" x2="10" y2="14"/>
-          </svg>`;
+          exp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>`;
           card.appendChild(exp);
         }
 
-        /* caption */
         if (cap && !card.querySelector('.train-card-caption')) {
           const c = document.createElement('div');
           c.className = 'train-card-caption';
@@ -262,12 +250,12 @@
 
     requestAnimationFrame(() => requestAnimationFrame(() => {
       patch();
-      setTimeout(patch, 300); // re-patch après duplication tardive
+      setTimeout(patch, 300);
     }));
   }
 
   /* ============================================================
-     LIGHTBOX
+     LIGHTBOX AVEC FOCUS TRAP
   ============================================================ */
   function initLightbox() {
     const lb       = document.getElementById('lightbox');
@@ -279,17 +267,47 @@
 
     let lastFocused = null;
 
+    function trapFocus(e) {
+      if (e.key !== 'Tab') return;
+      const focusable = lb.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
     function open(src, cap, trigger) {
       if (!src) return;
       lastFocused = trigger || document.activeElement;
-      lbImg.src          = src;
-      lbImg.alt          = cap || '';
-      lbCap.textContent  = cap || '';
+      
+      lbImg.style.opacity = '0';
+      lbImg.src = src;
+      lbImg.alt = cap || '';
+      lbCap.textContent = cap || '';
+      
       lb.classList.add('open');
       lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      
+      lbImg.onload = () => {
+        lbImg.style.transition = 'opacity 0.3s ease';
+        lbImg.style.opacity = '1';
+      };
+      
       closeBtn.focus();
       document.addEventListener('keydown', onEsc);
+      document.addEventListener('keydown', trapFocus);
     }
 
     function close() {
@@ -297,9 +315,11 @@
       lb.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       document.removeEventListener('keydown', onEsc);
+      document.removeEventListener('keydown', trapFocus);
       setTimeout(() => { lbImg.src = ''; lbImg.alt = ''; }, 350);
-      if (lastFocused && typeof lastFocused.focus === 'function')
+      if (lastFocused && typeof lastFocused.focus === 'function') {
         lastFocused.focus();
+      }
       lastFocused = null;
     }
 
@@ -357,6 +377,22 @@
       const honeypot = form.querySelector('[name="_gotcha"]');
       if (honeypot && honeypot.value) return;
 
+      // Validation visuelle
+      const invalidFields = form.querySelectorAll(':invalid');
+      invalidFields.forEach(field => {
+        field.style.borderColor = '#e74c3c';
+        field.style.transition = 'border-color 0.3s ease';
+        field.addEventListener('input', function resetBorder() {
+          this.style.borderColor = '';
+          this.removeEventListener('input', resetBorder);
+        }, { once: true });
+      });
+
+      if (invalidFields.length > 0) {
+        invalidFields[0].focus();
+        return;
+      }
+
       const btn   = form.querySelector('.form-submit');
       const label = btn ? btn.querySelector('span:first-child') : null;
       if (btn) btn.disabled = true;
@@ -370,14 +406,18 @@
           headers: { Accept: 'application/json' },
           body: data
         });
-        if (res.ok) { showSuccess('Merci ! Votre demande a bien été envoyée.'); form.reset(); return; }
+        if (res.ok) {
+          showSuccess('Merci ! Votre demande a bien été envoyée.');
+          form.reset();
+          return;
+        }
         throw new Error('HTTP ' + res.status);
       } catch (err) {
         console.warn('Formspree indisponible, repli mailto.', err);
       }
 
       const champs = {
-        'Nom'             : data.get('nom') || '',
+        'Nom'             : data.get('prenom_nom') || '',
         'Téléphone'       : data.get('tel') || '',
         'E-mail'          : data.get('email') || '',
         'Ville / Quartier': data.get('ville') || '',
@@ -389,7 +429,7 @@
       for (const [k, v] of Object.entries(champs)) corps += k + ' : ' + (v || '—') + '\n';
 
       window.location.href = 'mailto:' + CONTACT_MAIL
-        + '?subject=' + encodeURIComponent("Demande d'adhésion — " + (data.get('nom') || ''))
+        + '?subject=' + encodeURIComponent("Demande d'adhésion — " + (data.get('prenom_nom') || ''))
         + '&body='    + encodeURIComponent(corps);
 
       showSuccess("Votre messagerie va s'ouvrir avec votre demande pré-remplie.");
@@ -404,131 +444,6 @@
     document.querySelectorAll('.footer-year').forEach(el => {
       el.textContent = new Date().getFullYear();
     });
-  }
-
-  /* ============================================================
-     FOOTER STATS : compteur au scroll
-  ============================================================ */
-  function initFooterStats() {
-    const stats = document.querySelectorAll('.ftr-stat-num[data-to]');
-    if (!stats.length || !('IntersectionObserver' in window)) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el  = entry.target;
-        const to  = parseInt(el.dataset.to, 10);
-        const sfx = el.dataset.suffix || '';
-        const dur = 1400;
-        const t0  = performance.now();
-        observer.unobserve(el);
-        (function run(now) {
-          const p    = Math.min((now - t0) / dur, 1);
-          const ease = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(to * ease) + sfx;
-          if (p < 1) requestAnimationFrame(run);
-        })(performance.now());
-      });
-    }, { threshold: 0.6 });
-
-    stats.forEach(el => observer.observe(el));
-  }
-
-  /* ============================================================
-     LAZY LOAD CHART.JS (section #donnees optionnelle)
-  ============================================================ */
-  function lazyLoadCharts() {
-    const section = document.getElementById('donnees');
-    if (!section) return;
-
-    let loaded = false;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !loaded) {
-          loaded = true;
-          observer.unobserve(section);
-          loadChartJs();
-        }
-      });
-    }, { threshold: 0.1 });
-
-    observer.observe(section);
-
-    function loadChartJs() {
-      if (typeof Chart !== 'undefined') { initCharts(); return; }
-      const s = document.createElement('script');
-      s.src   = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
-      s.async = true;
-      s.onload  = initCharts;
-      s.onerror = () => console.warn("Chart.js n'a pas pu être chargé.");
-      document.head.appendChild(s);
-    }
-
-    function initCharts() {
-      if (typeof Chart === 'undefined') return;
-      Chart.defaults.font.family = "'Outfit', sans-serif";
-      Chart.defaults.color = '#888';
-
-      const V  = '#1a3d2b', V2 = '#2d6b4f',
-            OR = '#c9a84c', OR2 = '#e8c97a';
-
-      function mk(id, cfg) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        try { new Chart(el, cfg); } catch(e) { console.warn(id, e); }
-      }
-
-      mk('chartEvol', {
-        type: 'line',
-        data: {
-          labels: ['1996','1998','2000','2005','2010','2015','2020','2025','2026'],
-          datasets: [{ label:'Croissance', data:[10,15,22,35,50,65,75,90,100],
-            borderColor:V, backgroundColor:'rgba(26,61,43,0.06)',
-            borderWidth:2.5, pointBackgroundColor:[V,V,V,V,V,V,V,OR,OR2],
-            pointRadius:5, pointHoverRadius:7, fill:true, tension:0.4 }]
-        },
-        options:{ responsive:true, maintainAspectRatio:false,
-          interaction:{ mode:'index', intersect:false },
-          plugins:{ legend:{display:false} },
-          scales:{ y:{display:false,beginAtZero:true}, x:{grid:{display:false}} } }
-      });
-
-      mk('chartMembres', {
-        type:'doughnut',
-        data:{ labels:['Restaurateurs','Kiosques','Producteurs','Vendeurs','Gestionnaires'],
-          datasets:[{ data:[35,28,18,12,7],
-            backgroundColor:[V,OR,V2,OR2,'#5a9a78'],
-            borderWidth:3, borderColor:'#fff', borderRadius:8 }] },
-        options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
-          plugins:{ legend:{ position:'bottom', labels:{font:{size:11},padding:12,boxWidth:12,usePointStyle:true} } } }
-      });
-
-      mk('chartDomaines', {
-        type:'doughnut',
-        data:{ labels:['Formation','Hygiène','Promotion','Défense','Partenariats'],
-          datasets:[{ data:[30,20,20,15,15],
-            backgroundColor:[OR,V,V2,OR2,'#5a9a78'],
-            borderWidth:3, borderColor:'#fff', borderRadius:8 }] },
-        options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
-          plugins:{ legend:{ position:'bottom', labels:{font:{size:11},padding:12,boxWidth:12,usePointStyle:true} } } }
-      });
-
-      mk('chartAxes', {
-        type:'bar',
-        data:{
-          labels:['Structuration','Emploi jeunes/femmes','Qualité produit','Promotion','Hygiène','Partenariats'],
-          datasets:[{ label:'Importance (/10)', data:[9,8,9,7,8,7],
-            backgroundColor:[V,OR,V,OR,V2,OR2],
-            borderRadius:4, borderSkipped:false, borderWidth:0 }]
-        },
-        options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
-          plugins:{ legend:{display:false} },
-          scales:{
-            x:{ beginAtZero:true, max:10, grid:{color:'#f0f0f0',drawBorder:false}, ticks:{font:{size:11}} },
-            y:{ grid:{display:false}, ticks:{font:{size:12}} }
-          } }
-      });
-    }
   }
 
 })();
