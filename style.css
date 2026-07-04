@@ -268,6 +268,15 @@ nav.scrolled::after { opacity: 1; }
   pointer-events:none; z-index:0;
 }
 
+/* ===== TRANSITION HERO → GALERIE (AMÉLIORATION 1) =====
+   Fondu doux en bas du hero pour préparer visuellement l'arrivée
+   sur la bande verte de la galerie, sans ajouter d'élément HTML. */
+.hero-line-bottom-fade {
+  position:absolute; left:0; right:0; bottom:0; height:120px;
+  background:linear-gradient(to bottom, transparent, rgba(14,26,18,.55));
+  pointer-events:none; z-index:1;
+}
+
 /* Losanges africains flottants */
 .hero-diamonds {
   position: absolute;
@@ -309,7 +318,7 @@ nav.scrolled::after { opacity: 1; }
 .hero h1 em { -webkit-text-fill-color:transparent; background:linear-gradient(90deg,#c9a84c,#e8c97a,#c9a84c); background-size:200% auto; -webkit-background-clip:text; background-clip:text; animation:shimmerText 3s 2s linear infinite; }
 .hero-sous  { font-size:13px; color:rgba(255,255,255,.45); letter-spacing:.5px; margin-bottom:20px; font-weight:300; animation:heroFadeUp .8s .8s both; }
 .hero-rule  { width:50px; height:2px; background:var(--or); margin:0 auto 24px; animation:ruleExpand .8s 1s both, ruleShine 4s ease-in-out 2s infinite; }
-.hero-desc  { font-size:17px; color:rgba(255,255,255,.75); line-height:1.8; max-width:560px; margin:0 auto 36px; animation:heroFadeUp .8s 1.1s both; font-weight:300; }
+.hero-desc  { font-size:17px; color:rgba(255,255,255,.85); line-height:1.8; max-width:560px; margin:0 auto 36px; animation:heroFadeUp .8s 1.1s both; font-weight:300; }
 .hero-btns  { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; animation:heroFadeUp .8s 1.4s both; }
 .hero-particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
 .hero-particles span { position:absolute; bottom:10%; width:6px; height:6px; border-radius:50%; background:rgba(201,168,76,.7); animation:particleFly var(--dur,4s) var(--delay,0s) ease-in infinite; }
@@ -348,6 +357,20 @@ nav.scrolled::after { opacity: 1; }
 
 /* ===== GALERIE ===== */
 .galerie { background:var(--vert); position:relative; overflow:hidden; }
+/* AMÉLIORATION 1 — ligne dorée de transition en haut de la galerie
+   pour marquer clairement la coupure avec le hero */
+.galerie::before {
+  content:''; position:absolute; top:0; left:12%; right:12%; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(201,168,76,.55), rgba(201,168,76,.85), rgba(201,168,76,.55), transparent);
+  z-index:3; pointer-events:none;
+}
+/* AMÉLIORATION 1 — légère vignette haut/bas pour adoucir les coutures
+   avec le hero (au-dessus) et les chiffres (en-dessous) */
+.galerie {
+  box-shadow:
+    inset 0 46px 34px -34px rgba(0,0,0,.28),
+    inset 0 -46px 34px -34px rgba(0,0,0,.22);
+}
 .galerie-header { text-align:center; padding:44px 20px 4px; position:relative; z-index:2; }
 .galerie-grains { position:absolute; inset:0; pointer-events:none; z-index:0; }
 .galerie-grains .grain { position:absolute; width:6px; height:9px; border-radius:50% 50% 45% 45%; background:rgba(201,168,76,.22); animation:grainFloat 7s ease-in-out infinite; }
@@ -378,6 +401,13 @@ nav.scrolled::after { opacity: 1; }
 .chiffres { background:var(--vert-med); position:relative; overflow:hidden; }
 .chiffres::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.015) 40px,rgba(255,255,255,.015) 41px); }
 .chiffres::after { content:''; position:absolute; inset:0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.01) 2px, rgba(255,255,255,.01) 4px); pointer-events:none; }
+/* AMÉLIORATION 1 — fines liserés or en haut/bas des chiffres pour
+   marquer la transition avec la galerie (au-dessus) et la page (en-dessous) */
+.chiffres {
+  box-shadow:
+    inset 0 2px 0 rgba(201,168,76,.28),
+    inset 0 -2px 0 rgba(201,168,76,.18);
+}
 .chiffres-inner { max-width:var(--max); margin:0 auto; position:relative; display:grid; grid-template-columns:repeat(4,1fr); }
 .chiffre-item { padding:36px 24px; text-align:center; border-right:1px solid rgba(255,255,255,.08); transition:background .3s; cursor:default; }
 .chiffre-item:last-child { border-right:none; }
