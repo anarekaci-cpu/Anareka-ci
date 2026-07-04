@@ -1,10 +1,7 @@
 /* =====================================================
-   ANAREKA-CI — SCRIPT v7.0
-   Nouveautés v7 :
-   - Lightbox focus trap complet
-   - WhatsApp float disparaît près du footer
-   - Validation visuelle des formulaires
-   - Année dynamique footer
+   ANAREKA-CI — SCRIPT v7.1 enrichi
+   Ajouts : Split Text, Custom Cursor, Parallax,
+   nouvelles classes de révélation, Text Reveal
    ===================================================== */
 
 (function () {
@@ -27,10 +24,15 @@
     initAdhesionForm();
     initSignature();
     initFooterYear();
+
+    // --- NOUVELLES INITIALISATIONS ---
+    initSplitText();      // Animation lettre par lettre du titre
+    initCustomCursor();   // Curseur doré personnalisé
+    initParallax();       // Parallaxe subtil sur les éléments du hero
   });
 
   /* ============================================================
-     MENU MOBILE
+     MENU MOBILE (inchangé)
   ============================================================ */
   function initNavMenu() {
     const nav    = document.getElementById('mainNav');
@@ -62,7 +64,7 @@
   }
 
   /* ============================================================
-     SCROLL EFFECTS
+     SCROLL EFFECTS (inchangé)
   ============================================================ */
   function initScrollEffects() {
     const nav       = document.getElementById('mainNav');
@@ -107,7 +109,7 @@
   }
 
   /* ============================================================
-     RETOUR EN HAUT
+     RETOUR EN HAUT (inchangé)
   ============================================================ */
   function initBackToTopClick() {
     const btn = document.getElementById('backTop');
@@ -118,7 +120,7 @@
   }
 
   /* ============================================================
-     VIGNE + FOOTER REVEAL
+     VIGNE + FOOTER REVEAL (inchangé)
   ============================================================ */
   function initSignature() {
     const foot   = document.querySelector('footer');
@@ -147,11 +149,12 @@
   }
 
   /* ============================================================
-     RÉVÉLATION AU SCROLL
+     RÉVÉLATION AU SCROLL (étendue)
+     Ajout des classes .reveal-rotate, .reveal-scale, .reveal-text
   ============================================================ */
   function initReveal() {
     if (!('IntersectionObserver' in window)) {
-      document.querySelectorAll('.reveal, .reveal-l').forEach(el =>
+      document.querySelectorAll('.reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text').forEach(el =>
         el.classList.add('on')
       );
       return;
@@ -166,13 +169,13 @@
       });
     }, { threshold: 0.08 });
 
-    document.querySelectorAll('.reveal, .reveal-l').forEach(el =>
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text').forEach(el =>
       observer.observe(el)
     );
   }
 
   /* ============================================================
-     COMPTEUR HERO
+     COMPTEUR HERO (inchangé)
   ============================================================ */
   function initCounter() {
     function animate(el) {
@@ -203,7 +206,7 @@
   }
 
   /* ============================================================
-     DUPLICATION DES TRAINS
+     DUPLICATION DES TRAINS (inchangé)
   ============================================================ */
   function initTrainDuplication() {
     document.querySelectorAll('.train-track').forEach(track => {
@@ -213,7 +216,7 @@
   }
 
   /* ============================================================
-     ALBUM PATCH
+     ALBUM PATCH (inchangé)
   ============================================================ */
   function patchAlbumCards() {
     function patch() {
@@ -255,7 +258,7 @@
   }
 
   /* ============================================================
-     LIGHTBOX AVEC FOCUS TRAP
+     LIGHTBOX AVEC FOCUS TRAP (inchangé)
   ============================================================ */
   function initLightbox() {
     const lb       = document.getElementById('lightbox');
@@ -344,7 +347,7 @@
   }
 
   /* ============================================================
-     FORMULAIRE ADHÉSION
+     FORMULAIRE ADHÉSION (inchangé)
   ============================================================ */
   function initAdhesionForm() {
     const form    = document.getElementById('adhesionForm');
@@ -438,12 +441,93 @@
   }
 
   /* ============================================================
-     FOOTER : ANNÉE DYNAMIQUE
+     FOOTER : ANNÉE DYNAMIQUE (inchangé)
   ============================================================ */
   function initFooterYear() {
     document.querySelectorAll('.footer-year').forEach(el => {
       el.textContent = new Date().getFullYear();
     });
+  }
+
+  /* ============================================================
+     NOUVEAU : SPLIT TEXT (animation lettre par lettre du h1)
+  ============================================================ */
+  function initSplitText() {
+    const title = document.querySelector('.hero h1');
+    if (!title) return;
+
+    // Sauvegarde du texte et découpage
+    const text = title.textContent.trim();
+    title.innerHTML = '';
+    [...text].forEach((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      span.classList.add('split-char');
+      span.style.setProperty('--i', i);
+      title.appendChild(span);
+    });
+
+    // Observer pour déclencher l'animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          title.querySelectorAll('.split-char').forEach(span => {
+            span.classList.add('reveal-char');
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+
+    observer.observe(title);
+  }
+
+  /* ============================================================
+     NOUVEAU : CUSTOM CURSOR (curseur doré personnalisé)
+  ============================================================ */
+  function initCustomCursor() {
+    const cursor = document.getElementById('customCursor');
+    if (!cursor) return;
+
+    // Sur mobile/tablette, on cache le curseur et on restaure le curseur natif
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      cursor.style.display = 'none';
+      document.body.style.cursor = 'auto';
+      return;
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Cacher le curseur natif
+    document.body.style.cursor = 'none';
+  }
+
+  /* ============================================================
+     NOUVEAU : PARALLAXE SUBTIL SUR LES ORBES ET LOSANGES
+  ============================================================ */
+  function initParallax() {
+    const orb1 = document.querySelector('.hero-orb1');
+    const orb2 = document.querySelector('.hero-orb2');
+    const diamonds = document.querySelectorAll('.hero-diamond');
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          if (orb1) orb1.style.transform = `translateY(${scrolled * 0.03}px)`;
+          if (orb2) orb2.style.transform = `translateY(${scrolled * -0.02}px)`;
+          diamonds.forEach((d, i) => {
+            d.style.transform = `rotate(45deg) translateY(${scrolled * 0.01 * (i % 2 ? 1 : -1)}px)`;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
 })();
