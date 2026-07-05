@@ -1,7 +1,7 @@
 /* =====================================================
-   ANAREKA-CI — SCRIPT v8.0 enrichi
-   Nouveautés : Ripple Effect, Tilt 3D, Compteur amélioré,
-   Timeline animée, Stagger formulaires, Animation icônes
+   ANAREKA-CI — SCRIPT v9.0 enrichi
+   Nouveautés v9 : Tilt 3D subtil sur cartes Missions & Partenaires
+   (gestion via mousemove + variables CSS, reset propre au mouseleave)
    ===================================================== */
 
 (function () {
@@ -25,12 +25,15 @@
     initSignature();
     initFooterYear();
 
-    // --- NOUVELLES INITIALISATIONS ---
+    // --- INITIALISATIONS EXISTANTES ---
     initSplitText();
     initParallax();
     initRippleEffect();
     initTiltCards();
     initTimelineAnimation();
+
+    // --- NOUVEAU v9 ---
+    initSoftTilt3D();
   });
 
   /* ============================================================
@@ -184,12 +187,10 @@
       const dur    = 2000;
       const start  = performance.now();
       
-      // Ajout classe pour pulse
       el.classList.add('counting');
       
       (function run(now) {
         const p    = Math.min((now - start) / dur, 1);
-        // Easing plus fluide : ease-out-expo
         const ease = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
         const current = Math.round(target * ease);
         el.textContent = current + suffix;
@@ -515,7 +516,7 @@
   }
 
   /* ============================================================
-     NOUVEAU : RIPPLE EFFECT SUR LES BOUTONS
+     RIPPLE EFFECT SUR LES BOUTONS
   ============================================================ */
   function initRippleEffect() {
     document.querySelectorAll('.ripple-btn').forEach(btn => {
@@ -539,7 +540,7 @@
   }
 
   /* ============================================================
-     NOUVEAU : TILT 3D SUR LES CARTES ÉQUIPE
+     TILT 3D SUR LES CARTES ÉQUIPE (existant, inchangé)
   ============================================================ */
   function initTiltCards() {
     const cards = document.querySelectorAll('.tilt-card');
@@ -566,7 +567,51 @@
   }
 
   /* ============================================================
-     NOUVEAU : ANIMATION TIMELINE
+     NOUVEAU v9 : TILT 3D SUBTIL — CARTES MISSIONS & PARTENAIRES
+     Rotation légère (max ~6deg) + petite profondeur (translateZ),
+     désactivé automatiquement si prefers-reduced-motion ou sur
+     appareils tactiles (pas d'événement mousemove pertinent).
+  ============================================================ */
+  function initSoftTilt3D() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    // Évite d'activer le tilt sur les écrans tactiles (pas de survol fiable)
+    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (isTouch) return;
+
+    const selectors = '.domaine-card, .part-card';
+    const cards = document.querySelectorAll(selectors);
+    if (!cards.length) return;
+
+    const MAX_TILT = 6;   // degrés — reste subtil et professionnel
+    const MAX_LIFT = 10;  // px de translateZ perçu (via translateY léger)
+
+    cards.forEach(card => {
+      card.classList.add('tilt-3d-soft');
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const px = x / rect.width;  // 0 -> 1
+        const py = y / rect.height; // 0 -> 1
+
+        const rotateY = (px - 0.5) * (MAX_TILT * 2);
+        const rotateX = (0.5 - py) * (MAX_TILT * 2);
+
+        card.style.transform =
+          `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-${MAX_LIFT}px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      });
+    });
+  }
+
+  /* ============================================================
+     ANIMATION TIMELINE
   ============================================================ */
   function initTimelineAnimation() {
     const timeline = document.querySelector('.timeline');
@@ -575,7 +620,6 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // L'animation est gérée par le CSS via .section.reveal.on .timeline::before
           observer.unobserve(entry.target);
         }
       });
