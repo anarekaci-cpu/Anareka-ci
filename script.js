@@ -1,7 +1,7 @@
 /* =====================================================
-   ANAREKA-CI — SCRIPT v7.1 enrichi
-   Ajouts : Split Text, Custom Cursor, Parallax,
-   nouvelles classes de révélation, Text Reveal
+   ANAREKA-CI — SCRIPT v8.0 enrichi
+   Nouveautés : Ripple Effect, Tilt 3D, Compteur amélioré,
+   Timeline animée, Stagger formulaires, Animation icônes
    ===================================================== */
 
 (function () {
@@ -26,12 +26,15 @@
     initFooterYear();
 
     // --- NOUVELLES INITIALISATIONS ---
-    initSplitText();      // Animation lettre par lettre du titre
-    initParallax();       // Parallaxe subtil sur les éléments du hero
+    initSplitText();
+    initParallax();
+    initRippleEffect();
+    initTiltCards();
+    initTimelineAnimation();
   });
 
   /* ============================================================
-     MENU MOBILE (inchangé)
+     MENU MOBILE
   ============================================================ */
   function initNavMenu() {
     const nav    = document.getElementById('mainNav');
@@ -63,7 +66,7 @@
   }
 
   /* ============================================================
-     SCROLL EFFECTS (inchangé)
+     SCROLL EFFECTS
   ============================================================ */
   function initScrollEffects() {
     const nav       = document.getElementById('mainNav');
@@ -90,7 +93,6 @@
         btnFloat.style.pointerEvents = vis ? 'auto' : 'none';
       }
 
-      // Masquer le WhatsApp près du footer
       if (whatsapp) {
         const nearBottom = y > docHeight - 400;
         whatsapp.style.opacity = nearBottom ? '0' : '1';
@@ -108,7 +110,7 @@
   }
 
   /* ============================================================
-     RETOUR EN HAUT (inchangé)
+     RETOUR EN HAUT
   ============================================================ */
   function initBackToTopClick() {
     const btn = document.getElementById('backTop');
@@ -119,7 +121,7 @@
   }
 
   /* ============================================================
-     VIGNE + FOOTER REVEAL (inchangé)
+     VIGNE + FOOTER REVEAL
   ============================================================ */
   function initSignature() {
     const foot   = document.querySelector('footer');
@@ -149,7 +151,6 @@
 
   /* ============================================================
      RÉVÉLATION AU SCROLL (étendue)
-     Ajout des classes .reveal-rotate, .reveal-scale, .reveal-text
   ============================================================ */
   function initReveal() {
     if (!('IntersectionObserver' in window)) {
@@ -174,19 +175,29 @@
   }
 
   /* ============================================================
-     COMPTEUR HERO (inchangé)
+     COMPTEUR AMÉLIORÉ
   ============================================================ */
   function initCounter() {
     function animate(el) {
       const target = parseInt(el.dataset.target, 10);
       const suffix = el.dataset.suffix || '';
-      const dur    = 1800;
+      const dur    = 2000;
       const start  = performance.now();
+      
+      // Ajout classe pour pulse
+      el.classList.add('counting');
+      
       (function run(now) {
         const p    = Math.min((now - start) / dur, 1);
-        const ease = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(target * ease) + suffix;
-        if (p < 1) requestAnimationFrame(run);
+        // Easing plus fluide : ease-out-expo
+        const ease = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        const current = Math.round(target * ease);
+        el.textContent = current + suffix;
+        if (p < 1) {
+          requestAnimationFrame(run);
+        } else {
+          el.classList.remove('counting');
+        }
       })(performance.now());
     }
 
@@ -205,7 +216,7 @@
   }
 
   /* ============================================================
-     DUPLICATION DES TRAINS (inchangé)
+     DUPLICATION DES TRAINS
   ============================================================ */
   function initTrainDuplication() {
     document.querySelectorAll('.train-track').forEach(track => {
@@ -215,7 +226,7 @@
   }
 
   /* ============================================================
-     ALBUM PATCH (inchangé)
+     ALBUM PATCH
   ============================================================ */
   function patchAlbumCards() {
     function patch() {
@@ -257,7 +268,7 @@
   }
 
   /* ============================================================
-     LIGHTBOX AVEC FOCUS TRAP (inchangé)
+     LIGHTBOX AVEC FOCUS TRAP
   ============================================================ */
   function initLightbox() {
     const lb       = document.getElementById('lightbox');
@@ -346,7 +357,7 @@
   }
 
   /* ============================================================
-     FORMULAIRE ADHÉSION (inchangé)
+     FORMULAIRE ADHÉSION
   ============================================================ */
   function initAdhesionForm() {
     const form    = document.getElementById('adhesionForm');
@@ -379,7 +390,6 @@
       const honeypot = form.querySelector('[name="_gotcha"]');
       if (honeypot && honeypot.value) return;
 
-      // Validation visuelle
       const invalidFields = form.querySelectorAll(':invalid');
       invalidFields.forEach(field => {
         field.style.borderColor = '#e74c3c';
@@ -440,7 +450,7 @@
   }
 
   /* ============================================================
-     FOOTER : ANNÉE DYNAMIQUE (inchangé)
+     FOOTER : ANNÉE DYNAMIQUE
   ============================================================ */
   function initFooterYear() {
     document.querySelectorAll('.footer-year').forEach(el => {
@@ -449,13 +459,12 @@
   }
 
   /* ============================================================
-     NOUVEAU : SPLIT TEXT (animation lettre par lettre du h1)
+     SPLIT TEXT (animation lettre par lettre du h1)
   ============================================================ */
   function initSplitText() {
     const title = document.querySelector('.hero h1');
     if (!title) return;
 
-    // Sauvegarde du texte et découpage
     const text = title.textContent.trim();
     title.innerHTML = '';
     [...text].forEach((char, i) => {
@@ -466,7 +475,6 @@
       title.appendChild(span);
     });
 
-    // Observer pour déclencher l'animation
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -482,7 +490,7 @@
   }
 
   /* ============================================================
-     NOUVEAU : PARALLAXE SUBTIL SUR LES ORBES ET LOSANGES
+     PARALLAXE SUBTIL
   ============================================================ */
   function initParallax() {
     const orb1 = document.querySelector('.hero-orb1');
@@ -504,6 +512,76 @@
         ticking = true;
       }
     }, { passive: true });
+  }
+
+  /* ============================================================
+     NOUVEAU : RIPPLE EFFECT SUR LES BOUTONS
+  ============================================================ */
+  function initRippleEffect() {
+    document.querySelectorAll('.ripple-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple-span';
+        
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        
+        this.appendChild(ripple);
+        
+        ripple.addEventListener('animationend', () => {
+          ripple.remove();
+        });
+      });
+    });
+  }
+
+  /* ============================================================
+     NOUVEAU : TILT 3D SUR LES CARTES ÉQUIPE
+  ============================================================ */
+  function initTiltCards() {
+    const cards = document.querySelectorAll('.tilt-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const strength = parseFloat(this.dataset.tiltStrength) || 10;
+        const rotateX = ((y - centerY) / centerY) * -strength;
+        const rotateY = ((x - centerX) / centerX) * strength;
+        
+        this.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(8px)`;
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateX(0)';
+      });
+    });
+  }
+
+  /* ============================================================
+     NOUVEAU : ANIMATION TIMELINE
+  ============================================================ */
+  function initTimelineAnimation() {
+    const timeline = document.querySelector('.timeline');
+    if (!timeline) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // L'animation est gérée par le CSS via .section.reveal.on .timeline::before
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    observer.observe(timeline);
   }
 
 })();
