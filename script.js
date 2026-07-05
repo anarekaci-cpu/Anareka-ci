@@ -27,7 +27,6 @@
 
     // --- NOUVELLES INITIALISATIONS ---
     initSplitText();      // Animation lettre par lettre du titre
-    initCustomCursor();   // Curseur doré personnalisé
     initParallax();       // Parallaxe subtil sur les éléments du hero
   });
 
@@ -480,29 +479,6 @@
     }, { threshold: 0.6 });
 
     observer.observe(title);
-  }
-
-  /* ============================================================
-     NOUVEAU : CUSTOM CURSOR (curseur doré personnalisé)
-  ============================================================ */
-  function initCustomCursor() {
-    const cursor = document.getElementById('customCursor');
-    if (!cursor) return;
-
-    // Sur mobile/tablette, on cache le curseur et on restaure le curseur natif
-    if (window.matchMedia('(max-width: 768px)').matches) {
-      cursor.style.display = 'none';
-      document.body.style.cursor = 'auto';
-      return;
-    }
-
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-
-    // Cacher le curseur natif
-    document.body.style.cursor = 'none';
   }
 
   /* ============================================================
