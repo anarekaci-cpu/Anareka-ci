@@ -29,7 +29,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.jpg" fetchpriority="high">
-<!-- Police variable Cormorant + Outfit -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/jpeg" href="logo.jpg">
@@ -167,6 +166,7 @@
   <div class="hero-inner">
     <div class="hero-logo-wrap">
       <div class="hero-ring" aria-hidden="true"></div>
+      <div class="hero-ring2" aria-hidden="true"></div>
       <img src="logo.jpg" class="hero-logo" alt="Logo ANAREKA-CI" width="130" height="130" fetchpriority="high">
     </div>
     <p class="hero-eyebrow">Organisation Professionnelle Nationale</p>
@@ -175,8 +175,8 @@
     <div class="hero-rule" aria-hidden="true"></div>
     <p class="hero-desc reveal-text">Valoriser, structurer et professionnaliser la filière manioc-attiéké — un patrimoine culinaire national au service du développement économique et social de la Côte d'Ivoire.</p>
     <div class="hero-btns">
-      <a href="#missions" class="btn-or">Nos missions</a>
-      <a href="#contact" class="btn-ghost">Nous contacter</a>
+      <a href="#missions" class="btn-or ripple-btn">Nos missions</a>
+      <a href="#contact" class="btn-ghost ripple-btn">Nous contacter</a>
     </div>
   </div>
 </section>
@@ -207,19 +207,19 @@
     </div>
   </div>
   <div class="galerie-inner" role="region" aria-label="Galerie d'images de l'attiéké">
-    <div class="galerie-item">
+    <div class="galerie-item tilt-hover">
       <img src="attieke1.jpg" alt="Plants de manioc - la matière première de l'attiéké" loading="lazy">
       <div class="galerie-label">🌿 Plants de manioc — La matière première</div>
     </div>
-    <div class="galerie-item">
+    <div class="galerie-item tilt-hover">
       <img src="attieke3.jpg" alt="Femmes épluchant le manioc - savoir-faire traditionnel" loading="lazy">
       <div class="galerie-label">👩🏾 Femmes épluchant le manioc — Savoir-faire traditionnel</div>
     </div>
-    <div class="galerie-item">
+    <div class="galerie-item tilt-hover">
       <img src="attieke4.jpg" alt="Cuisson de l'attiéké - savoir-faire ancestral" loading="lazy">
       <div class="galerie-label">🍲 Cuisson de l'attiéké — Savoir-faire ancestral</div>
     </div>
-    <div class="galerie-item">
+    <div class="galerie-item tilt-hover">
       <img src="attieke2.jpg" alt="Attiéké Capitaine grillé - saveur ivoirienne authentique" loading="lazy">
       <div class="galerie-label">🔥 Attiéké Capitaine grillé — Saveur ivoirienne</div>
     </div>
@@ -241,16 +241,16 @@
     <h2 class="section-titre">Présentation de l'ANAREKA-CI</h2>
     <div class="tiret" aria-hidden="true"></div>
     <p class="pres-lead">Une organisation au cœur de la gastronomie ivoirienne, au service des acteurs de la filière manioc-attiéké depuis 1996.</p>
-    <p class="pres-body">L'Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire (ANAREKA-CI) rassemble les producteurs de manioc, les restaurateurs, les vendeurs et gestionnaires de kiosques d'attiéké.</p>
-    <p class="pres-body">Créée dans le but de valoriser l'attiéké comme <strong>marque collective protégée</strong> et <strong>patrimoine culinaire emblématique</strong> de la Côte d'Ivoire.</p>
-    <div class="vision-bloc">
+    <p class="pres-body reveal-l">L'Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire (ANAREKA-CI) rassemble les producteurs de manioc, les restaurateurs, les vendeurs et gestionnaires de kiosques d'attiéké.</p>
+    <p class="pres-body reveal-l">Créée dans le but de valoriser l'attiéké comme <strong>marque collective protégée</strong> et <strong>patrimoine culinaire emblématique</strong> de la Côte d'Ivoire.</p>
+    <div class="vision-bloc reveal-scale">
       <h3>Notre Vision</h3>
       <p>Faire de la filière manioc-attiéké un secteur moderne, structuré, compétitif et reconnu à l'échelle nationale et internationale.</p>
     </div>
   </section>
 </div>
 
-<div class="album-accueil" id="albumAccueil">
+<div class="album-accueil reveal" id="albumAccueil">
   <div class="album-header">
     <span class="album-tag">📸 Notre association en images</span>
     <h2 class="album-titre">Moments forts de l'ANAREKA-CI</h2>
@@ -305,12 +305,12 @@
     <h2 class="section-titre">De SYNAREK-CI à ANAREKA-CI</h2>
     <div class="tiret" aria-hidden="true"></div>
     <div class="hist-logos">
-      <div class="hist-logo-item">
+      <div class="hist-logo-item reveal-scale">
         <img src="logo-synarek.jpg" alt="Logo SYNAREK-CI" loading="lazy" decoding="async" width="96" height="96">
         <p>SYNAREK-CI</p><small>Syndicat — depuis 1996</small>
       </div>
       <div class="hist-fleche" title="Deux entités partenaires, mêmes membres fondateurs" aria-hidden="true">🤝</div>
-      <div class="hist-logo-item">
+      <div class="hist-logo-item reveal-scale">
         <img src="logo.jpg" alt="Logo ANAREKA-CI" width="96" height="96">
         <p>ANAREKA-CI</p><small>Association — depuis 2025</small>
       </div>
@@ -351,7 +351,7 @@
     <h2 class="section-titre">Équipe dirigeante</h2>
     <div class="tiret" aria-hidden="true"></div>
     <div class="equipe-list">
-      <div class="equipe-card">
+      <div class="equipe-card tilt-card" data-tilt-strength="8">
         <div class="eq-avatar" aria-hidden="true">OJT</div>
         <div>
           <div class="eq-role">Président de l'Association</div>
@@ -359,7 +359,7 @@
           <div class="eq-bio">Membre fondateur de l'ANAREKA-CI — à la tête de l'association depuis la passation de charges de juillet 2025.</div>
         </div>
       </div>
-      <div class="equipe-card">
+      <div class="equipe-card tilt-card" data-tilt-strength="8">
         <div class="eq-avatar" aria-hidden="true">EL</div>
         <div>
           <div class="eq-role">Secrétaire Générale</div>
@@ -367,7 +367,7 @@
           <div class="eq-bio">Membre fondatrice — assure la coordination administrative et institutionnelle de l'association.</div>
         </div>
       </div>
-      <div class="equipe-card fondateur">
+      <div class="equipe-card fondateur tilt-card" data-tilt-strength="8">
         <div class="eq-avatar" aria-hidden="true">OKG</div>
         <div>
           <div class="eq-role">Président Fondateur Historique</div>
@@ -385,12 +385,12 @@
     <p class="pres-lead" style="font-size:16px;margin-bottom:32px;">Une feuille de route claire, organisée en six grands axes d'intervention au service de la filière manioc-attiéké.</p>
 
     <div class="domaines-grid axes-grid">
-      <div class="domaine-card axe-card">
+      <div class="domaine-card axe-card glow-hover">
         <span class="d-icon" aria-hidden="true">🤝</span>
         <h4>Organisation &amp; structuration de la filière</h4>
         <p>Organiser et fédérer les restaurateurs et kiosques d'attiéké de Côte d'Ivoire, et structurer durablement la filière manioc-attiéké à l'échelle nationale.</p>
       </div>
-      <div class="domaine-card axe-card">
+      <div class="domaine-card axe-card glow-hover">
         <span class="d-icon" aria-hidden="true">🎓</span>
         <h4>Formation, hygiène &amp; accompagnement</h4>
         <p>Former les acteurs aux bonnes pratiques d'hygiène, de gestion et de transformation alimentaire, avec des campagnes de salubrité et un accompagnement complet :</p>
@@ -400,22 +400,22 @@
           <li>Assainissement, recensement et modernisation des points de vente</li>
         </ul>
       </div>
-      <div class="domaine-card axe-card">
+      <div class="domaine-card axe-card glow-hover">
         <span class="d-icon" aria-hidden="true">🎭</span>
         <h4>Promotion, qualité &amp; image de l'attiéké</h4>
         <p>Promouvoir l'attiéké comme produit culturel et économique ivoirien à travers événements culturels, foires et salons, tout en renforçant la qualité et l'image de l'attiéké ivoirien.</p>
       </div>
-      <div class="domaine-card axe-card">
+      <div class="domaine-card axe-card glow-hover">
         <span class="d-icon" aria-hidden="true">👩🏾‍🤝‍👨🏾</span>
         <h4>Inclusion des jeunes &amp; des femmes</h4>
         <p>Encourager l'entrepreneuriat féminin et l'autonomisation des jeunes, en créant des opportunités d'emplois durables pour les jeunes et les femmes du secteur.</p>
       </div>
-      <div class="domaine-card axe-card">
+      <div class="domaine-card axe-card glow-hover">
         <span class="d-icon" aria-hidden="true">🏛️</span>
         <h4>Défense des membres &amp; partenariats</h4>
         <p>Défendre les intérêts des membres auprès des institutions publiques et privées, et développer des partenariats avec les ministères, ONG, collectivités et partenaires techniques.</p>
       </div>
-      <div class="domaine-card axe-card">
+      <div class="domaine-card axe-card glow-hover">
         <span class="d-icon" aria-hidden="true">📈</span>
         <h4>Développement économique &amp; social</h4>
         <p>Améliorer les revenus des acteurs du secteur et contribuer au développement économique et social du pays grâce à une filière mieux valorisée.</p>
@@ -430,7 +430,7 @@
     <p class="part-titre">Partenaires actuels</p>
 
     <div class="part-cards" role="list">
-      <a href="https://oipi.ci" target="_blank" rel="noopener noreferrer" class="part-card" role="listitem">
+      <a href="https://oipi.ci" target="_blank" rel="noopener noreferrer" class="part-card glow-hover" role="listitem">
         <div class="part-card-logo"><span class="part-initiales">OIPI</span></div>
         <div class="part-card-info">
           <h4>OIPI</h4>
@@ -439,7 +439,7 @@
         </div>
         <span class="part-card-lien" aria-hidden="true">oipi.ci →</span>
       </a>
-      <a href="https://www.inhp.ci" target="_blank" rel="noopener noreferrer" class="part-card" role="listitem">
+      <a href="https://www.inhp.ci" target="_blank" rel="noopener noreferrer" class="part-card glow-hover" role="listitem">
         <div class="part-card-logo inhp"><span class="part-initiales">INHP</span></div>
         <div class="part-card-info">
           <h4>INHP</h4>
@@ -448,7 +448,7 @@
         </div>
         <span class="part-card-lien" aria-hidden="true">inhp.ci →</span>
       </a>
-      <a href="https://www.campc.net" target="_blank" rel="noopener noreferrer" class="part-card" role="listitem">
+      <a href="https://www.campc.net" target="_blank" rel="noopener noreferrer" class="part-card glow-hover" role="listitem">
         <div class="part-card-logo campc"><span class="part-initiales">CAMPC</span></div>
         <div class="part-card-info">
           <h4>CAMPC</h4>
@@ -457,7 +457,7 @@
         </div>
         <span class="part-card-lien" aria-hidden="true">campc.net →</span>
       </a>
-      <a href="https://luciole-media.fr" target="_blank" rel="noopener noreferrer" class="part-card" role="listitem">
+      <a href="https://luciole-media.fr" target="_blank" rel="noopener noreferrer" class="part-card glow-hover" role="listitem">
         <div class="part-card-logo luciole"><span class="part-initiales">LM</span></div>
         <div class="part-card-info">
           <h4>Luciole Média</h4>
@@ -466,7 +466,7 @@
         </div>
         <span class="part-card-lien" aria-hidden="true">France →</span>
       </a>
-      <a href="https://abidjan.gouv.ci" target="_blank" rel="noopener noreferrer" class="part-card" role="listitem">
+      <a href="https://abidjan.gouv.ci" target="_blank" rel="noopener noreferrer" class="part-card glow-hover" role="listitem">
         <div class="part-card-logo prefecture"><span class="part-initiales">🏛️</span></div>
         <div class="part-card-info">
           <h4>Préfecture d'Abidjan</h4>
@@ -475,7 +475,7 @@
         </div>
         <span class="part-card-lien" aria-hidden="true">Abidjan →</span>
       </a>
-      <a href="https://oapi.int" target="_blank" rel="noopener noreferrer" class="part-card" role="listitem">
+      <a href="https://oapi.int" target="_blank" rel="noopener noreferrer" class="part-card glow-hover" role="listitem">
         <div class="part-card-logo oapi"><span class="part-initiales">OAPI</span></div>
         <div class="part-card-info">
           <h4>OAPI</h4>
@@ -566,7 +566,7 @@
             <label for="f-message">Message (facultatif)</label>
             <textarea id="f-message" name="message" rows="3" placeholder="Parlez-nous de votre activité..."></textarea>
           </div>
-          <button type="submit" class="form-submit">
+          <button type="submit" class="form-submit ripple-btn">
             <span>Envoyer ma demande d'adhésion</span>
             <span class="submit-arrow" aria-hidden="true">→</span>
           </button>
@@ -610,7 +610,7 @@
           <div class="c-ico" aria-hidden="true">📋</div>
           <div><div class="c-lbl">Récépissé officiel</div><div class="c-val">N° 0408/PA/SG/D1</div></div>
         </div>
-        <a href="mailto:info@anarekaci.com" class="btn-contact">✉️ Envoyer un message</a>
+        <a href="mailto:info@anarekaci.com" class="btn-contact ripple-btn">✉️ Envoyer un message</a>
       </div>
       <div class="contact-qr">
         <div class="maps-wrap" style="flex:1;min-width:260px;">
