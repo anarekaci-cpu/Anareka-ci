@@ -1256,3 +1256,75 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   .reveal-text::after { display: none; }
   .tilt-3d-soft { transform: none !important; }
 }
+
+/* ============================================================
+   ANAREKA-CI — v10 : INNOVATIONS
+   Curseur "grain", boutons magnétiques, barre de progression
+   "vigne", garde-fou performance (pause hors écran)
+   ============================================================ */
+/* ===== Curseur grain doré (desktop uniquement) ===== */
+.has-grain-cursor,
+.has-grain-cursor a,
+.has-grain-cursor button,
+.has-grain-cursor .btn-or,
+.has-grain-cursor .cta-btn {
+  cursor: none;
+}
+.grain-cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--or);
+  background: rgba(201, 168, 76, .12);
+  pointer-events: none;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
+  transition: width .2s, height .2s, background .2s, border-color .2s;
+  will-change: transform;
+}
+.grain-cursor-dot.active {
+  width: 30px; height: 30px;
+  background: rgba(201, 168, 76, .22);
+  border-color: var(--or-clair);
+}
+.grain-trail {
+  position: fixed;
+  top: 0; left: 0;
+  width: 5px; height: 7px;
+  border-radius: 60% 60% 50% 50%;
+  background: rgba(201, 168, 76, .65);
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  animation: grainTrailFade .9s ease-out forwards;
+}
+@keyframes grainTrailFade {
+  0%   { opacity: .8; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0;  transform: translate(-50%, -50%) translateY(18px) scale(.4); }
+}
+/* ===== Barre de progression "vigne" ===== */
+.vine-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--vert-clair), var(--or), var(--or-clair));
+  z-index: 10002;
+  transition: width .1s linear;
+  box-shadow: 0 0 8px rgba(201, 168, 76, .5);
+}
+/* ===== Boutons / cartes magnétiques ===== */
+.magnetic {
+  transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+}
+/* ===== Garde-fou performance : pause hors écran ===== */
+.anim-paused {
+  animation-play-state: paused !important;
+}
+/* ===== Désactivation propre selon contexte ===== */
+@media (prefers-reduced-motion: reduce) {
+  .grain-cursor-dot, .grain-trail, .vine-progress { display: none !important; }
+}
+@media (max-width: 900px) {
+  .grain-cursor-dot, .grain-trail { display: none !important; }
+}
