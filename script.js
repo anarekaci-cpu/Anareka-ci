@@ -629,3 +629,111 @@
   }
 
 })();
+
+/* ============================================================
+   ANAREKA-CI — innovations.js (v10)
+   Script additif autonome — ne modifie rien de script.js.
+   À inclure APRÈS script.js, juste avant </body> :
+   <script src="innovations.js" defer></script>
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var isDesktopWidth = window.innerWidth > 900;
+
+  /* ---------- 1. Barre de progression "vigne" ---------- */
+  var progress = document.createElement("div");
+  progress.className = "vine-progress";
+  document.body.appendChild(progress);
+
+  function updateProgress() {
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var height = h.scrollHeight - h.clientHeight;
+    progress.style.width = height > 0 ? (scrolled / height) * 100 + "%" : "0%";
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+
+  /* ---------- 2. Curseur grain doré (desktop uniquement) ---------- */
+  if (isFinePointer && isDesktopWidth && !reduceMotion) {
+    document.documentElement.classList.add("has-grain-cursor");
+
+    var dot = document.createElement("div");
+    dot.className = "grain-cursor-dot";
+    document.body.appendChild(dot);
+
+    var mx = 0, my = 0, dx = 0, dy = 0;
+
+    window.addEventListener("mousemove", function (e) {
+      mx = e.clientX;
+      my = e.clientY;
+      if (Math.random() < 0.15) spawnGrain(mx, my);
+    });
+
+    (function raf() {
+      dx += (mx - dx) * 0.18;
+      dy += (my - dy) * 0.18;
+      dot.style.transform = "translate(" + dx + "px, " + dy + "px) translate(-50%,-50%)";
+      requestAnimationFrame(raf);
+    })();
+
+    var hoverTargets = document.querySelectorAll(
+      "a, button, .part-card, .domaine-card, .equipe-card"
+    );
+    hoverTargets.forEach(function (el) {
+      el.addEventListener("mouseenter", function () { dot.classList.add("active"); });
+      el.addEventListener("mouseleave", function () { dot.classList.remove("active"); });
+    });
+
+    function spawnGrain(x, y) {
+      var g = document.createElement("span");
+      g.className = "grain-trail";
+      g.style.left = x + "px";
+      g.style.top = y + "px";
+      document.body.appendChild(g);
+      setTimeout(function () { g.remove(); }, 900);
+    }
+  }
+
+  /* ---------- 3. Boutons / cartes magnétiques ---------- */
+  if (isFinePointer && !reduceMotion) {
+    var magneticSelectors = ".btn-or, .cta-btn, .btn-contact, .form-submit";
+    document.querySelectorAll(magneticSelectors).forEach(function (el) {
+      el.classList.add("magnetic");
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        var relX = e.clientX - r.left - r.width / 2;
+        var relY = e.clientY - r.top - r.height / 2;
+        el.style.transform = "translate(" + relX * 0.18 + "px, " + relY * 0.25 + "px)";
+      });
+      el.addEventListener("mouseleave", function () {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  /* ---------- 4. Garde-fou perf : pause animations hors écran ---------- */
+  var heavyAnimSelectors = [
+    ".hero-orb1", ".hero-orb2", ".hero-orb3", ".hero-diamond",
+    ".chiffre-val", ".tag", ".d-icon", ".eq-avatar",
+    ".train-card", ".cta-orb1", ".cta-orb2", ".cta-grains span",
+    ".engagement-icon", ".footer-logo span", ".whatsapp-float",
+    ".btn-or", ".cta-btn"
+  ];
+  var targets = document.querySelectorAll(heavyAnimSelectors.join(","));
+  if ("IntersectionObserver" in window && targets.length) {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle("anim-paused", !entry.isIntersecting);
+        });
+      },
+      { rootMargin: "80px" }
+    );
+    targets.forEach(function (t) { io.observe(t); });
+  }
+})();
