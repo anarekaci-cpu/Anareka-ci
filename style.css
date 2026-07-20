@@ -173,7 +173,7 @@ picture { display:contents; }
   box-shadow:0 20px 40px rgba(26,61,43,.15), 0 0 0 1px rgba(201,168,76,.25);
 }
 
-/* ===== NOUVEAU v9 : Tilt 3D subtil — Missions & Partenaires =====
+/* ===== Tilt 3D subtil — Missions & Partenaires =====
    Rotation légère + profondeur (translateZ), sans excès, piloté en JS
    via variables --tiltX/--tiltY appliquées au transform de la carte. */
 .tilt-3d-soft {
@@ -206,7 +206,7 @@ picture { display:contents; }
   pointer-events:none;
 }
 
-/* ===== NOUVEAU v9 : Perspective sur conteneurs de grilles pour le tilt 3D ===== */
+/* ===== Perspective sur conteneurs de grilles pour le tilt 3D ===== */
 .domaines-grid.axes-grid,
 .part-cards {
   perspective: 1400px;
@@ -588,7 +588,7 @@ nav.scrolled::after { opacity: 1; }
 .galerie-item:hover .galerie-label { transform:translateY(0); }
 
 /* ============================================================
-   NOUVEAU v9 : SECTION "NOTRE ENGAGEMENT" — mini-section dédiée
+   SECTION "NOTRE ENGAGEMENT" — mini-section dédiée
    Placée entre la galerie et les chiffres.
    ============================================================ */
 .engagement-section {
@@ -616,6 +616,9 @@ nav.scrolled::after { opacity: 1; }
   max-width: 720px;
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .engagement-icon-wrap {
   position: relative;
@@ -623,7 +626,7 @@ nav.scrolled::after { opacity: 1; }
   align-items: center;
   justify-content: center;
   width: 78px; height: 78px;
-  margin-bottom: 22px;
+  margin-bottom: 4px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--vert) 0%, var(--vert-clair) 100%);
   box-shadow: 0 12px 32px rgba(26,61,43,.25), 0 0 0 8px rgba(201,168,76,.1);
@@ -656,6 +659,7 @@ nav.scrolled::after { opacity: 1; }
   border: 1px solid rgba(45,107,79,.2);
   padding: 6px 16px;
   border-radius: 20px;
+  margin-top: 4px;
   margin-bottom: 18px;
 }
 .engagement-titre {
@@ -817,7 +821,7 @@ nav.scrolled::after { opacity: 1; }
 .section.reveal.on .equipe-card:nth-child(1){animation-delay:.05s} .section.reveal.on .equipe-card:nth-child(2){animation-delay:.13s} .section.reveal.on .equipe-card:nth-child(3){animation-delay:.21s}
 
 /* ============================================================
-   NOUVEAU v9 : MISSIONS — grille 2 colonnes + tilt 3D subtil
+   MISSIONS — grille 2 colonnes + tilt 3D subtil
    ============================================================ */
 .domaines-grid.axes-grid {
   display: grid;
@@ -865,7 +869,7 @@ nav.scrolled::after { opacity: 1; }
 .section.reveal.on .axe-card:nth-child(1){transition-delay:.05s,.05s,0s,0s} .section.reveal.on .axe-card:nth-child(2){transition-delay:.15s,.15s,0s,0s} .section.reveal.on .axe-card:nth-child(3){transition-delay:.25s,.25s,0s,0s} .section.reveal.on .axe-card:nth-child(4){transition-delay:.35s,.35s,0s,0s} .section.reveal.on .axe-card:nth-child(5){transition-delay:.45s,.45s,0s,0s} .section.reveal.on .axe-card:nth-child(6){transition-delay:.55s,.55s,0s,0s}
 
 /* ============================================================
-   NOUVEAU v9 : PARTENAIRES — grille 2 colonnes + tilt 3D subtil
+   PARTENAIRES — grille 2 colonnes + tilt 3D subtil
    ============================================================ */
 .part-titre { font-size:14px; font-weight:700; color:var(--vert); margin-top:24px; margin-bottom:16px; text-transform:uppercase; letter-spacing:1px; }
 .part-row { display:flex; flex-wrap:wrap; gap:12px; }
@@ -1259,50 +1263,10 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
 
 /* ============================================================
    ANAREKA-CI — v10 : INNOVATIONS
-   Curseur "grain", boutons magnétiques, barre de progression
-   "vigne", garde-fou performance (pause hors écran)
+   Boutons magnétiques, barre de progression "vigne",
+   garde-fou performance (pause hors écran)
+   (Le curseur "grain" doré a été retiré)
    ============================================================ */
-/* ===== Curseur grain doré (desktop uniquement) ===== */
-.has-grain-cursor,
-.has-grain-cursor a,
-.has-grain-cursor button,
-.has-grain-cursor .btn-or,
-.has-grain-cursor .cta-btn {
-  cursor: none;
-}
-.grain-cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  border: 1.5px solid var(--or);
-  background: rgba(201, 168, 76, .12);
-  pointer-events: none;
-  z-index: 10001;
-  transform: translate(-50%, -50%);
-  transition: width .2s, height .2s, background .2s, border-color .2s;
-  will-change: transform;
-}
-.grain-cursor-dot.active {
-  width: 30px; height: 30px;
-  background: rgba(201, 168, 76, .22);
-  border-color: var(--or-clair);
-}
-.grain-trail {
-  position: fixed;
-  top: 0; left: 0;
-  width: 5px; height: 7px;
-  border-radius: 60% 60% 50% 50%;
-  background: rgba(201, 168, 76, .65);
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  animation: grainTrailFade .9s ease-out forwards;
-}
-@keyframes grainTrailFade {
-  0%   { opacity: .8; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0;  transform: translate(-50%, -50%) translateY(18px) scale(.4); }
-}
 /* ===== Barre de progression "vigne" ===== */
 .vine-progress {
   position: fixed;
@@ -1323,8 +1287,5 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
 }
 /* ===== Désactivation propre selon contexte ===== */
 @media (prefers-reduced-motion: reduce) {
-  .grain-cursor-dot, .grain-trail, .vine-progress { display: none !important; }
-}
-@media (max-width: 900px) {
-  .grain-cursor-dot, .grain-trail { display: none !important; }
+  .vine-progress { display: none !important; }
 }
