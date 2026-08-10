@@ -791,7 +791,7 @@ nav.scrolled::after { opacity: 1; }
 .section.reveal.on .tl-item:nth-child(3) .tl-point { animation-delay:.4s; }
 .section.reveal.on .tl-item:nth-child(4) .tl-point { animation-delay:.55s; }
 .tl-item:hover .tl-point { transform:scale(1.5); background:var(--or); box-shadow:0 0 0 2px var(--or); }
-.tl-item h4 { font-size:15px; font-weight:600; color:var(--vert); margin-bottom:5px; }
+.tl-item h3 { font-size:15px; font-weight:600; color:var(--vert); margin-bottom:5px; }
 .tl-item p { font-size:14px; color:var(--gris); line-height:1.65; }
 
 /* ===== ÉQUIPE ===== */
@@ -858,7 +858,7 @@ nav.scrolled::after { opacity: 1; }
 .domaine-card:nth-child(5) .d-icon { animation-delay:1.6s; }
 .domaine-card:nth-child(6) .d-icon { animation-delay:2s; }
 .domaine-card:hover .d-icon { animation-play-state:paused; transform:scale(1.15) rotate(-6deg); }
-.domaine-card h4 { font-size:16px; font-weight:600; color:var(--vert); margin-bottom:10px; position:relative; z-index:1; }
+.domaine-card h3 { font-size:16px; font-weight:600; color:var(--vert); margin-bottom:10px; position:relative; z-index:1; }
 .domaine-card p,.domaine-card li { font-size:13.5px; color:var(--gris); line-height:1.65; position:relative; z-index:1; }
 .domaine-card ul { list-style:none; position:relative; z-index:1; }
 .domaine-card ul li { padding-left:18px; margin-bottom:8px; position:relative; }
@@ -901,7 +901,7 @@ nav.scrolled::after { opacity: 1; }
 .part-card-logo { width:56px; height:56px; border-radius:50%; background:var(--vert-pale); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:700; font-size:14px; color:var(--vert); transition:transform .3s; }
 .part-card:hover .part-card-logo { transform:scale(1.08) rotate(3deg); }
 .part-card-logo.inhp{background:rgba(52,165,117,.1);color:#2d9e6f} .part-card-logo.campc{background:rgba(201,168,76,.15);color:var(--or)} .part-card-logo.luciole{background:#fef3e2;color:#f39200} .part-card-logo.prefecture{background:rgba(14,26,18,.05);color:var(--noir)} .part-card-logo.oapi{background:rgba(201,168,76,.15);color:var(--or)}
-.part-card-info h4 { font-size:14px; font-weight:700; color:var(--vert); margin-bottom:4px; }
+.part-card-info h3 { font-size:14px; font-weight:700; color:var(--vert); margin-bottom:4px; }
 .part-card-info p { font-size:12px; color:var(--gris); line-height:1.5; margin-bottom:6px; }
 .part-card-domaine { font-size:10px; font-weight:600; color:var(--or); text-transform:uppercase; letter-spacing:.5px; }
 .part-card-lien { margin-left:auto; color:var(--or); font-weight:600; white-space:nowrap; opacity:0; transition:opacity .2s; }

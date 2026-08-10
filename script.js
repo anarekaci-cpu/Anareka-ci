@@ -256,7 +256,10 @@
           const c = document.createElement('div');
           c.className = 'train-card-caption';
           c.setAttribute('aria-hidden', 'true');
-          c.innerHTML = `<span class="card-label-text">${cap}</span>`;
+          const label = document.createElement('span');
+          label.className = 'card-label-text';
+          label.textContent = cap;
+          c.appendChild(label);
           card.appendChild(c);
         }
       });
