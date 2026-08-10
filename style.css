@@ -947,6 +947,23 @@ nav.scrolled::after { opacity: 1; }
 .article-back { display:inline-flex; align-items:center; gap:8px; margin-top:12px; color:var(--vert); font-weight:600; font-size:13px; text-decoration:none; }
 .article-back:hover { color:var(--or); }
 
+.article-layout { display:flex; gap:48px; align-items:flex-start; }
+.article-main { flex:1; min-width:0; }
+.article-sidebar { width:280px; flex-shrink:0; position:sticky; top:96px; }
+.sidebar-titre { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--vert); margin-bottom:14px; }
+.sidebar-rule { width:32px; height:2px; background:var(--or); margin-bottom:22px; }
+.sidebar-post { display:flex; gap:12px; align-items:flex-start; text-decoration:none; color:var(--noir); margin-bottom:20px; }
+.sidebar-post-img { width:72px; height:72px; border-radius:8px; overflow:hidden; flex-shrink:0; }
+.sidebar-post-img img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+.sidebar-post:hover .sidebar-post-img img { transform:scale(1.08); }
+.sidebar-post h4 { font-size:13px; font-weight:700; color:var(--vert); line-height:1.4; margin-bottom:6px; }
+.sidebar-post:hover h4 { color:var(--or); }
+.sidebar-date { font-size:11px; color:var(--gris); }
+@media(max-width:900px) {
+  .article-layout { flex-direction:column; }
+  .article-sidebar { width:100%; position:static; border-top:1px solid var(--bordure); padding-top:28px; margin-top:8px; }
+}
+
 /* ===== ADHÉSION ===== */
 .adhesion-wrap { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:32px; align-items:start; }
 .adhesion-avantages { background:var(--blanc); border:1px solid var(--bordure); border-top:3px solid var(--or); border-radius:var(--r); padding:32px 28px; box-shadow:var(--ombre); }
