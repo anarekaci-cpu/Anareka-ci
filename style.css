@@ -936,6 +936,9 @@ nav.scrolled::after { opacity: 1; }
 .article-body p { margin-bottom:20px; }
 .article-body h2 { font-family:'Cormorant', serif; font-size:26px; color:var(--vert); margin:36px 0 14px; }
 .article-body strong { color:var(--vert); }
+.article-sources { font-size:12.5px; color:var(--gris); border-top:1px solid var(--bordure); padding-top:16px; margin-top:8px; }
+.article-sources a { color:var(--vert); font-weight:600; text-decoration:underline; }
+.article-sources a:hover { color:var(--or); }
 .article-back { display:inline-flex; align-items:center; gap:8px; margin-top:12px; color:var(--vert); font-weight:600; font-size:13px; text-decoration:none; }
 .article-back:hover { color:var(--or); }
 
