@@ -435,6 +435,8 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 }
 .nav-links a:hover { color:var(--vert); }
 .nav-links a:hover::after { transform:scaleX(1); }
+.nav-links a[aria-current="page"] { color:var(--vert); }
+.nav-links a[aria-current="page"]::after { transform:scaleX(1); background:var(--vert); }
 .nav-toggle {
   display:none; flex-direction:column;
   justify-content:center; gap:5px;
@@ -680,10 +682,10 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
   margin-bottom: 18px;
 }
 .engagement-titre {
-  font-size: clamp(24px, 3.6vw, 34px);
+  font-size: clamp(28px, 4.6vw, 44px);
   font-weight: 700;
   color: var(--vert);
-  line-height: 1.25;
+  line-height: 1.2;
   margin-bottom: 16px;
 }
 .engagement-titre em {
