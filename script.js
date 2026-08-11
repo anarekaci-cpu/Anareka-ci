@@ -24,6 +24,7 @@
     initAdhesionForm();
     initSignature();
     initFooterYear();
+    initImageFade();
 
     // --- INITIALISATIONS EXISTANTES ---
     initSplitText();
@@ -175,6 +176,20 @@
     document.querySelectorAll('.reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text').forEach(el =>
       observer.observe(el)
     );
+  }
+
+  /* ============================================================
+     FONDU DES IMAGES EN DIFFÉRÉ (galerie, blog, sidebar…)
+  ============================================================ */
+  function initImageFade() {
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('img-loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('img-loaded'), { once: true });
+        img.addEventListener('error', () => img.classList.add('img-loaded'), { once: true });
+      }
+    });
   }
 
   /* ============================================================

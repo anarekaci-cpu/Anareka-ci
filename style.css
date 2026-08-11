@@ -34,6 +34,10 @@
 /* ===== RESET ===== */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
+
+/* Fondu à l'apparition pour les images chargées en différé (n'affecte pas les images critiques eager/LCP) */
+.js img[loading="lazy"] { opacity:0; transition:opacity .5s ease; }
+.js img[loading="lazy"].img-loaded { opacity:1; }
 body {
   font-family:'Outfit', sans-serif;
   color:var(--noir);
@@ -519,6 +523,18 @@ nav.scrolled::after { opacity: 1; }
 .hero-rule  { width:50px; height:2px; background:var(--or); margin:0 auto 28px; animation:ruleExpand .8s 1s both, ruleShine 4s ease-in-out 2s infinite; }
 .hero-desc  { font-size:17px; color:rgba(255,255,255,.85); line-height:1.8; max-width:520px; margin:0 auto 40px; animation:heroFadeUp .8s 1.1s both; font-weight:300; }
 .hero-btns  { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:4px; animation:heroFadeUp .8s 1.4s both; }
+.scroll-cue {
+  margin:32px auto 0;
+  z-index:2; display:flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:50%;
+  opacity:0; animation:heroFadeUp .8s 2s both, scrollCueFloat 2.6s 2.8s ease-in-out infinite;
+  transition:background .25s;
+}
+.scroll-cue:hover, .scroll-cue:focus-visible { background:rgba(255,255,255,.08); }
+.scroll-cue-mouse { width:22px; height:36px; border:1.5px solid rgba(255,255,255,.55); border-radius:12px; display:block; position:relative; }
+.scroll-cue-mouse span { position:absolute; top:6px; left:50%; width:3px; height:7px; margin-left:-1.5px; border-radius:2px; background:var(--or-clair); animation:scrollCueDot 1.8s ease-in-out infinite; }
+@keyframes scrollCueFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+@keyframes scrollCueDot { 0% { opacity:1; top:6px; } 70% { opacity:0; top:18px; } 100% { opacity:0; top:6px; } }
 .hero-particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
 .hero-particles span { position:absolute; bottom:10%; width:6px; height:6px; border-radius:50%; background:rgba(201,168,76,.7); animation:particleFly var(--dur,4s) var(--delay,0s) ease-in infinite; }
 
@@ -1295,6 +1311,7 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   :root { --card-w:260px; --card-h:175px; }
   .hero-inner { padding:56px 20px 28px; }
   .hero-btns { flex-direction:row; justify-content:center; gap:10px; }
+  .scroll-cue { display:none; }
   .btn-or, .btn-ghost { padding:12px 18px; font-size:11px; }
   .galerie-inner { height:220px; grid-template-columns:repeat(4,80vw); overflow-x:auto; }
   .engagement-section { padding:48px 20px; }
