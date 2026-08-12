@@ -95,6 +95,7 @@ picture { display:contents; }
 @keyframes orbDrift1    { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,-30px) scale(1.1)} 66%{transform:translate(-20px,20px) scale(.95)} }
 @keyframes orbDrift2    { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-50px,20px) scale(.9)} 66%{transform:translate(30px,-40px) scale(1.05)} }
 @keyframes orbDrift3    { 0%,100%{transform:translate(-50%,-50%)} 50%{transform:translate(calc(-50% + 25px),calc(-50% + 35px))} }
+@keyframes auroraSweep  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 @keyframes particleFly  { 0%{transform:translateY(0) translateX(0) scale(1);opacity:.7} 100%{transform:translateY(-120px) translateX(var(--dx,20px)) scale(0);opacity:0} }
 @keyframes eyebrowSlide { from{opacity:0;letter-spacing:.3em} to{opacity:1;letter-spacing:.15em} }
 @keyframes titleGlow    { 0%,100%{text-shadow:0 0 0 rgba(201,168,76,0)} 50%{text-shadow:0 0 40px rgba(201,168,76,.3)} }
@@ -474,6 +475,15 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
     linear-gradient(180deg, transparent, rgba(201,168,76,.1) 10%, rgba(201,168,76,.25) 40%, rgba(201,168,76,.35) 50%, rgba(201,168,76,.25) 60%, rgba(201,168,76,.1) 90%, transparent) right / 2px 70% no-repeat,
     radial-gradient(ellipse at center, transparent 30%, rgba(14,26,18,.65) 100%);
   pointer-events:none; z-index:0;
+}
+
+.hero-aurora {
+  position:absolute; inset:-25%; pointer-events:none; z-index:0;
+  background:conic-gradient(from 0deg at 50% 40%, transparent 0deg, rgba(201,168,76,.14) 55deg, transparent 130deg, rgba(45,107,79,.18) 210deg, transparent 290deg, transparent 360deg);
+  mix-blend-mode:screen;
+  opacity:.65;
+  animation:auroraSweep 26s linear infinite;
+  will-change:transform;
 }
 
 .hero-line-bottom-fade {
