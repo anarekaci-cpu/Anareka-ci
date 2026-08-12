@@ -99,8 +99,9 @@
 
       if (whatsapp) {
         const nearBottom = y > docHeight - 400;
-        whatsapp.style.opacity = nearBottom ? '0' : '1';
-        whatsapp.style.pointerEvents = nearBottom ? 'none' : 'auto';
+        const vis = y > 200 && !nearBottom;
+        whatsapp.style.opacity = vis ? '1' : '0';
+        whatsapp.style.pointerEvents = vis ? 'auto' : 'none';
       }
 
       ticking = false;
