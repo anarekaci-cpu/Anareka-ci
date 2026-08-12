@@ -826,13 +826,14 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 /* ===== ÉQUIPE ===== */
 .equipe-list { display:flex; flex-direction:column; gap:12px; }
 .equipe-card {
-  display:flex; align-items:center; gap:24px;
+  display:flex; align-items:center; gap:26px;
   background: linear-gradient(135deg, var(--blanc) 0%, rgba(248,244,236,.5) 100%);
-  border-radius:var(--r); padding:24px 28px;
+  border-radius:var(--r); padding:26px 30px;
   border:1px solid var(--bordure); border-left:3px solid var(--vert);
   box-shadow: 0 1px 2px rgba(26,61,43,.03), 0 3px 8px rgba(26,61,43,.05);
   transition:all .35s cubic-bezier(.22,1,.36,1);
   will-change:transform;
+  position:relative;
 }
 .equipe-card:hover {
   transform:translateX(8px);
@@ -840,13 +841,14 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
   border-left-color:var(--or);
 }
 .equipe-card.fondateur { border-left-color:var(--or); background:var(--or-pale); }
-.eq-avatar { width:58px; height:58px; border-radius:50%; flex-shrink:0; background:var(--vert-pale); color:var(--vert); display:flex; align-items:center; justify-content:center; font-family:'Cormorant', serif; font-size:18px; font-weight:700; transition:transform .3s; animation:navLogoGlow 5s ease-in-out infinite; overflow:hidden; }
+.eq-avatar { width:72px; height:72px; border-radius:50%; flex-shrink:0; background:var(--vert-pale); color:var(--vert); display:flex; align-items:center; justify-content:center; font-family:'Cormorant', serif; font-size:20px; font-weight:700; transition:transform .3s, border-color .3s; animation:navLogoGlow 5s ease-in-out infinite; overflow:hidden; border:2px solid rgba(201,168,76,.3); box-shadow:0 4px 14px rgba(26,61,43,.1); }
 .eq-avatar-photo img { width:100%; height:100%; object-fit:cover; }
-.equipe-card:hover .eq-avatar { animation-play-state:paused; transform:scale(1.1) rotate(5deg); }
+.equipe-card:hover .eq-avatar { animation-play-state:paused; transform:scale(1.08) rotate(4deg); border-color:var(--or); }
 .equipe-card.fondateur .eq-avatar { background:rgba(201,168,76,.15); color:var(--or); }
-.eq-role { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--or); margin-bottom:4px; }
-.eq-nom { font-size:16px; font-weight:600; color:var(--noir); margin-bottom:3px; }
-.eq-bio { font-size:13px; color:var(--gris); line-height:1.55; }
+.eq-role { display:inline-flex; align-items:center; gap:7px; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--or); margin-bottom:6px; }
+.eq-role::before { content:''; width:14px; height:1px; background:var(--or); opacity:.6; }
+.eq-nom { font-family:'Cormorant', serif; font-size:20px; font-weight:700; color:var(--noir); margin-bottom:4px; letter-spacing:.2px; }
+.eq-bio { font-size:13px; color:var(--gris); line-height:1.6; }
 .section.reveal.on .equipe-card { animation:fadeInSoft .7s both; }
 .section.reveal.on .equipe-card:nth-child(1){animation-delay:.05s} .section.reveal.on .equipe-card:nth-child(2){animation-delay:.13s} .section.reveal.on .equipe-card:nth-child(3){animation-delay:.21s}
 
