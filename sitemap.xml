@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://anarekaci.com/</loc>
-    <lastmod>2026-07-06</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://anarekaci.com/logo.webp</image:loc>
+      <image:title>Logo ANAREKA-CI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://anarekaci.com/oipi-convention-signee.webp</image:loc>
+      <image:title>Signature de la convention de partenariat entre l'OIPI et l'ANAREKA-CI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://anarekaci.com/photo15.webp</image:loc>
+      <image:title>Remise de l'attestation IGP au siège de l'ANAREKA-CI</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://anarekaci.com/blog.html</loc>
@@ -17,11 +30,19 @@
     <lastmod>2026-08-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://anarekaci.com/photo15.webp</image:loc>
+      <image:title>Remise de l'attestation IGP au siège de l'ANAREKA-CI</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://anarekaci.com/blog/oipi-anareka-ci-partenariat-strategique.html</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://anarekaci.com/oipi-signature-table.webp</image:loc>
+      <image:title>Signature de la convention de partenariat entre l'OIPI et l'ANAREKA-CI</image:title>
+    </image:image>
   </url>
 </urlset>
