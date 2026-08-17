@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://anarekaci.com/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -18,6 +18,10 @@
       <image:loc>https://anarekaci.com/photo15.webp</image:loc>
       <image:title>Remise de l'attestation IGP au siège de l'ANAREKA-CI</image:title>
     </image:image>
+    <image:image>
+      <image:loc>https://anarekaci.com/eynoux-portrait.webp</image:loc>
+      <image:title>Portrait de Madame Eynoux Lydie Marcelle Ezia, Ambassadrice du GR-IGP Attiéké des Lagunes</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://anarekaci.com/blog.html</loc>
@@ -27,7 +31,7 @@
   </url>
   <url>
     <loc>https://anarekaci.com/blog/igp-attieke-lagunes-oapi.html</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -37,7 +41,7 @@
   </url>
   <url>
     <loc>https://anarekaci.com/blog/oipi-anareka-ci-partenariat-strategique.html</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
     <image:image>
