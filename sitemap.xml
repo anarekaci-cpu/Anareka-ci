@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://anarekaci.com/blog.html</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -43,6 +43,16 @@
     <image:image>
       <image:loc>https://anarekaci.com/oipi-signature-table.webp</image:loc>
       <image:title>Signature de la convention de partenariat entre l'OIPI et l'ANAREKA-CI</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/blog/gardiennes-savoir-faire-attieke-tiapoum.html</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://anarekaci.com/attieke3.webp</image:loc>
+      <image:title>Femmes épluchant le manioc - savoir-faire traditionnel</image:title>
     </image:image>
   </url>
 </urlset>
