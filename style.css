@@ -1285,6 +1285,7 @@ footer .tagline { font-size:12.5px; color:rgba(255,255,255,.58); margin-bottom:2
 .social-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:30px; font-size:13px; font-weight:600; text-decoration:none; transition:transform .2s, box-shadow .2s; }
 .social-btn:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.18); }
 .social-btn.social-fb { background:#1877F2; color:#fff; }
+.social-btn.social-li { background:#0A66C2; color:#fff; }
 .social-btn.whatsapp { background:#25D366; color:#fff; }
 .social-btn.email { background:var(--or); color:var(--noir); }
 .social-btn.tel { background:var(--vert); color:#fff; }
