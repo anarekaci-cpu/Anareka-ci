@@ -993,7 +993,14 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .blog-card-body { padding:22px 24px 26px; display:flex; flex-direction:column; flex:1; }
 .blog-meta { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--or); margin-bottom:10px; }
 .blog-card h2, .blog-card h3 { font-size:19px; font-weight:700; color:var(--vert); line-height:1.35; margin-bottom:10px; }
-.equipe-preuve { max-width:520px; margin:28px auto 0; }
+.equipe-preuve { max-width:640px; margin:28px auto 0; }
+.equipe-preuve .album-blog-card { background:var(--blanc); border:1px solid var(--bordure); box-shadow:var(--ombre); }
+.equipe-preuve .album-blog-card:hover { background:var(--ivoire); border-color:rgba(201,168,76,.5); box-shadow:var(--ombre-hov); }
+.equipe-preuve .album-blog-tag { color:var(--or); }
+.equipe-preuve .album-blog-body h3 { color:var(--noir); }
+.equipe-preuve .album-blog-body p { color:var(--gris); }
+.equipe-preuve .album-blog-lien { color:var(--or); }
+.equipe-preuve .album-blog-card:hover .album-blog-lien { color:var(--vert); }
 .blog-card p { font-size:13.5px; color:var(--gris); line-height:1.65; margin-bottom:16px; }
 .blog-card-lien { margin-top:auto; color:var(--or); font-weight:600; font-size:13px; }
 .blog-card:hover .blog-card-lien { text-decoration:underline; }
