@@ -887,14 +887,17 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 }
 
 /* ============================================================
-   FAQ
+   FAQ (mini, replié par défaut)
    ============================================================ */
-.faq-list { max-width:760px; margin:0 auto; display:flex; flex-direction:column; }
-.faq-item { padding:26px 0; border-bottom:1px solid var(--bordure); }
-.faq-item:first-child { padding-top:0; }
-.faq-item:last-child { border-bottom:none; padding-bottom:0; }
-.faq-item h3 { font-size:17px; font-weight:700; color:var(--vert); margin-bottom:10px; }
-.faq-item p { font-size:14.5px; color:var(--gris); line-height:1.7; }
+.faq-mini { max-width:640px; margin:0 auto; padding:28px 20px; }
+.faq-mini-titre { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--or); margin-bottom:10px; }
+.faq-item { border-bottom:1px solid var(--bordure); }
+.faq-item:first-of-type { border-top:1px solid var(--bordure); }
+.faq-item summary { padding:10px 2px; font-size:13px; font-weight:600; color:var(--vert); cursor:pointer; list-style:none; }
+.faq-item summary::-webkit-details-marker { display:none; }
+.faq-item summary::before { content:'+'; display:inline-block; width:14px; color:var(--or); font-weight:700; }
+.faq-item[open] summary::before { content:'–'; }
+.faq-item p { font-size:12.5px; color:var(--gris); line-height:1.6; padding:0 2px 12px 16px; }
 .faq-item p strong { color:var(--noir); }
 
 /* ============================================================
