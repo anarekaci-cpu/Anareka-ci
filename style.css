@@ -887,6 +887,17 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 }
 
 /* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list { max-width:760px; margin:0 auto; display:flex; flex-direction:column; }
+.faq-item { padding:26px 0; border-bottom:1px solid var(--bordure); }
+.faq-item:first-child { padding-top:0; }
+.faq-item:last-child { border-bottom:none; padding-bottom:0; }
+.faq-item h3 { font-size:17px; font-weight:700; color:var(--vert); margin-bottom:10px; }
+.faq-item p { font-size:14.5px; color:var(--gris); line-height:1.7; }
+.faq-item p strong { color:var(--noir); }
+
+/* ============================================================
    MISSIONS — grille 2 colonnes + tilt 3D subtil
    ============================================================ */
 .domaines-grid.axes-grid {
