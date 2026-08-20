@@ -698,7 +698,7 @@
 
   /* ---------- 3. Garde-fou perf : pause animations hors écran ---------- */
   var heavyAnimSelectors = [
-    ".hero-orb1", ".hero-orb2", ".hero-orb3", ".hero-diamond",
+    ".hero-orb1", ".hero-orb2", ".hero-orb3", ".hero-diamond", ".hero-steam .steam",
     ".chiffre-val", ".tag", ".d-icon", ".eq-avatar",
     ".train-card", ".cta-orb1", ".cta-orb2", ".cta-grains span",
     ".engagement-icon", ".footer-logo span", ".whatsapp-float",
