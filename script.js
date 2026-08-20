@@ -702,7 +702,7 @@
     ".chiffre-val", ".tag", ".d-icon", ".eq-avatar",
     ".train-card", ".cta-orb1", ".cta-orb2", ".cta-grains span",
     ".engagement-icon", ".footer-logo span", ".whatsapp-float",
-    ".btn-or", ".cta-btn"
+    ".btn-or", ".cta-btn", ".section-titre"
   ];
   var targets = document.querySelectorAll(heavyAnimSelectors.join(","));
   if ("IntersectionObserver" in window && targets.length) {
