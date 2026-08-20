@@ -763,34 +763,6 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .section:last-child { border-bottom:none; }
 .section:last-child::after { display:none; }
 
-/* ============================================================
-   IDENTITÉ VISUELLE PAR SECTION
-   Chaque section garde exactement la même structure (.section,
-   boutons, typographie, nav) : seule la composition — fond,
-   accents — change, pour différencier la lecture au scroll.
-   ============================================================ */
-#presentation.section {
-  background: radial-gradient(ellipse 900px 420px at 12% 0%, rgba(232,201,122,.12), transparent 60%);
-}
-#histoire.section {
-  background: linear-gradient(180deg, var(--or-pale) 0%, var(--ivoire) 45%);
-}
-#equipe.section {
-  background: var(--vert-pale);
-}
-#missions.section {
-  background: radial-gradient(ellipse 950px 480px at 88% 100%, rgba(45,107,79,.07), transparent 62%);
-}
-#partenaires.section {
-  background: var(--gris-clair);
-}
-#adhesion.section {
-  background: linear-gradient(180deg, var(--or-pale) 0%, var(--ivoire) 55%);
-}
-#contact.section {
-  background: var(--vert-pale);
-}
-
 .section-titre {
   font-size:38px; font-weight:600;
   line-height:1.1; margin-bottom:12px;
@@ -1047,7 +1019,6 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .blog-card:hover .blog-card-lien { text-decoration:underline; }
 
 /* ===== ANAREKA-CI MAG — identité éditoriale ===== */
-#blog.section { background: linear-gradient(180deg, var(--vert-pale) 0%, var(--ivoire) 32%); }
 .mag-categories { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 36px; }
 .mag-cat-chip { font-size:11.5px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--vert); background:var(--blanc); border:1px solid var(--bordure); border-radius:999px; padding:7px 16px; }
 .mag-subheading { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--gris); margin:0 0 20px; padding-bottom:10px; border-bottom:1px solid var(--bordure); }
