@@ -1090,6 +1090,24 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 }
 
 /* ===== ADHÉSION ===== */
+.adhesion-reassurance-mini { display:flex; flex-wrap:wrap; gap:10px 18px; margin:14px 0 28px; }
+.adhesion-reassurance-mini span { font-size:12.5px; font-weight:600; color:var(--vert); background:var(--blanc); border:1px solid var(--bordure); border-radius:999px; padding:6px 14px; }
+
+.adhesion-audience { margin-bottom:36px; }
+.adhesion-audience h3 { font-size:18px; font-weight:700; color:var(--vert); margin-bottom:16px; }
+.audience-grid { display:flex; flex-wrap:wrap; gap:10px; }
+.audience-chip { font-size:13px; font-weight:600; color:var(--noir); background:var(--blanc); border:1px solid var(--bordure); border-left:3px solid var(--or); border-radius:8px; padding:10px 16px; }
+
+.adhesion-etapes { margin-top:44px; }
+.adhesion-etapes h3 { font-size:18px; font-weight:700; color:var(--vert); margin-bottom:20px; }
+.etapes-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.etape-item { background:var(--blanc); border:1px solid var(--bordure); border-radius:var(--r); padding:22px 18px; display:flex; gap:12px; align-items:flex-start; box-shadow:var(--ombre); }
+.etape-num { flex-shrink:0; width:30px; height:30px; border-radius:50%; background:var(--or); color:var(--noir); font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; }
+.etape-item strong { display:block; font-size:14px; color:var(--vert); margin-bottom:4px; }
+.etape-item p { font-size:12.5px; color:var(--gris); line-height:1.55; }
+@media (max-width:768px) { .etapes-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:480px) { .etapes-grid { grid-template-columns:1fr; } }
+
 .adhesion-wrap { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:32px; align-items:start; }
 .adhesion-avantages { background:var(--blanc); border:1px solid var(--bordure); border-top:3px solid var(--or); border-radius:var(--r); padding:32px 28px; box-shadow:var(--ombre); }
 .adhesion-avantages h3 { font-size:18px; font-weight:700; color:var(--vert); margin-bottom:24px; }
