@@ -1046,6 +1046,21 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .blog-card-lien { margin-top:auto; color:var(--or); font-weight:600; font-size:13px; }
 .blog-card:hover .blog-card-lien { text-decoration:underline; }
 
+/* ===== ANAREKA-CI MAG — identité éditoriale ===== */
+#blog.section { background: linear-gradient(180deg, var(--vert-pale) 0%, var(--ivoire) 32%); }
+.mag-categories { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 36px; }
+.mag-cat-chip { font-size:11.5px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--vert); background:var(--blanc); border:1px solid var(--bordure); border-radius:999px; padding:7px 16px; }
+.mag-subheading { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--gris); margin:0 0 20px; padding-bottom:10px; border-bottom:1px solid var(--bordure); }
+
+.blog-card-featured { display:grid; grid-template-columns:1.1fr 1fr; margin-bottom:48px; }
+.blog-card-featured .blog-card-img { aspect-ratio:auto; }
+.blog-card-featured .blog-card-body { padding:32px 36px; justify-content:center; }
+.blog-card-featured h2 { font-size:24px; }
+@media (max-width:768px) {
+  .blog-card-featured { grid-template-columns:1fr; }
+  .blog-card-featured .blog-card-img { aspect-ratio:16/10; }
+}
+
 .article-hero { border-radius:var(--r); overflow:hidden; margin:28px 0 32px; box-shadow:var(--ombre); }
 .article-hero img { width:100%; height:auto; display:block; }
 .article-gallery { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:420px; margin:-8px 0 32px; }
@@ -1062,6 +1077,8 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .article-video-links a { color:var(--vert); font-weight:600; text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s, color .2s; }
 .article-video-links a:hover { color:var(--or); border-bottom-color:var(--or); }
 .article-meta { font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--or); margin-bottom:14px; }
+.article-meta a { color:inherit; text-decoration:none; }
+.article-meta a:hover { text-decoration:underline; }
 .article-body { font-size:16px; line-height:1.85; color:#3a3a3a; max-width:720px; }
 .article-body p { margin-bottom:20px; }
 .article-body h2 { font-family:'Cormorant', serif; font-size:26px; color:var(--vert); margin:36px 0 14px; }
