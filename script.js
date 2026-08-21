@@ -1,1 +1,719 @@
-!function(){"use strict";var e;e=function(){!function(){const e=document.getElementById("mainNav"),t=document.getElementById("navToggle"),n=document.getElementById("navLinks");e&&t&&n&&(t.addEventListener("click",()=>{const e=n.classList.toggle("open");t.classList.toggle("active",e),t.setAttribute("aria-expanded",String(e))}),n.querySelectorAll("a").forEach(e=>e.addEventListener("click",()=>{n.classList.remove("open"),t.classList.remove("active"),t.setAttribute("aria-expanded","false")})),document.addEventListener("click",o=>{!e.contains(o.target)&&n.classList.contains("open")&&(n.classList.remove("open"),t.classList.remove("active"),t.setAttribute("aria-expanded","false"))}))}(),function(){const e=document.getElementById("mainNav"),t=document.getElementById("backTop"),n=document.getElementById("btnFloat"),o=document.getElementById("whatsappFloat");n&&(n.style.opacity="0",n.style.pointerEvents="none");let r=!1;function a(){const a=window.scrollY,s=document.documentElement.scrollHeight-window.innerHeight;if(e&&e.classList.toggle("scrolled",a>60),t&&t.classList.toggle("show",a>300),n){const e=a>200;n.style.opacity=e?"1":"0",n.style.pointerEvents=e?"auto":"none"}if(o){const e=a>200&&!(a>s-400);o.style.opacity=e?"1":"0",o.style.pointerEvents=e?"auto":"none"}r=!1}window.addEventListener("scroll",()=>{r||(requestAnimationFrame(a),r=!0)},{passive:!0}),a()}(),function(){const e=document.getElementById("backTop");e&&e.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}))}(),function(){if(!("IntersectionObserver"in window))return void document.querySelectorAll(".reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text").forEach(e=>e.classList.add("on"));const e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add("on"),e.unobserve(t.target))})},{threshold:.08});document.querySelectorAll(".reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text").forEach(t=>e.observe(t))}(),function(){function e(e){const t=parseInt(e.dataset.target,10),n=e.dataset.suffix||"",o=2e3,r=performance.now();e.classList.add("counting"),function a(s){const i=Math.min((s-r)/o,1),c=1===i?1:1-Math.pow(2,-10*i),d=Math.round(t*c);e.textContent=d+n,i<1?requestAnimationFrame(a):e.classList.remove("counting")}(performance.now())}const t=new IntersectionObserver(n=>{n.forEach(n=>{n.isIntersecting&&(n.target.querySelectorAll("[data-target]").forEach(t=>{"true"!==t.dataset.noAnimate&&e(t)}),t.unobserve(n.target))})},{threshold:.5});document.querySelectorAll(".chiffres").forEach(e=>t.observe(e))}(),document.querySelectorAll(".train-track").forEach(e=>{[...e.children].forEach(t=>e.appendChild(t.cloneNode(!0)))}),function(){function e(){document.querySelectorAll(".train-card").forEach(e=>{if(e.dataset.patched)return;e.dataset.patched="1";const t=e.dataset.cap||"";if(!e.querySelector(".card-shine")){const t=document.createElement("span");t.className="card-shine",t.setAttribute("aria-hidden","true"),e.appendChild(t)}if(!e.querySelector(".card-expand")){const t=document.createElement("span");t.className="card-expand",t.setAttribute("aria-hidden","true"),t.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>',e.appendChild(t)}if(t&&!e.querySelector(".train-card-caption")){const n=document.createElement("div");n.className="train-card-caption",n.setAttribute("aria-hidden","true");const o=document.createElement("span");o.className="card-label-text",o.textContent=t,n.appendChild(o),e.appendChild(n)}})}requestAnimationFrame(()=>requestAnimationFrame(()=>{e(),setTimeout(e,300)}))}(),function(){const e=document.getElementById("lightbox"),t=document.getElementById("lightboxImg"),n=document.getElementById("lightboxCap"),o=document.getElementById("lightboxOverlay"),r=document.getElementById("lightboxClose");if(!(e&&t&&n&&o&&r))return;let a=null;function s(t){if("Tab"!==t.key)return;const n=e.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');if(0===n.length)return;const o=n[0],r=n[n.length-1];t.shiftKey?document.activeElement===o&&(t.preventDefault(),r.focus()):document.activeElement===r&&(t.preventDefault(),o.focus())}function i(o,i,c){o&&(a=c||document.activeElement,t.style.opacity="0",t.src=o,t.alt=i||"",n.textContent=i||"",e.classList.add("open"),e.setAttribute("aria-hidden","false"),document.body.style.overflow="hidden",t.onload=()=>{t.style.transition="opacity 0.3s ease",t.style.opacity="1"},r.focus(),document.addEventListener("keydown",d),document.addEventListener("keydown",s))}function c(){e.classList.remove("open"),e.setAttribute("aria-hidden","true"),document.body.style.overflow="",document.removeEventListener("keydown",d),document.removeEventListener("keydown",s),setTimeout(()=>{t.src="",t.alt=""},350),a&&"function"==typeof a.focus&&a.focus(),a=null}function d(e){"Escape"===e.key&&c()}document.addEventListener("click",e=>{const t=e.target.closest(".train-card");t&&i(t.dataset.src,t.dataset.cap,t)}),document.addEventListener("keydown",e=>{if("Enter"!==e.key&&" "!==e.key)return;const t=document.activeElement;t&&t.classList.contains("train-card")&&(e.preventDefault(),i(t.dataset.src,t.dataset.cap,t))}),o.addEventListener("click",c),r.addEventListener("click",c)}(),function(){const e=document.getElementById("adhesionForm"),t=document.getElementById("formSuccess");if(!e)return;const n="https://formspree.io/f/xbdezwjg",o="info@anarekaci.com";function r(n){const o=t?t.querySelector("p"):null;n&&o&&(o.textContent=n),e.style.display="none",t&&(t.style.display="block",t.focus&&t.focus())}function a(){const t=e.querySelector(".form-submit"),n=t?t.querySelector("span:first-child"):null;t&&(t.disabled=!1),n&&(n.textContent="Envoyer ma demande d'adhésion")}e.addEventListener("submit",async t=>{t.preventDefault();const s=e.querySelector('[name="_gotcha"]');if(s&&s.value)return;const i=e.querySelectorAll(":invalid");if(i.forEach(e=>{e.style.borderColor="#e74c3c",e.style.transition="border-color 0.3s ease",e.addEventListener("input",function e(){this.style.borderColor="",this.removeEventListener("input",e)},{once:!0})}),i.length>0)return void i[0].focus();const c=e.querySelector(".form-submit"),d=c?c.querySelector("span:first-child"):null;c&&(c.disabled=!0),d&&(d.textContent="Envoi en cours…");const l=new FormData(e);try{const t=await fetch(n,{method:"POST",headers:{Accept:"application/json"},body:l});if(t.ok)return r("Merci ! Votre demande a bien été envoyée."),void e.reset();throw new Error("HTTP "+t.status)}catch(e){console.warn("Formspree indisponible, repli mailto.",e)}const u={Nom:l.get("prenom_nom")||"","Téléphone":l.get("tel")||"","E-mail":l.get("email")||"","Ville / Quartier":l.get("ville")||"","Type d'activité":l.get("activite")||"","Établissement":l.get("etablissement")||"",Message:l.get("message")||""};let m="Demande d'adhésion ANAREKA-CI\n\n";for(const[e,t]of Object.entries(u))m+=e+" : "+(t||"—")+"\n";window.location.href="mailto:"+o+"?subject="+encodeURIComponent("Demande d'adhésion — "+(l.get("prenom_nom")||""))+"&body="+encodeURIComponent(m),r("Votre messagerie va s'ouvrir avec votre demande pré-remplie."),setTimeout(a,2e3)})}(),function(){const e=document.querySelector("footer"),t=document.querySelector(".vine-divider");if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver"in window))return t&&t.classList.add("drawn"),void(e&&e.classList.add("footer-in"));const n=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(t.target===e?"footer-in":"drawn"),n.unobserve(t.target))})},{threshold:.25});t&&n.observe(t),e&&n.observe(e)}(),document.querySelectorAll(".footer-year").forEach(e=>{e.textContent=(new Date).getFullYear()}),document.querySelectorAll('img[loading="lazy"]').forEach(e=>{e.complete&&e.naturalWidth>0?e.classList.add("img-loaded"):(e.addEventListener("load",()=>e.classList.add("img-loaded"),{once:!0}),e.addEventListener("error",()=>e.classList.add("img-loaded"),{once:!0}))}),function(){const e=document.querySelector(".hero h1");if(!e)return;const t=e.textContent.trim();e.innerHTML="",[...t].forEach((t,n)=>{const o=document.createElement("span");o.textContent=t,o.classList.add("split-char"),o.style.setProperty("--i",n),e.appendChild(o)});const n=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(e.querySelectorAll(".split-char").forEach(e=>{e.classList.add("reveal-char")}),n.unobserve(t.target))})},{threshold:.6});n.observe(e)}(),function(){const e=document.querySelector(".hero-orb1"),t=document.querySelector(".hero-orb2"),n=document.querySelectorAll(".hero-diamond");let o=!1;window.addEventListener("scroll",()=>{o||(requestAnimationFrame(()=>{const r=window.scrollY;e&&(e.style.transform=`translateY(${.03*r}px)`),t&&(t.style.transform=`translateY(${-.02*r}px)`),n.forEach((e,t)=>{e.style.transform=`rotate(45deg) translateY(${.01*r*(t%2?1:-1)}px)`}),o=!1}),o=!0)},{passive:!0})}(),document.querySelectorAll(".ripple-btn").forEach(e=>{e.addEventListener("click",function(e){const t=document.createElement("span");t.className="ripple-span";const n=this.getBoundingClientRect(),o=Math.max(n.width,n.height);t.style.width=t.style.height=o+"px",t.style.left=e.clientX-n.left-o/2+"px",t.style.top=e.clientY-n.top-o/2+"px",this.appendChild(t),t.addEventListener("animationend",()=>{t.remove()})})}),document.querySelectorAll(".tilt-card").forEach(e=>{e.addEventListener("mousemove",function(e){const t=this.getBoundingClientRect(),n=e.clientX-t.left,o=e.clientY-t.top,r=t.width/2,a=t.height/2,s=parseFloat(this.dataset.tiltStrength)||10,i=(o-a)/a*-s,c=(n-r)/r*s;this.style.transform=`perspective(800px) rotateX(${i}deg) rotateY(${c}deg) translateX(8px)`}),e.addEventListener("mouseleave",function(){this.style.transform="perspective(800px) rotateX(0) rotateY(0) translateX(0)"})}),function(){const e=document.querySelector(".timeline");if(!e)return;const t=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&t.unobserve(e.target)})},{threshold:.3});t.observe(e)}(),function(){if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;if(window.matchMedia("(hover: none), (pointer: coarse)").matches)return;const e=".domaine-card, .part-card",t=document.querySelectorAll(e);if(!t.length)return;const n=6,o=10;t.forEach(e=>{e.classList.add("tilt-3d-soft"),e.addEventListener("mousemove",t=>{const r=e.getBoundingClientRect(),a=t.clientX-r.left,s=t.clientY-r.top,i=a/r.width,c=s/r.height,d=2*n*(i-.5),l=2*n*(.5-c);e.style.transform=`perspective(1000px) rotateX(${l.toFixed(2)}deg) rotateY(${d.toFixed(2)}deg) translateY(-${o}px)`}),e.addEventListener("mouseleave",()=>{e.style.transform="perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)"})})}()},"loading"!==document.readyState?e():document.addEventListener("DOMContentLoaded",e)}(),function(){"use strict";var e=window.matchMedia("(prefers-reduced-motion: reduce)").matches,t=window.matchMedia("(hover: hover) and (pointer: fine)").matches,n=document.createElement("div");function o(){var e=document.documentElement,t=e.scrollTop,o=e.scrollHeight-e.clientHeight;n.style.width=o>0?t/o*100+"%":"0%"}if(n.className="vine-progress",document.body.appendChild(n),window.addEventListener("scroll",o,{passive:!0}),window.addEventListener("resize",o),o(),t&&!e){document.querySelectorAll(".btn-or, .cta-btn, .btn-contact, .form-submit").forEach(function(e){e.classList.add("magnetic"),e.addEventListener("mousemove",function(t){var n=e.getBoundingClientRect(),o=t.clientX-n.left-n.width/2,r=t.clientY-n.top-n.height/2;e.style.transform="translate("+.18*o+"px, "+.25*r+"px)"}),e.addEventListener("mouseleave",function(){e.style.transform=""})})}var r=document.querySelectorAll([".hero-orb1",".hero-orb2",".hero-orb3",".hero-diamond",".hero-steam .steam",".chiffre-val",".tag",".d-icon",".eq-avatar",".train-card",".cta-orb1",".cta-orb2",".cta-grains span",".engagement-icon",".footer-logo span",".whatsapp-float",".btn-or",".cta-btn",".section-titre"].join(","));if("IntersectionObserver"in window&&r.length){var a=new IntersectionObserver(function(e){e.forEach(function(e){e.target.classList.toggle("anim-paused",!e.isIntersecting)})},{rootMargin:"80px"});r.forEach(function(e){a.observe(e)})}}();
+/* =====================================================
+   ANAREKA-CI — SCRIPT v9.0 enrichi
+   Nouveautés v9 : Tilt 3D subtil sur cartes Missions & Partenaires
+   (gestion via mousemove + variables CSS, reset propre au mouseleave)
+   ===================================================== */
+
+(function () {
+  'use strict';
+
+  function ready(fn) {
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+
+  ready(function () {
+    initNavMenu();
+    initScrollEffects();
+    initBackToTopClick();
+    initReveal();
+    initCounter();
+    initTrainDuplication();
+    patchAlbumCards();
+    initLightbox();
+    initAdhesionForm();
+    initSignature();
+    initFooterYear();
+    initImageFade();
+
+    // --- INITIALISATIONS EXISTANTES ---
+    initSplitText();
+    initParallax();
+    initRippleEffect();
+    initTiltCards();
+    initTimelineAnimation();
+
+    // --- NOUVEAU v9 ---
+    initSoftTilt3D();
+  });
+
+  /* ============================================================
+     MENU MOBILE
+  ============================================================ */
+  function initNavMenu() {
+    const nav    = document.getElementById('mainNav');
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.classList.toggle('active', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    links.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      })
+    );
+
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && links.classList.contains('open')) {
+        links.classList.remove('open');
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ============================================================
+     SCROLL EFFECTS
+  ============================================================ */
+  function initScrollEffects() {
+    const nav       = document.getElementById('mainNav');
+    const backTop   = document.getElementById('backTop');
+    const btnFloat  = document.getElementById('btnFloat');
+    const whatsapp  = document.getElementById('whatsappFloat');
+
+    if (btnFloat) {
+      btnFloat.style.opacity      = '0';
+      btnFloat.style.pointerEvents = 'none';
+    }
+
+    let ticking = false;
+    function update() {
+      const y = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      
+      if (nav) nav.classList.toggle('scrolled', y > 60);
+      if (backTop) backTop.classList.toggle('show', y > 300);
+      
+      if (btnFloat) {
+        const vis = y > 200;
+        btnFloat.style.opacity       = vis ? '1' : '0';
+        btnFloat.style.pointerEvents = vis ? 'auto' : 'none';
+      }
+
+      if (whatsapp) {
+        const nearBottom = y > docHeight - 400;
+        const vis = y > 200 && !nearBottom;
+        whatsapp.style.opacity = vis ? '1' : '0';
+        whatsapp.style.pointerEvents = vis ? 'auto' : 'none';
+      }
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+
+    update();
+  }
+
+  /* ============================================================
+     RETOUR EN HAUT
+  ============================================================ */
+  function initBackToTopClick() {
+    const btn = document.getElementById('backTop');
+    if (!btn) return;
+    btn.addEventListener('click', () =>
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    );
+  }
+
+  /* ============================================================
+     VIGNE + FOOTER REVEAL
+  ============================================================ */
+  function initSignature() {
+    const foot   = document.querySelector('footer');
+    const vine   = document.querySelector('.vine-divider');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduce || !('IntersectionObserver' in window)) {
+      if (vine) vine.classList.add('drawn');
+      if (foot) foot.classList.add('footer-in');
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(
+            entry.target === foot ? 'footer-in' : 'drawn'
+          );
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    if (vine) io.observe(vine);
+    if (foot) io.observe(foot);
+  }
+
+  /* ============================================================
+     RÉVÉLATION AU SCROLL (étendue)
+  ============================================================ */
+  function initReveal() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text').forEach(el =>
+        el.classList.add('on')
+      );
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('on');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text').forEach(el =>
+      observer.observe(el)
+    );
+  }
+
+  /* ============================================================
+     FONDU DES IMAGES EN DIFFÉRÉ (galerie, blog, sidebar…)
+  ============================================================ */
+  function initImageFade() {
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('img-loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('img-loaded'), { once: true });
+        img.addEventListener('error', () => img.classList.add('img-loaded'), { once: true });
+      }
+    });
+  }
+
+  /* ============================================================
+     COMPTEUR AMÉLIORÉ
+  ============================================================ */
+  function initCounter() {
+    function animate(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const suffix = el.dataset.suffix || '';
+      const dur    = 2000;
+      const start  = performance.now();
+      
+      el.classList.add('counting');
+      
+      (function run(now) {
+        const p    = Math.min((now - start) / dur, 1);
+        const ease = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        const current = Math.round(target * ease);
+        el.textContent = current + suffix;
+        if (p < 1) {
+          requestAnimationFrame(run);
+        } else {
+          el.classList.remove('counting');
+        }
+      })(performance.now());
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('[data-target]').forEach(el => {
+            if (el.dataset.noAnimate !== 'true') animate(el);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.chiffres').forEach(el => observer.observe(el));
+  }
+
+  /* ============================================================
+     DUPLICATION DES TRAINS
+  ============================================================ */
+  function initTrainDuplication() {
+    document.querySelectorAll('.train-track').forEach(track => {
+      const cards = [...track.children];
+      cards.forEach(card => track.appendChild(card.cloneNode(true)));
+    });
+  }
+
+  /* ============================================================
+     ALBUM PATCH
+  ============================================================ */
+  function patchAlbumCards() {
+    function patch() {
+      document.querySelectorAll('.train-card').forEach(card => {
+        if (card.dataset.patched) return;
+        card.dataset.patched = '1';
+
+        const cap = card.dataset.cap || '';
+
+        if (!card.querySelector('.card-shine')) {
+          const s = document.createElement('span');
+          s.className = 'card-shine';
+          s.setAttribute('aria-hidden', 'true');
+          card.appendChild(s);
+        }
+
+        if (!card.querySelector('.card-expand')) {
+          const exp = document.createElement('span');
+          exp.className = 'card-expand';
+          exp.setAttribute('aria-hidden', 'true');
+          exp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>`;
+          card.appendChild(exp);
+        }
+
+        if (cap && !card.querySelector('.train-card-caption')) {
+          const c = document.createElement('div');
+          c.className = 'train-card-caption';
+          c.setAttribute('aria-hidden', 'true');
+          const label = document.createElement('span');
+          label.className = 'card-label-text';
+          label.textContent = cap;
+          c.appendChild(label);
+          card.appendChild(c);
+        }
+      });
+    }
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      patch();
+      setTimeout(patch, 300);
+    }));
+  }
+
+  /* ============================================================
+     LIGHTBOX AVEC FOCUS TRAP
+  ============================================================ */
+  function initLightbox() {
+    const lb       = document.getElementById('lightbox');
+    const lbImg    = document.getElementById('lightboxImg');
+    const lbCap    = document.getElementById('lightboxCap');
+    const overlay  = document.getElementById('lightboxOverlay');
+    const closeBtn = document.getElementById('lightboxClose');
+    if (!lb || !lbImg || !lbCap || !overlay || !closeBtn) return;
+
+    let lastFocused = null;
+
+    function trapFocus(e) {
+      if (e.key !== 'Tab') return;
+      const focusable = lb.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    function open(src, cap, trigger) {
+      if (!src) return;
+      lastFocused = trigger || document.activeElement;
+      
+      lbImg.style.opacity = '0';
+      lbImg.src = src;
+      lbImg.alt = cap || '';
+      lbCap.textContent = cap || '';
+      
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      
+      lbImg.onload = () => {
+        lbImg.style.transition = 'opacity 0.3s ease';
+        lbImg.style.opacity = '1';
+      };
+      
+      closeBtn.focus();
+      document.addEventListener('keydown', onEsc);
+      document.addEventListener('keydown', trapFocus);
+    }
+
+    function close() {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onEsc);
+      document.removeEventListener('keydown', trapFocus);
+      setTimeout(() => { lbImg.src = ''; lbImg.alt = ''; }, 350);
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+      lastFocused = null;
+    }
+
+    function onEsc(e) { if (e.key === 'Escape') close(); }
+
+    document.addEventListener('click', e => {
+      const card = e.target.closest('.train-card');
+      if (card) open(card.dataset.src, card.dataset.cap, card);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const active = document.activeElement;
+      if (active && active.classList.contains('train-card')) {
+        e.preventDefault();
+        open(active.dataset.src, active.dataset.cap, active);
+      }
+    });
+
+    overlay.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
+  }
+
+  /* ============================================================
+     FORMULAIRE ADHÉSION
+  ============================================================ */
+  function initAdhesionForm() {
+    const form    = document.getElementById('adhesionForm');
+    const success = document.getElementById('formSuccess');
+    if (!form) return;
+
+    const ENDPOINT     = 'https://formspree.io/f/xbdezwjg';
+    const CONTACT_MAIL = 'info@anarekaci.com';
+
+    function showSuccess(msg) {
+      const p = success ? success.querySelector('p') : null;
+      if (msg && p) p.textContent = msg;
+      form.style.display = 'none';
+      if (success) {
+        success.style.display = 'block';
+        success.focus && success.focus();
+      }
+    }
+
+    function resetBtn() {
+      const btn   = form.querySelector('.form-submit');
+      const label = btn ? btn.querySelector('span:first-child') : null;
+      if (btn) btn.disabled = false;
+      if (label) label.textContent = "Envoyer ma demande d'adhésion";
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const honeypot = form.querySelector('[name="_gotcha"]');
+      if (honeypot && honeypot.value) return;
+
+      const invalidFields = form.querySelectorAll(':invalid');
+      invalidFields.forEach(field => {
+        field.style.borderColor = '#e74c3c';
+        field.style.transition = 'border-color 0.3s ease';
+        field.addEventListener('input', function resetBorder() {
+          this.style.borderColor = '';
+          this.removeEventListener('input', resetBorder);
+        }, { once: true });
+      });
+
+      if (invalidFields.length > 0) {
+        invalidFields[0].focus();
+        return;
+      }
+
+      const btn   = form.querySelector('.form-submit');
+      const label = btn ? btn.querySelector('span:first-child') : null;
+      if (btn) btn.disabled = true;
+      if (label) label.textContent = 'Envoi en cours…';
+
+      const data = new FormData(form);
+
+      try {
+        const res = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data
+        });
+        if (res.ok) {
+          showSuccess('Merci ! Votre demande a bien été envoyée.');
+          form.reset();
+          return;
+        }
+        throw new Error('HTTP ' + res.status);
+      } catch (err) {
+        console.warn('Formspree indisponible, repli mailto.', err);
+      }
+
+      const champs = {
+        'Nom'             : data.get('prenom_nom') || '',
+        'Téléphone'       : data.get('tel') || '',
+        'E-mail'          : data.get('email') || '',
+        'Ville / Quartier': data.get('ville') || '',
+        "Type d'activité" : data.get('activite') || '',
+        'Établissement'   : data.get('etablissement') || '',
+        'Message'         : data.get('message') || ''
+      };
+      let corps = "Demande d'adhésion ANAREKA-CI\n\n";
+      for (const [k, v] of Object.entries(champs)) corps += k + ' : ' + (v || '—') + '\n';
+
+      window.location.href = 'mailto:' + CONTACT_MAIL
+        + '?subject=' + encodeURIComponent("Demande d'adhésion — " + (data.get('prenom_nom') || ''))
+        + '&body='    + encodeURIComponent(corps);
+
+      showSuccess("Votre messagerie va s'ouvrir avec votre demande pré-remplie.");
+      setTimeout(resetBtn, 2000);
+    });
+  }
+
+  /* ============================================================
+     FOOTER : ANNÉE DYNAMIQUE
+  ============================================================ */
+  function initFooterYear() {
+    document.querySelectorAll('.footer-year').forEach(el => {
+      el.textContent = new Date().getFullYear();
+    });
+  }
+
+  /* ============================================================
+     SPLIT TEXT (animation lettre par lettre du h1)
+  ============================================================ */
+  function initSplitText() {
+    const title = document.querySelector('.hero h1');
+    if (!title) return;
+
+    const text = title.textContent.trim();
+    title.innerHTML = '';
+    [...text].forEach((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      span.classList.add('split-char');
+      span.style.setProperty('--i', i);
+      title.appendChild(span);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          title.querySelectorAll('.split-char').forEach(span => {
+            span.classList.add('reveal-char');
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+
+    observer.observe(title);
+  }
+
+  /* ============================================================
+     PARALLAXE SUBTIL
+  ============================================================ */
+  function initParallax() {
+    const orb1 = document.querySelector('.hero-orb1');
+    const orb2 = document.querySelector('.hero-orb2');
+    const diamonds = document.querySelectorAll('.hero-diamond');
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          if (orb1) orb1.style.transform = `translateY(${scrolled * 0.03}px)`;
+          if (orb2) orb2.style.transform = `translateY(${scrolled * -0.02}px)`;
+          diamonds.forEach((d, i) => {
+            d.style.transform = `rotate(45deg) translateY(${scrolled * 0.01 * (i % 2 ? 1 : -1)}px)`;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  /* ============================================================
+     RIPPLE EFFECT SUR LES BOUTONS
+  ============================================================ */
+  function initRippleEffect() {
+    document.querySelectorAll('.ripple-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple-span';
+        
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        
+        this.appendChild(ripple);
+        
+        ripple.addEventListener('animationend', () => {
+          ripple.remove();
+        });
+      });
+    });
+  }
+
+  /* ============================================================
+     TILT 3D SUR LES CARTES ÉQUIPE (existant, inchangé)
+  ============================================================ */
+  function initTiltCards() {
+    const cards = document.querySelectorAll('.tilt-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const strength = parseFloat(this.dataset.tiltStrength) || 10;
+        const rotateX = ((y - centerY) / centerY) * -strength;
+        const rotateY = ((x - centerX) / centerX) * strength;
+        
+        this.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(8px)`;
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateX(0)';
+      });
+    });
+  }
+
+  /* ============================================================
+     TILT 3D SUBTIL — CARTES MISSIONS & PARTENAIRES
+     Rotation légère (max ~6deg) + petite profondeur (translateZ),
+     désactivé automatiquement si prefers-reduced-motion ou sur
+     appareils tactiles (pas d'événement mousemove pertinent).
+  ============================================================ */
+  function initSoftTilt3D() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    // Évite d'activer le tilt sur les écrans tactiles (pas de survol fiable)
+    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (isTouch) return;
+
+    const selectors = '.domaine-card, .part-card';
+    const cards = document.querySelectorAll(selectors);
+    if (!cards.length) return;
+
+    const MAX_TILT = 6;   // degrés — reste subtil et professionnel
+    const MAX_LIFT = 10;  // px de translateZ perçu (via translateY léger)
+
+    cards.forEach(card => {
+      card.classList.add('tilt-3d-soft');
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const px = x / rect.width;  // 0 -> 1
+        const py = y / rect.height; // 0 -> 1
+
+        const rotateY = (px - 0.5) * (MAX_TILT * 2);
+        const rotateX = (0.5 - py) * (MAX_TILT * 2);
+
+        card.style.transform =
+          `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-${MAX_LIFT}px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      });
+    });
+  }
+
+  /* ============================================================
+     ANIMATION TIMELINE
+  ============================================================ */
+  function initTimelineAnimation() {
+    const timeline = document.querySelector('.timeline');
+    if (!timeline) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    observer.observe(timeline);
+  }
+
+})();
+
+/* ============================================================
+   ANAREKA-CI — innovations.js (v10 — corrigé)
+   Script additif autonome — ne modifie rien de script.js.
+   À inclure APRÈS script.js, juste avant </body> :
+   <script src="innovations.js" defer></script>
+
+   NOTE : le curseur "grain" doré a été retiré à la demande
+   de l'utilisateur (ancienne section 2 supprimée).
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  /* ---------- 1. Barre de progression "vigne" ---------- */
+  var progress = document.createElement("div");
+  progress.className = "vine-progress";
+  document.body.appendChild(progress);
+
+  function updateProgress() {
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var height = h.scrollHeight - h.clientHeight;
+    progress.style.width = height > 0 ? (scrolled / height) * 100 + "%" : "0%";
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+
+  /* ---------- 2. Boutons / cartes magnétiques ---------- */
+  if (isFinePointer && !reduceMotion) {
+    var magneticSelectors = ".btn-or, .cta-btn, .btn-contact, .form-submit";
+    document.querySelectorAll(magneticSelectors).forEach(function (el) {
+      el.classList.add("magnetic");
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        var relX = e.clientX - r.left - r.width / 2;
+        var relY = e.clientY - r.top - r.height / 2;
+        el.style.transform = "translate(" + relX * 0.18 + "px, " + relY * 0.25 + "px)";
+      });
+      el.addEventListener("mouseleave", function () {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  /* ---------- 3. Garde-fou perf : pause animations hors écran ---------- */
+  var heavyAnimSelectors = [
+    ".hero-orb1", ".hero-orb2", ".hero-orb3", ".hero-diamond", ".hero-steam .steam",
+    ".chiffre-val", ".tag", ".d-icon", ".eq-avatar",
+    ".train-card", ".cta-orb1", ".cta-orb2", ".cta-grains span",
+    ".engagement-icon", ".footer-logo span", ".whatsapp-float",
+    ".btn-or", ".cta-btn", ".section-titre"
+  ];
+  var targets = document.querySelectorAll(heavyAnimSelectors.join(","));
+  if ("IntersectionObserver" in window && targets.length) {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle("anim-paused", !entry.isIntersecting);
+        });
+      },
+      { rootMargin: "80px" }
+    );
+    targets.forEach(function (t) { io.observe(t); });
+  }
+})();
