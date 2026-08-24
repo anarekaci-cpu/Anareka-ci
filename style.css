@@ -1038,6 +1038,10 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 
 .article-hero { border-radius:var(--r); overflow:hidden; margin:28px 0 32px; box-shadow:var(--ombre); }
 .article-hero img { width:100%; height:auto; display:block; }
+.article-caption { font-size:12px; color:var(--gris); text-align:center; padding:10px 12px; background:var(--ivoire); }
+.article-attestation summary { cursor:pointer; font-weight:600; color:var(--vert); font-size:14px; padding:10px 0; list-style:none; }
+.article-attestation summary::-webkit-details-marker { display:none; }
+.article-attestation .article-hero { margin-top:12px; }
 .article-gallery { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; max-width:420px; margin:-8px 0 32px; }
 .article-gallery-item { border-radius:8px; overflow:hidden; box-shadow:var(--ombre); aspect-ratio:3/4; }
 .article-gallery-item.wide { grid-column:1 / -1; aspect-ratio:21/9; }
