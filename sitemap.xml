@@ -3,8 +3,8 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://anarekaci.com/</loc>
-    <lastmod>2026-08-17</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://anarekaci.com/logo.webp</image:loc>
@@ -24,36 +24,36 @@
     </image:image>
   </url>
   <url>
-    <loc>https://anarekaci.com/blog.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <loc>https://anarekaci.com/blog</loc>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://anarekaci.com/blog/igp-attieke-lagunes-oapi.html</loc>
+    <loc>https://anarekaci.com/blog/igp-attieke-lagunes-oapi</loc>
     <lastmod>2026-08-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://anarekaci.com/photo15.webp</image:loc>
       <image:title>Remise de l'attestation IGP au siège de l'ANAREKA-CI</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://anarekaci.com/blog/oipi-anareka-ci-partenariat-strategique.html</loc>
+    <loc>https://anarekaci.com/blog/oipi-anareka-ci-partenariat-strategique</loc>
     <lastmod>2026-08-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://anarekaci.com/oipi-signature-table.webp</image:loc>
       <image:title>Signature de la convention de partenariat entre l'OIPI et l'ANAREKA-CI</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://anarekaci.com/blog/gardiennes-savoir-faire-attieke-tiapoum.html</loc>
+    <loc>https://anarekaci.com/blog/gardiennes-savoir-faire-attieke-tiapoum</loc>
     <lastmod>2026-08-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://anarekaci.com/attieke3.webp</image:loc>
       <image:title>Femmes épluchant le manioc - savoir-faire traditionnel</image:title>
