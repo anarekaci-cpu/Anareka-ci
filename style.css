@@ -996,7 +996,7 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .igp-callout a:hover { color:var(--vert); }
 
 /* ===== BLOG ===== */
-.blog-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:28px; margin-top:8px; }
+.blog-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:28px; margin-top:8px; }
 .blog-card {
   display:flex; flex-direction:column;
   background:var(--blanc); border:1px solid var(--bordure); border-radius:var(--r);
