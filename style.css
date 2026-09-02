@@ -647,10 +647,15 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .manioc-stage-btn.active .manioc-stage-dot { background:var(--or-clair); transform:scale(1.5); box-shadow:0 0 0 4px var(--vert), 0 0 14px 2px rgba(232,201,122,.6); }
 
 @media (max-width:720px) {
-  .manioc-timeline { height:520px; }
-  .manioc-slide-content { max-width:none; padding:0 26px; }
+  .manioc-timeline { height:auto; }
+  .manioc-slide { position:static; opacity:1; visibility:visible; pointer-events:none; display:none; transition:none; }
+  .manioc-slide.active { display:block; pointer-events:auto; }
+  .manioc-slide-img { position:relative; width:100%; height:auto; aspect-ratio:4/3; object-fit:contain; background:var(--vert); }
+  .manioc-slide-scrim { display:none; }
+  .manioc-slide-content { position:relative; max-width:none; padding:20px 22px 90px; background:var(--vert); height:auto; }
+  .manioc-eyebrow, .manioc-title, .manioc-text { text-align:left; }
   .manioc-stage-label { display:none; }
-  .manioc-rail-wrap { padding:0 18px 20px; }
+  .manioc-rail-wrap { position:absolute; padding:0 18px 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .manioc-slide { transition:none !important; }
