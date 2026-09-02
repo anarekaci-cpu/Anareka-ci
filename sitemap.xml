@@ -24,6 +24,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://anarekaci.com/attieke</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://anarekaci.com/manioc-01-recolte.webp</image:loc>
+      <image:title>Récolte du manioc, matière première de l'attiéké, en Côte d'Ivoire</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://anarekaci.com/blog</loc>
     <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
