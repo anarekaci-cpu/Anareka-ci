@@ -20,6 +20,7 @@
     initCounter();
     initTrainDuplication();
     patchAlbumCards();
+    initManiocTimeline();
     initLightbox();
     initAdhesionForm();
     initSignature();
@@ -285,6 +286,38 @@
       patch();
       setTimeout(patch, 300);
     }));
+  }
+
+  /* ============================================================
+     LE VOYAGE DU MANIOC — slider chronologique
+  ============================================================ */
+  function initManiocTimeline() {
+    const root = document.getElementById('maniocTimeline');
+    if (!root) return;
+
+    const slides = root.querySelectorAll('.manioc-slide');
+    const buttons = root.querySelectorAll('.manioc-stage-btn');
+    const progress = document.getElementById('maniocRailProgress');
+    let current = 0;
+
+    function render() {
+      slides.forEach((el, idx) => el.classList.toggle('active', idx === current));
+      buttons.forEach((el, idx) => el.classList.toggle('active', idx === current));
+      if (progress) progress.style.width = (current / (slides.length - 1) * 100) + '%';
+    }
+
+    function goTo(i) {
+      current = (i + slides.length) % slides.length;
+      render();
+    }
+
+    buttons.forEach((btn, idx) => btn.addEventListener('click', () => goTo(idx)));
+
+    render();
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setInterval(() => goTo(current + 1), 5200);
+    }
   }
 
   /* ============================================================
