@@ -865,6 +865,40 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .vision-bloc h3 { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--or-clair); margin-bottom:14px; }
 .vision-bloc p { font-family:'Cormorant', serif; font-size:20px; font-style:italic; color:rgba(255,255,255,.92); line-height:1.7; }
 
+/* ===== ENGAGEMENT TERRAIN — Productrices ===== */
+.engagement-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:48px; align-items:center; margin-top:32px; }
+.engagement-text h3 { font-family:'Cormorant', serif; font-size:24px; font-weight:600; color:var(--vert); margin-bottom:14px; }
+.engagement-text p { font-size:15px; line-height:1.8; color:#444; margin-bottom:24px; }
+.engagement-list { list-style:none; }
+.engagement-list li { display:flex; gap:16px; align-items:flex-start; margin-bottom:18px; }
+.eng-icon { flex-shrink:0; width:42px; height:42px; display:flex; align-items:center; justify-content:center; font-size:19px; background:var(--vert-pale); border-radius:50%; box-shadow:var(--ombre); }
+.engagement-list div { font-size:14px; line-height:1.65; color:#4a4a4a; }
+.engagement-list strong { color:var(--vert); }
+
+.engagement-image { position:relative; }
+.engagement-image img { width:100%; height:auto; display:block; border-radius:var(--r); box-shadow:var(--ombre); object-fit:cover; }
+.engagement-badge {
+  position:absolute; bottom:-18px; left:-18px;
+  background:var(--or); color:var(--noir);
+  padding:16px 22px; border-radius:12px;
+  box-shadow:0 10px 26px rgba(201,168,76,.4);
+  text-align:center;
+}
+.engagement-badge-num { display:block; font-family:'Cormorant', serif; font-size:26px; font-weight:700; line-height:1; }
+.engagement-badge-label { display:block; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; margin-top:4px; }
+
+.engagement-trust { margin-top:64px; text-align:center; border-top:1px solid var(--bordure); padding-top:32px; }
+.engagement-trust-titre { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--gris); margin-bottom:22px; }
+.engagement-trust-logos { display:flex; justify-content:center; align-items:center; gap:40px; flex-wrap:wrap; }
+.engagement-trust-logos img { max-height:56px; width:auto; object-fit:contain; filter:grayscale(70%); opacity:.75; transition:filter .3s ease, opacity .3s ease, transform .3s ease; }
+.engagement-trust-logos img:hover { filter:grayscale(0%); opacity:1; transform:translateY(-2px); }
+
+@media (max-width:768px) {
+  .engagement-grid { grid-template-columns:1fr; }
+  .engagement-image { order:-1; }
+  .engagement-badge { left:12px; bottom:-16px; padding:12px 18px; }
+}
+
 /* ===== HISTORIQUE ===== */
 .hist-logos { display:flex; align-items:center; justify-content:center; gap:48px; margin-bottom:48px; flex-wrap:wrap; }
 .hist-logo-item { text-align:center; }
