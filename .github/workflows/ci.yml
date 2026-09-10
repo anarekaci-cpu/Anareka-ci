@@ -42,3 +42,63 @@ jobs:
             --root-dir .
             .
           fail: true
+
+  minify-check:
+    name: Minification dry-run (HTML/CSS/JS)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install minifiers
+        run: npm install --no-save html-minifier-terser csso-cli terser
+
+      - name: Minify HTML/CSS/JS to a scratch dir and report savings
+        run: |
+          set -e
+          mkdir -p /tmp/minified
+          orig_total=0
+          min_total=0
+
+          html_files=$(find . -name '*.html' -not -path './.git/*')
+          for f in $html_files; do
+            out="/tmp/minified/$(basename "$f")"
+            npx html-minifier-terser \
+              --collapse-whitespace --remove-comments \
+              --minify-css true --minify-js true \
+              -o "$out" "$f"
+            o=$(stat -c%s "$f"); m=$(stat -c%s "$out")
+            orig_total=$((orig_total+o)); min_total=$((min_total+m))
+            printf '%-55s %8d -> %8d bytes\n' "$f" "$o" "$m"
+          done
+
+          for f in style.css; do
+            out="/tmp/minified/$(basename "$f")"
+            npx csso-cli "$f" -o "$out"
+            o=$(stat -c%s "$f"); m=$(stat -c%s "$out")
+            orig_total=$((orig_total+o)); min_total=$((min_total+m))
+            printf '%-55s %8d -> %8d bytes\n' "$f" "$o" "$m"
+          done
+
+          for f in script.js; do
+            out="/tmp/minified/$(basename "$f")"
+            npx terser "$f" --compress --mangle -o "$out"
+            o=$(stat -c%s "$f"); m=$(stat -c%s "$out")
+            orig_total=$((orig_total+o)); min_total=$((min_total+m))
+            printf '%-55s %8d -> %8d bytes\n' "$f" "$o" "$m"
+          done
+
+          saved=$((orig_total-min_total))
+          pct=$(( 100 * saved / orig_total ))
+          {
+            echo "### Minification dry-run"
+            echo ""
+            echo "This job only verifies HTML/CSS/JS minify cleanly and reports potential"
+            echo "savings — it does not modify the repo or affect deployment. Cloudflare"
+            echo "Pages deploys directly from this repo's source files."
+            echo ""
+            echo "**Total: ${orig_total} → ${min_total} bytes (saved ${saved} bytes, ${pct}%)**"
+          } >> "$GITHUB_STEP_SUMMARY"
