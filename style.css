@@ -801,14 +801,13 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
     inset 0 2px 0 rgba(201,168,76,.28),
     inset 0 -2px 0 rgba(201,168,76,.18);
 }
-.chiffres-inner { max-width:var(--max); margin:0 auto; position:relative; display:grid; grid-template-columns:repeat(4,1fr); }
+.chiffres-inner { max-width:var(--max); margin:0 auto; position:relative; display:grid; grid-template-columns:repeat(3,1fr); }
 .chiffre-item { padding:36px 24px; text-align:center; border-right:1px solid rgba(255,255,255,.08); transition:background .3s; cursor:default; }
 .chiffre-item:last-child { border-right:none; }
 .chiffre-item:hover { background:rgba(255,255,255,.04); }
 .chiffre-val { font-family:'Cormorant', serif; font-size:44px; font-weight:700; color:var(--or-clair); display:block; line-height:1; margin-bottom:10px; transition:transform .3s; animation:chiffreFloat 3.5s ease-in-out infinite; }
 .chiffre-item:nth-child(2) .chiffre-val { animation-delay:.3s; }
 .chiffre-item:nth-child(3) .chiffre-val { animation-delay:.6s; }
-.chiffre-item:nth-child(4) .chiffre-val { animation-delay:.9s; }
 .chiffre-item:hover .chiffre-val { animation-play-state:paused; transform:scale(1.06); }
 .chiffre-label { font-size:10.5px; color:rgba(255,255,255,.65); text-transform:uppercase; letter-spacing:1.5px; font-weight:500; }
 
@@ -1541,10 +1540,9 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   :root { --card-w:320px; --card-h:210px; }
 }
 @media(max-width:768px){
-  .chiffres-inner { grid-template-columns:repeat(2,1fr); }
-  .chiffre-item { border-right:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
-  .chiffre-item:nth-child(2n) { border-right:none; }
-  .chiffre-item:nth-last-child(-n+2) { border-bottom:none; }
+  .chiffres-inner { grid-template-columns:1fr; }
+  .chiffre-item { border-right:none; border-bottom:1px solid rgba(255,255,255,.08); }
+  .chiffre-item:last-child { border-bottom:none; }
   .hero-diamond:nth-child(n+5) { display:none; }
   .hero-particles span:nth-child(n+6) { display:none; }
   .section::after { left:10%; right:10%; }
@@ -1603,7 +1601,6 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
    ANAREKA-CI — v10 : INNOVATIONS
    Boutons magnétiques, barre de progression "vigne",
    garde-fou performance (pause hors écran)
-   (Le curseur "grain" doré a été retiré)
    ============================================================ */
 /* ===== Barre de progression "vigne" ===== */
 .vine-progress {
