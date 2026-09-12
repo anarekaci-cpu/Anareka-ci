@@ -256,14 +256,6 @@ picture { display:contents; }
   transition: transform .08s linear, box-shadow .35s ease, border-color .35s ease;
 }
 
-/* ===== Tilt Hover Galerie ===== */
-.tilt-hover {
-  transition:transform .4s cubic-bezier(.22,1,.36,1);
-}
-.tilt-hover:hover {
-  transform:scale(1.03) translateY(-4px);
-}
-
 /* ===== Second anneau héro ===== */
 .hero-ring2 {
   position:absolute;
@@ -347,7 +339,6 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .reveal.on, .reveal-l.on { opacity:1; transform:none; }
 .delay-1 { transition-delay:.1s; }
 .delay-2 { transition-delay:.2s; }
-.delay-3 { transition-delay:.3s; }
 
 /* ===== NOUVELLES CLASSES DE RÉVÉLATION ===== */
 .reveal-rotate { opacity:0; transform: translateY(30px) rotate(-3deg); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
@@ -535,12 +526,6 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
   will-change:transform;
 }
 
-.hero-line-bottom-fade {
-  position:absolute; left:0; right:0; bottom:0; height:120px;
-  background:linear-gradient(to bottom, transparent, rgba(14,26,18,.55));
-  pointer-events:none; z-index:1;
-}
-
 .hero-diamonds {
   position: absolute;
   inset: 0;
@@ -663,14 +648,6 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .galerie-titre { font-size:clamp(26px,4vw,40px); font-weight:600; color:#fff; letter-spacing:.01em; line-height:1.15; margin:0 0 12px; }
 .galerie-rule { width:50px; height:2px; margin:0 auto 12px; background:linear-gradient(90deg,transparent,var(--or),transparent); }
 .galerie-sous { font-size:13.5px; font-weight:300; letter-spacing:.2px; color:rgba(255,255,255,.68); margin:0 0 6px; }
-
-.galerie-inner { display:grid; grid-template-columns:repeat(4,1fr); height:300px; overflow-x:auto; scroll-snap-type:x mandatory; position:relative; z-index:1; }
-.galerie-item { position:relative; overflow:hidden; cursor:pointer; scroll-snap-align:start; min-width:180px; }
-.galerie-item img { width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.22,1,.36,1), filter .4s; filter:brightness(.6) saturate(.85); }
-.galerie-item:hover img { transform:scale(1.1); filter:brightness(.75) saturate(1.1); }
-.galerie-item::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(10,20,14,.7) 0%,transparent 50%); }
-.galerie-label { position:absolute; bottom:0; left:0; right:0; z-index:1; padding:24px 16px 14px; color:white; font-size:12px; font-weight:500; transform:translateY(100%); transition:transform .35s cubic-bezier(.22,1,.36,1); letter-spacing:.3px; }
-.galerie-item:hover .galerie-label { transform:translateY(0); }
 
 /* ============================================================
    LE VOYAGE DU MANIOC — slider chronologique (remplace la grille photo)
@@ -1470,7 +1447,7 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .train-card:hover .card-shine { animation:cardShine .8s ease forwards; }
 .card-expand { position:absolute; top:14px; right:14px; z-index:4; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.16); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,.28); display:flex; align-items:center; justify-content:center; font-size:13px; color:rgba(255,255,255,.85); opacity:0; transform:scale(.75); transition:opacity .3s, transform .35s cubic-bezier(.34,1.56,.64,1); }
 .train-card:hover .card-expand { opacity:1; transform:scale(1); }
-.train-card-caption, .card-num, .card-label-text { display:none !important; }
+.train-card-caption, .card-label-text { display:none !important; }
 
 /* ===== LIGHTBOX ===== */
 .lightbox { position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; padding:20px; }
@@ -1620,7 +1597,6 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   .hero-btns { flex-direction:row; justify-content:center; gap:10px; }
   .scroll-cue { display:none; }
   .btn-or, .btn-ghost { padding:12px 18px; font-size:11px; }
-  .galerie-inner { height:220px; grid-template-columns:repeat(4,80vw); overflow-x:auto; }
   .engagement-section { padding:48px 20px; }
   .engagement-texte { font-size:16.5px; }
   .domaines-grid { grid-template-columns:1fr; }
