@@ -544,14 +544,21 @@
 
   /* ============================================================
      PARALLAXE SUBTIL
+     Désactivé si prefers-reduced-motion (mouvement continu lié au
+     scroll — catégorie la plus déclenchante pour les troubles
+     vestibulaires) ; réagit en direct à un changement de préférence
+     et remet les éléments à leur position neutre.
   ============================================================ */
   function initParallax() {
     const orb1 = document.querySelector('.hero-orb1');
     const orb2 = document.querySelector('.hero-orb2');
     const diamonds = document.querySelectorAll('.hero-diamond');
+    if (!orb1 && !orb2 && !diamonds.length) return;
 
+    const reduceMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
     let ticking = false;
-    window.addEventListener('scroll', () => {
+
+    function onScroll() {
       if (!ticking) {
         requestAnimationFrame(() => {
           const scrolled = window.scrollY;
@@ -564,7 +571,26 @@
         });
         ticking = true;
       }
-    }, { passive: true });
+    }
+
+    function reset() {
+      if (orb1) orb1.style.transform = '';
+      if (orb2) orb2.style.transform = '';
+      diamonds.forEach(d => { d.style.transform = ''; });
+    }
+
+    function sync() {
+      window.removeEventListener('scroll', onScroll);
+      if (reduceMotionMQ.matches) {
+        reset();
+      } else {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+    }
+
+    sync();
+    reduceMotionMQ.addEventListener('change', sync);
   }
 
   /* ============================================================
@@ -592,30 +618,59 @@
   }
 
   /* ============================================================
-     TILT 3D SUR LES CARTES ÉQUIPE (existant, inchangé)
+     TILT 3D SUR LES CARTES ÉQUIPE
+     Désactivé si prefers-reduced-motion ou sur appareil tactile
+     (pas de mousemove pertinent) ; réagit en direct si l'utilisateur
+     change cette préférence pendant la consultation de la page.
   ============================================================ */
   function initTiltCards() {
     const cards = document.querySelectorAll('.tilt-card');
-    
-    cards.forEach(card => {
-      card.addEventListener('mousemove', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const strength = parseFloat(this.dataset.tiltStrength) || 10;
-        const rotateX = ((y - centerY) / centerY) * -strength;
-        const rotateY = ((x - centerX) / centerX) * strength;
-        
-        this.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(8px)`;
+    if (!cards.length) return;
+
+    const reduceMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const noHoverMQ      = window.matchMedia('(hover: none), (pointer: coarse)');
+
+    function handleMouseMove(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const strength = parseFloat(this.dataset.tiltStrength) || 10;
+      const rotateX = ((y - centerY) / centerY) * -strength;
+      const rotateY = ((x - centerX) / centerX) * strength;
+
+      this.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(8px)`;
+    }
+
+    function handleMouseLeave() {
+      this.style.transform = '';
+    }
+
+    function attach() {
+      cards.forEach(card => {
+        card.addEventListener('mousemove', handleMouseMove);
+        card.addEventListener('mouseleave', handleMouseLeave);
       });
-      
-      card.addEventListener('mouseleave', function() {
-        this.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateX(0)';
+    }
+
+    function detach() {
+      cards.forEach(card => {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+        card.style.transform = ''; // retour propre à l'état neutre
       });
-    });
+    }
+
+    function sync() {
+      if (reduceMotionMQ.matches || noHoverMQ.matches) detach();
+      else attach();
+    }
+
+    sync();
+    reduceMotionMQ.addEventListener('change', sync);
+    noHoverMQ.addEventListener('change', sync);
   }
 
   /* ============================================================
@@ -623,43 +678,63 @@
      Rotation légère (max ~6deg) + petite profondeur (translateZ),
      désactivé automatiquement si prefers-reduced-motion ou sur
      appareils tactiles (pas d'événement mousemove pertinent).
+     Réagit en direct (événement "change") si l'utilisateur bascule
+     cette préférence pendant la consultation de la page, et remet
+     les cartes à leur état neutre lors de la désactivation.
   ============================================================ */
   function initSoftTilt3D() {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
-
-    // Évite d'activer le tilt sur les écrans tactiles (pas de survol fiable)
-    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-    if (isTouch) return;
-
     const selectors = '.domaine-card, .part-card';
     const cards = document.querySelectorAll(selectors);
     if (!cards.length) return;
 
+    const reduceMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const noHoverMQ      = window.matchMedia('(hover: none), (pointer: coarse)');
+
     const MAX_TILT = 6;   // degrés — reste subtil et professionnel
     const MAX_LIFT = 10;  // px de translateZ perçu (via translateY léger)
 
-    cards.forEach(card => {
-      card.classList.add('tilt-3d-soft');
+    function handleMouseMove(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const px = x / rect.width;  // 0 -> 1
+      const py = y / rect.height; // 0 -> 1
 
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const px = x / rect.width;  // 0 -> 1
-        const py = y / rect.height; // 0 -> 1
+      const rotateY = (px - 0.5) * (MAX_TILT * 2);
+      const rotateX = (0.5 - py) * (MAX_TILT * 2);
 
-        const rotateY = (px - 0.5) * (MAX_TILT * 2);
-        const rotateX = (0.5 - py) * (MAX_TILT * 2);
+      this.style.transform =
+        `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-${MAX_LIFT}px)`;
+    }
 
-        card.style.transform =
-          `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-${MAX_LIFT}px)`;
+    function handleMouseLeave() {
+      this.style.transform = '';
+    }
+
+    function attach() {
+      cards.forEach(card => {
+        card.classList.add('tilt-3d-soft');
+        card.addEventListener('mousemove', handleMouseMove);
+        card.addEventListener('mouseleave', handleMouseLeave);
       });
+    }
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+    function detach() {
+      cards.forEach(card => {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+        card.style.transform = ''; // retour propre à l'état neutre
       });
-    });
+    }
+
+    function sync() {
+      if (reduceMotionMQ.matches || noHoverMQ.matches) detach();
+      else attach();
+    }
+
+    sync();
+    reduceMotionMQ.addEventListener('change', sync);
+    noHoverMQ.addEventListener('change', sync);
   }
 
   /* ============================================================
@@ -694,8 +769,8 @@
 (function () {
   "use strict";
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var reduceMotionMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var finePointerMQ  = window.matchMedia("(hover: hover) and (pointer: fine)");
 
   /* ---------- 1. Barre de progression "vigne" ---------- */
   var progress = document.createElement("div");
@@ -712,22 +787,43 @@
   window.addEventListener("resize", updateProgress);
   updateProgress();
 
-  /* ---------- 2. Boutons / cartes magnétiques ---------- */
-  if (isFinePointer && !reduceMotion) {
-    var magneticSelectors = ".btn-or, .cta-btn, .btn-contact, .form-submit";
-    document.querySelectorAll(magneticSelectors).forEach(function (el) {
+  /* ---------- 2. Boutons / cartes magnétiques ----------
+     Désactivés si prefers-reduced-motion ou pointeur non précis
+     (tactile) ; réagit en direct à un changement de préférence et
+     remet les boutons à leur position neutre. */
+  var magneticSelectors = ".btn-or, .cta-btn, .btn-contact, .form-submit";
+  var magneticEls = document.querySelectorAll(magneticSelectors);
+
+  function magneticMove(e) {
+    var r = this.getBoundingClientRect();
+    var relX = e.clientX - r.left - r.width / 2;
+    var relY = e.clientY - r.top - r.height / 2;
+    this.style.transform = "translate(" + relX * 0.18 + "px, " + relY * 0.25 + "px)";
+  }
+  function magneticLeave() {
+    this.style.transform = "";
+  }
+  function attachMagnetic() {
+    magneticEls.forEach(function (el) {
       el.classList.add("magnetic");
-      el.addEventListener("mousemove", function (e) {
-        var r = el.getBoundingClientRect();
-        var relX = e.clientX - r.left - r.width / 2;
-        var relY = e.clientY - r.top - r.height / 2;
-        el.style.transform = "translate(" + relX * 0.18 + "px, " + relY * 0.25 + "px)";
-      });
-      el.addEventListener("mouseleave", function () {
-        el.style.transform = "";
-      });
+      el.addEventListener("mousemove", magneticMove);
+      el.addEventListener("mouseleave", magneticLeave);
     });
   }
+  function detachMagnetic() {
+    magneticEls.forEach(function (el) {
+      el.removeEventListener("mousemove", magneticMove);
+      el.removeEventListener("mouseleave", magneticLeave);
+      el.style.transform = ""; // retour propre à l'état neutre
+    });
+  }
+  function syncMagnetic() {
+    if (finePointerMQ.matches && !reduceMotionMQ.matches) attachMagnetic();
+    else detachMagnetic();
+  }
+  syncMagnetic();
+  reduceMotionMQ.addEventListener("change", syncMagnetic);
+  finePointerMQ.addEventListener("change", syncMagnetic);
 
   /* ---------- 3. Garde-fou perf : pause animations hors écran ---------- */
   var heavyAnimSelectors = [
