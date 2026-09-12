@@ -290,6 +290,13 @@
 
   /* ============================================================
      LE VOYAGE DU MANIOC — slider chronologique
+     Défilement automatique actif uniquement pendant que le carrousel
+     est visible à l'écran (IntersectionObserver), à l'arrêt sinon —
+     évite de précharger les 6 diapositives suivantes et de faire
+     tourner l'animation hors champ. Désactivé sous
+     prefers-reduced-motion, y compris en cours de consultation ; la
+     navigation manuelle (flèches/boutons) reste active dans tous les
+     cas.
   ============================================================ */
   function initManiocTimeline() {
     const root = document.getElementById('maniocTimeline');
@@ -299,6 +306,7 @@
     const buttons = root.querySelectorAll('.manioc-stage-btn');
     const progress = document.getElementById('maniocRailProgress');
     let current = 0;
+    let autoTimer = null;
 
     function render() {
       slides.forEach((el, idx) => el.classList.toggle('active', idx === current));
@@ -315,9 +323,41 @@
 
     render();
 
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setInterval(() => goTo(current + 1), 5200);
+    const reduceMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function startAuto() {
+      if (autoTimer || reduceMotionMQ.matches) return;
+      autoTimer = setInterval(() => goTo(current + 1), 5200);
     }
+
+    function stopAuto() {
+      if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) startAuto();
+          else stopAuto();
+        });
+      }, { threshold: 0.3 });
+      io.observe(root);
+    } else {
+      startAuto();
+    }
+
+    reduceMotionMQ.addEventListener('change', () => {
+      if (reduceMotionMQ.matches) {
+        stopAuto();
+      } else {
+        const r = root.getBoundingClientRect();
+        const inView = r.top < window.innerHeight && r.bottom > 0;
+        if (inView) startAuto();
+      }
+    });
   }
 
   /* ============================================================
