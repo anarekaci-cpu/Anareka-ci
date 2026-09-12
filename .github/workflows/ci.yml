@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, lot3-decoupage-multipages]
   pull_request:
     branches: [main]
 
@@ -102,3 +102,19 @@ jobs:
             echo ""
             echo "**Total: ${orig_total} → ${min_total} bytes (saved ${saved} bytes, ${pct}%)**"
           } >> "$GITHUB_STEP_SUMMARY"
+
+  check-page-scaffold:
+    name: Cohérence du scaffold entre pages (nav, footer, version, copyright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install HTML parser
+        run: npm install --no-save node-html-parser
+
+      - name: Compare nav/footer/version/copyright across all pages
+        run: node .github/scripts/check-page-scaffold.js
