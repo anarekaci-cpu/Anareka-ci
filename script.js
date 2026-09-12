@@ -292,11 +292,19 @@
      LE VOYAGE DU MANIOC — slider chronologique
      Défilement automatique actif uniquement pendant que le carrousel
      est visible à l'écran (IntersectionObserver), à l'arrêt sinon —
-     évite de précharger les 6 diapositives suivantes et de faire
-     tourner l'animation hors champ. Désactivé sous
+     évite de faire tourner l'animation hors champ. Désactivé sous
      prefers-reduced-motion, y compris en cours de consultation ; la
      navigation manuelle (flèches/boutons) reste active dans tous les
      cas.
+     Les diapositives 2 à 7 utilisent data-src plutôt que src : le
+     seul attribut loading="lazy" ne suffisait pas à les différer
+     (mesuré en Phase 0 du lot 4 — le carrousel est trop proche du
+     haut de page pour la marge de préchargement native du
+     navigateur). Leur véritable src n'est posé qu'à l'entrée du
+     carrousel dans le viewport, indépendamment du défilement
+     automatique : un visiteur qui navigue à la main sous
+     prefers-reduced-motion doit pouvoir voir les diapositives dès
+     qu'il atteint la section.
   ============================================================ */
   function initManiocTimeline() {
     const root = document.getElementById('maniocTimeline');
@@ -307,6 +315,7 @@
     const progress = document.getElementById('maniocRailProgress');
     let current = 0;
     let autoTimer = null;
+    let imagesLoaded = false;
 
     function render() {
       slides.forEach((el, idx) => el.classList.toggle('active', idx === current));
@@ -319,7 +328,16 @@
       render();
     }
 
-    buttons.forEach((btn, idx) => btn.addEventListener('click', () => goTo(idx)));
+    function loadImages() {
+      if (imagesLoaded) return;
+      imagesLoaded = true;
+      root.querySelectorAll('.manioc-slide-img[data-src]').forEach(img => {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      });
+    }
+
+    buttons.forEach((btn, idx) => btn.addEventListener('click', () => { loadImages(); goTo(idx); }));
 
     render();
 
@@ -340,12 +358,17 @@
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) startAuto();
-          else stopAuto();
+          if (entry.isIntersecting) {
+            loadImages();
+            startAuto();
+          } else {
+            stopAuto();
+          }
         });
       }, { threshold: 0.3 });
       io.observe(root);
     } else {
+      loadImages();
       startAuto();
     }
 
