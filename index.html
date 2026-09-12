@@ -3,6 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function () {
+  var redirects = {
+    '#histoire': '/association#histoire',
+    '#equipe': '/association#equipe',
+    '#missions': '/missions#missions',
+    '#partenaires': '/missions#partenaires',
+    '#adhesion': '/adhesion#adhesion',
+    '#faq': '/association#faq',
+    '#contact': '/contact#contact',
+    '#mentions': '/mentions-legales#mentions'
+  };
+  var target = redirects[window.location.hash];
+  if (target) window.location.replace(target);
+})();
+</script>
 <script>document.documentElement.classList.add('js');</script>
 <title>ANAREKA-CI — Site officiel | Restaurateurs & Attiéké CI</title>
 <meta name="description" content="Site officiel de l'ANAREKA-CI, Association Nationale des Restaurateurs et Kiosques d'Attiéké de Côte d'Ivoire — au service d'une filière fédérée depuis 1996.">
