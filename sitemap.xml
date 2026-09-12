@@ -18,10 +18,40 @@
       <image:loc>https://anarekaci.com/photo15.webp</image:loc>
       <image:title>Remise de l'attestation IGP au siège de l'ANAREKA-CI</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/association</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
     <image:image>
       <image:loc>https://anarekaci.com/eynoux-portrait.webp</image:loc>
       <image:title>Portrait de Madame Eynoux Lydie Marcelle Ezia, Ambassadrice du GR-IGP Attiéké des Lagunes</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/missions</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/adhesion</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/contact</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/mentions-legales</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://anarekaci.com/attieke</loc>
