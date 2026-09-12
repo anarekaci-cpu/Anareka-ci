@@ -37,7 +37,13 @@
    OFL-Outfit.txt). Sous-ensembles latin + latin-ext conservés ;
    cyrillic/cyrillic-ext/vietnamese écartés (jamais utilisés par le
    site, jamais téléchargés grâce à unicode-range ci-dessous).
-   unicode-range repris tel quel depuis la CSS servie par Google Fonts.
+   unicode-range repris tel quel depuis la CSS servie par Google Fonts,
+   à une exception près : U+0152-0153 (œ/Œ) est retiré des 3 plages
+   latin-ext (romain, italique, Outfit) — ce glyphe est déjà couvert
+   par la plage latin de chaque fichier, le garder en double dans
+   latin-ext ne faisait que déclencher un téléchargement inutile dès
+   qu'un œ apparaît dans le texte (mesuré : jusqu'à ~76 Kio par visite
+   sur les pages d'articles, qui en utilisent le plus).
    ============================================================ */
 @font-face {
   font-family: 'Cormorant';
@@ -53,7 +59,7 @@
   font-weight: 300 700;
   font-display: swap;
   src: url('fonts/cormorant-roman-300-700-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-0151, U+0154-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Cormorant';
@@ -69,7 +75,7 @@
   font-weight: 300 700;
   font-display: swap;
   src: url('fonts/cormorant-italic-300-700-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-0151, U+0154-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Outfit';
@@ -85,7 +91,7 @@
   font-weight: 300 700;
   font-display: swap;
   src: url('fonts/outfit-100-900-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-0151, U+0154-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 /* ===== RESET ===== */
