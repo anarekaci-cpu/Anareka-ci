@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, lot3-decoupage-multipages]
+    branches: [main, lot3-decoupage-multipages, transition-fondu-natif]
   pull_request:
     branches: [main]
 
