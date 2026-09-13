@@ -1631,6 +1631,13 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   .split-char { opacity:1; transform: none; }
   .reveal-text::after { display: none; }
   .tilt-3d-soft { transform: none !important; }
+  /* ::view-transition-* vit hors de l'arbre DOM : le sélecteur * ci-dessus
+     ne l'atteint pas, d'où ce garde-fou dédié pour la transition de page. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 /* ============================================================
