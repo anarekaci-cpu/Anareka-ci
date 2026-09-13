@@ -31,15 +31,6 @@
   --card-gap:    20px;
 }
 
-/* ===== TRANSITION NATIVE ENTRE PAGES (View Transitions API) =====
-   Fondu-enchaîné natif du navigateur entre deux navigations same-origin.
-   0 JS, 0 image. Sans effet (navigation instantanée, pas d'erreur) sur
-   les navigateurs qui ne supportent pas encore cette règle. Le garde-fou
-   prefers-reduced-motion est en bas du fichier, section ACCESSIBILITÉ. */
-@view-transition {
-  navigation: auto;
-}
-
 /* ============================================================
    POLICES AUTO-HÉBERGÉES — Cormorant (variable) & Outfit (variable)
    Fichiers dans /fonts/, licence SIL OFL 1.1 (OFL-Cormorant.txt,
