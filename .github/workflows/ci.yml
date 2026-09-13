@@ -24,7 +24,11 @@ jobs:
       - name: Validate HTML files
         run: |
           files=$(find . -name '*.html' -not -name 'google*.html' -not -path './.git/*')
-          java -jar vnu.jar --skip-non-html $files
+          # Filtre unique et ciblé : le Nu Html Checker ne reconnaît pas encore
+          # @view-transition (CSS View Transitions Level 2, très récent), une
+          # règle pourtant valide et gérée nativement par Chrome — confirmé en
+          # inspectant le CSSOM du navigateur. Ne masque aucune autre erreur.
+          java -jar vnu.jar --skip-non-html --filterpattern ".*Unrecognized at-rule.*view-transition.*" $files
 
   check-local-links:
     name: Check local links & image references
