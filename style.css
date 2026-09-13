@@ -1631,13 +1631,90 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   .split-char { opacity:1; transform: none; }
   .reveal-text::after { display: none; }
   .tilt-3d-soft { transform: none !important; }
-  /* ::view-transition-* vit hors de l'arbre DOM : le sélecteur * ci-dessus
-     ne l'atteint pas, d'où ce garde-fou dédié pour la transition de page. */
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
-  }
+  /* La transition de page animée (Lottie) est entièrement retirée du
+     rendu ci-dessous plutôt que simplement figée : pour ces visiteurs,
+     un clic sur un lien doit naviguer tout de suite, sans délai. */
+}
+
+/* ===== TRANSITION DE PAGE ANIMÉE (Lottie) =====
+   Overlay affiché par défaut au chargement (masque le flash de
+   navigation d'une page à l'autre), qui rejoue le sceau ANAREKA-CI à
+   chaque clic sur un lien interne avant de naviguer. Remplace le
+   fondu CSS natif (View Transitions) utilisé précédemment. */
+.lottie-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--vert);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity .35s ease, visibility .35s ease;
+}
+.lottie-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.lottie-box { position: relative; z-index: 1; width: 220px; height: 220px; }
+.lottie-ring { position: absolute; inset: 0; }
+.lottie-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.7);
+  animation: lottieLogoReveal .6s ease .05s forwards;
+}
+@keyframes lottieLogoReveal {
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.lottie-word {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 90vw;
+  text-align: center;
+}
+.lottie-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--or);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.lottie-word strong {
+  font-family: 'Cormorant', serif;
+  color: var(--or-clair);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+.lottie-sub {
+  font-family: 'Outfit', sans-serif;
+  color: var(--ivoire);
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  max-width: 320px;
+  line-height: 1.5;
+  opacity: .85;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lottie-overlay { display: none !important; }
 }
 
 /* ============================================================

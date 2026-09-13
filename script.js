@@ -13,6 +13,7 @@
   }
 
   ready(function () {
+    initLottiePageTransition();
     initNavMenu();
     initScrollEffects();
     initBackToTopClick();
@@ -753,6 +754,90 @@
     }, { threshold: 0.3 });
     
     observer.observe(timeline);
+  }
+
+  /* ============================================================
+     TRANSITION DE PAGE ANIMÉE (Lottie)
+     Overlay affiché par défaut au chargement (masque le flash de
+     navigation), qui rejoue le sceau ANAREKA-CI à chaque clic sur un
+     lien interne avant de naviguer. Repli sans animation si la
+     librairie Lottie ou le JSON ne se chargent pas — la navigation ne
+     doit jamais être bloquée par un échec de chargement externe.
+  ============================================================ */
+  function initLottiePageTransition() {
+    var overlay = document.getElementById('lottie-overlay');
+    var ring = document.getElementById('lottie-ring');
+    var logo = document.querySelector('.lottie-logo');
+    if (!overlay || !ring) return;
+
+    // L'overlay est déjà display:none via CSS sous prefers-reduced-motion:
+    // reduce. On sort ici aussi pour ne rien charger/animer inutilement et
+    // laisser les liens naviguer normalement, sans délai, pour ces visiteurs.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var animData = null;
+    var anim = null;
+    var navigating = false;
+
+    function replayLogoReveal() {
+      if (!logo) return;
+      logo.style.animation = 'none';
+      void logo.offsetWidth; // force reflow so the animation restarts
+      logo.style.animation = '';
+    }
+
+    function play(onDone) {
+      replayLogoReveal();
+      if (typeof window.lottie === 'undefined' || !animData) { onDone(); return; }
+      if (anim) { anim.destroy(); anim = null; }
+      ring.innerHTML = '';
+      anim = window.lottie.loadAnimation({
+        container: ring,
+        renderer: 'svg',
+        loop: false,
+        autoplay: true,
+        animationData: animData
+      });
+      var done = false;
+      function finish() {
+        if (done) return;
+        done = true;
+        onDone();
+      }
+      anim.addEventListener('complete', finish);
+      setTimeout(finish, 2900);
+    }
+
+    if (typeof window.lottie === 'undefined') {
+      overlay.classList.add('hidden');
+      return;
+    }
+
+    fetch('/assets/json/anareka-seal-reveal.json?v=20260913a')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        animData = data;
+        play(function () { overlay.classList.add('hidden'); });
+      })
+      .catch(function () {
+        overlay.classList.add('hidden');
+      });
+
+    var internalLinks = document.querySelectorAll(
+      'a[href]:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"])'
+    );
+
+    internalLinks.forEach(function (link) {
+      if (link.hostname && link.hostname !== window.location.hostname) return;
+      link.addEventListener('click', function (e) {
+        if (navigating) return;
+        var targetUrl = link.getAttribute('href');
+        e.preventDefault();
+        navigating = true;
+        overlay.classList.remove('hidden');
+        play(function () { window.location.href = targetUrl; });
+      });
+    });
   }
 
 })();
