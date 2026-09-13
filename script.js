@@ -805,7 +805,7 @@
         onDone();
       }
       anim.addEventListener('complete', finish);
-      setTimeout(finish, 2900);
+      setTimeout(finish, 2300);
     }
 
     if (typeof window.lottie === 'undefined') {
@@ -813,7 +813,7 @@
       return;
     }
 
-    fetch('/assets/json/anareka-seal-reveal.json?v=20260913a')
+    fetch('/assets/json/anareka-seal-reveal.json?v=20260913b')
       .then(function (r) { return r.json(); })
       .then(function (data) {
         animData = data;
