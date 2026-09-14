@@ -808,20 +808,37 @@
       setTimeout(finish, 2300);
     }
 
+    // Durée d'affichage minimale de l'overlay au chargement (1s) : même si
+    // le JSON/l'animation se chargent instantanément (cache chaud) ou que
+    // Lottie est indisponible, le moment de marque reste visible au moins
+    // 1s, jamais un flash instantané.
+    var startTime = Date.now();
+    var MIN_DISPLAY_MS = 1000;
+    var revealed = false;
+    function revealOnce() {
+      if (revealed) return;
+      revealed = true;
+      var wait = Math.max(0, MIN_DISPLAY_MS - (Date.now() - startTime));
+      setTimeout(function () { overlay.classList.add('hidden'); }, wait);
+    }
+
     if (typeof window.lottie === 'undefined') {
-      overlay.classList.add('hidden');
+      revealOnce();
       return;
     }
+
+    // Filet de sécurité dur : quoi qu'il arrive (réseau lent/coupé, fetch qui
+    // ne répond jamais, CDN bloqué), l'overlay ne reste jamais affiché plus
+    // de 4s au chargement. Le site ne doit jamais paraître "bloqué".
+    setTimeout(revealOnce, 4000);
 
     fetch('/assets/json/anareka-seal-reveal.json?v=20260913b')
       .then(function (r) { return r.json(); })
       .then(function (data) {
         animData = data;
-        play(function () { overlay.classList.add('hidden'); });
+        play(revealOnce);
       })
-      .catch(function () {
-        overlay.classList.add('hidden');
-      });
+      .catch(revealOnce);
 
     var internalLinks = document.querySelectorAll(
       'a[href]:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"])'
