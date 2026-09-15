@@ -1,5 +1,16 @@
 name: CI
 
+# Décision d'architecture (Lot 6) : ce site reste volontairement sans étape
+# de build (pages HTML dupliquées à la main, gabarit commun copié-collé,
+# garde-fou CI check-page-scaffold à la place d'un système de composants)
+# tant que ces deux conditions restent vraies :
+#   1. Le nombre total de pages HTML reste sous ~30.
+#   2. Le site reste bilingue (FR + EN au plus).
+# Si une 3e langue apparaît, ou si les articles de blog doivent être
+# traduits (aujourd'hui volontairement FR-only, voir Lot 6), rouvrir la
+# question d'un build (SSG, templating) plutôt que d'empiler indéfiniment
+# la duplication manuelle. Ne pas trancher ça au coup par coup.
+
 on:
   push:
     branches: [main, lot3-decoupage-multipages, transition-fondu-natif, feature/lottie-page-transition]
