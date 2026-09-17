@@ -134,3 +134,19 @@ jobs:
 
       - name: Compare nav/footer/version/copyright across all pages
         run: node .github/scripts/check-page-scaffold.js
+
+  check-hreflang:
+    name: Réciprocité hreflang FR/EN (pages + sitemap)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install HTML parser
+        run: npm install --no-save node-html-parser
+
+      - name: Verify hreflang reciprocity across pages and sitemap.xml
+        run: node .github/scripts/check-hreflang.js
