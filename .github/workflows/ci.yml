@@ -34,7 +34,7 @@ jobs:
 
       - name: Validate HTML files
         run: |
-          files=$(find . -name '*.html' -not -name 'google*.html' -not -path './.git/*')
+          files=$(find . -name '*.html' -not -name 'google*.html' -not -path './.git/*' -not -path './templates/*')
           # Filtre unique et ciblé : le Nu Html Checker ne reconnaît pas encore
           # @view-transition (CSS View Transitions Level 2, très récent), une
           # règle pourtant valide et gérée nativement par Chrome — confirmé en
@@ -54,6 +54,7 @@ jobs:
             --offline
             --no-progress
             --exclude-path .git
+            --exclude-path templates
             --root-dir .
             --fallback-extensions html
             .
@@ -79,7 +80,7 @@ jobs:
           orig_total=0
           min_total=0
 
-          html_files=$(find . -name '*.html' -not -path './.git/*')
+          html_files=$(find . -name '*.html' -not -path './.git/*' -not -path './templates/*')
           for f in $html_files; do
             out="/tmp/minified/$(basename "$f")"
             npx html-minifier-terser \

@@ -51,6 +51,7 @@ function findHtmlFiles(dir, out) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (entry.name.startsWith('.')) continue;
     if (entry.name === 'node_modules') continue;
+    if (entry.name === 'templates') continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       findHtmlFiles(full, out);
