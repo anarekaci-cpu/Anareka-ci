@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://anarekaci.com/</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/"/>
     <image:image>
       <image:loc>https://anarekaci.com/logo.webp</image:loc>
       <image:title>Logo ANAREKA-CI</image:title>
@@ -20,20 +24,53 @@
     </image:image>
   </url>
   <url>
+    <loc>https://anarekaci.com/en/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/"/>
+  </url>
+  <url>
     <loc>https://anarekaci.com/association</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/association"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/association"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/association"/>
     <image:image>
       <image:loc>https://anarekaci.com/eynoux-portrait.webp</image:loc>
       <image:title>Portrait de Madame Eynoux Lydie Marcelle Ezia, Ambassadrice du GR-IGP Attiéké des Lagunes</image:title>
     </image:image>
   </url>
   <url>
+    <loc>https://anarekaci.com/en/association</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/association"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/association"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/association"/>
+  </url>
+  <url>
     <loc>https://anarekaci.com/missions</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/missions"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/missions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/missions"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/missions</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/missions"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/missions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/missions"/>
   </url>
   <url>
     <loc>https://anarekaci.com/adhesion</loc>
@@ -43,31 +80,79 @@
   </url>
   <url>
     <loc>https://anarekaci.com/contact</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/contact"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/contact</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/contact"/>
   </url>
   <url>
     <loc>https://anarekaci.com/mentions-legales</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/mentions-legales"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/mentions-legales</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/mentions-legales"/>
   </url>
   <url>
     <loc>https://anarekaci.com/attieke</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/attieke"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/attieke"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/attieke"/>
     <image:image>
       <image:loc>https://anarekaci.com/manioc-01-recolte.webp</image:loc>
       <image:title>Récolte du manioc, matière première de l'attiéké, en Côte d'Ivoire</image:title>
     </image:image>
   </url>
   <url>
+    <loc>https://anarekaci.com/en/attieke</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/attieke"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/attieke"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/attieke"/>
+  </url>
+  <url>
     <loc>https://anarekaci.com/blog</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/blog"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/blog</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/blog"/>
   </url>
   <url>
     <loc>https://anarekaci.com/blog/inhp-hygiene-kiosques-bingerville</loc>
