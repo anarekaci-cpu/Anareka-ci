@@ -31,6 +31,10 @@
  *   selon la page)
  * - contenu de .footer-year remplacé par un jeton neutre (valeur
  *   dynamique, vérifiée séparément pour égalité exacte)
+ * - href des liens .lang-switch remplacés par un jeton neutre (chaque page
+ *   pointe légitimement vers sa propre traduction, jamais la même selon
+ *   la page — voir la vérification d'équivalence structurelle au point 2
+ *   pour ce qui est réellement contrôlé sur ce lien)
  *
  * Aucune normalisation de chemin relatif : les pages doivent utiliser
  * des chemins racine-absolus (/association, /style.css, ...), qui
@@ -63,6 +67,12 @@ function normalizeBlock(el) {
   clone.querySelectorAll('a').forEach((a) => a.removeAttribute('aria-current'));
   const yearSpan = clone.querySelector('.footer-year');
   if (yearSpan) yearSpan.set_content('{YEAR}');
+  // .lang-switch pointe légitimement vers une page différente sur chaque
+  // page (le lien EN de la page /missions pointe vers /en/missions, celui
+  // de /association vers /en/association, etc.) — neutraliser ses href
+  // avant comparaison, comme .footer-year, plutôt que de le laisser casser
+  // la vérification de cohérence interne par langue.
+  clone.querySelectorAll('.lang-switch a').forEach((a) => a.setAttribute('href', '{LANG_LINK}'));
   return clone.toString().replace(/\s+/g, ' ').trim();
 }
 
@@ -133,7 +143,23 @@ function checkFieldGlobal(label, key) {
 // destinations (à la langue près) dans .nav-links, .footer-nav et le logo,
 // en comparant une page de référence de chaque langue. Ignoré tant qu'aucune
 // page EN n'existe.
+// Exceptions volontaires à la règle mécanique "/en" + href FR : pages ou
+// ancres qui n'ont delibérément pas d'équivalent traduit direct (Lot 6).
+const FR_TO_EN_HREF_EXCEPTIONS = {
+  // Ancre de la page d'accueil : le id de la section hero est traduit
+  // accueil -> home dans en/index.html, donc le lien logo doit pointer
+  // vers /en/#home et non /en/#accueil (dérivation mécanique erronée).
+  '/#accueil': '/en/#home',
+  // /adhesion (formulaire d'adhésion) reste volontairement FR-only : les
+  // pages EN renvoient vers l'original FR plutôt que vers une page /en/adhesion
+  // qui n'existe pas.
+  '/adhesion': '/adhesion',
+};
+
 function mapFrHrefToEn(frHref) {
+  if (Object.prototype.hasOwnProperty.call(FR_TO_EN_HREF_EXCEPTIONS, frHref)) {
+    return FR_TO_EN_HREF_EXCEPTIONS[frHref];
+  }
   if (frHref === '/') return '/en/';
   if (frHref.startsWith('/')) return '/en' + frHref;
   return null; // forme inattendue (lien externe, etc.) — non vérifiée ici
