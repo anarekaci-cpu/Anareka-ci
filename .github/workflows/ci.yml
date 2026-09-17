@@ -1,5 +1,16 @@
 name: CI
 
+# Décision d'architecture (Lot 6) : ce site reste volontairement sans étape
+# de build (pages HTML dupliquées à la main, gabarit commun copié-collé,
+# garde-fou CI check-page-scaffold à la place d'un système de composants)
+# tant que ces deux conditions restent vraies :
+#   1. Le nombre total de pages HTML reste sous ~30.
+#   2. Le site reste bilingue (FR + EN au plus).
+# Si une 3e langue apparaît, ou si les articles de blog doivent être
+# traduits (aujourd'hui volontairement FR-only, voir Lot 6), rouvrir la
+# question d'un build (SSG, templating) plutôt que d'empiler indéfiniment
+# la duplication manuelle. Ne pas trancher ça au coup par coup.
+
 on:
   push:
     branches: [main, lot3-decoupage-multipages, transition-fondu-natif, feature/lottie-page-transition]
@@ -123,3 +134,19 @@ jobs:
 
       - name: Compare nav/footer/version/copyright across all pages
         run: node .github/scripts/check-page-scaffold.js
+
+  check-hreflang:
+    name: Réciprocité hreflang FR/EN (pages + sitemap)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install HTML parser
+        run: npm install --no-save node-html-parser
+
+      - name: Verify hreflang reciprocity across pages and sitemap.xml
+        run: node .github/scripts/check-hreflang.js
