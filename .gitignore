@@ -12,6 +12,7 @@ desktop.ini
 # Temporary & Build
 *.log
 *.tmp
+*.jar
 node_modules/
 
 # Outillage local (agents/skills Claude Code, hors périmètre du site)
