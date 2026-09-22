@@ -1641,11 +1641,15 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
      un clic sur un lien doit naviguer tout de suite, sans délai. */
 }
 
-/* ===== TRANSITION DE PAGE ANIMÉE (Lottie) =====
+/* ===== TRANSITION DE PAGE (grains → sceau) =====
    Overlay affiché par défaut au chargement (masque le flash de
-   navigation d'une page à l'autre), qui rejoue le sceau ANAREKA-CI à
-   chaque clic sur un lien interne avant de naviguer. Remplace le
-   fondu CSS natif (View Transitions) utilisé précédemment. */
+   navigation d'une page à l'autre). Le motif : de petits grains d'or
+   se rassemblent en anneau — une référence directe à la semoule
+   d'attiéké elle-même plutôt qu'une forme abstraite. CSS/SVG pur,
+   aucune librairie externe. Le choréographie complète (grains → logo
+   → texte) ne se joue qu'une fois par session, à la première page vue
+   (voir script.js) ; sur .lottie-overlay.fast (pages/clics suivants),
+   tout est déjà en place, seul l'overlay fait un fondu. */
 .lottie-overlay {
   position: fixed;
   inset: 0;
@@ -1654,8 +1658,8 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  background: var(--vert);
+  gap: 22px;
+  background: radial-gradient(circle at 50% 42%, #234d38 0%, var(--vert) 45%, #0d2015 100%);
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -1666,46 +1670,67 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   visibility: hidden;
   pointer-events: none;
 }
-.lottie-box { position: relative; z-index: 1; width: 220px; height: 220px; }
-.lottie-ring { position: absolute; inset: 0; }
+
+.lottie-box { position: relative; z-index: 1; width: 208px; height: 208px; }
+
+.lottie-grains { position: absolute; inset: 0; --rr: 96px; }
+.lottie-grains i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--sz);
+  height: var(--sz);
+  margin: calc(var(--sz) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, var(--or-clair), var(--or) 70%);
+  opacity: 0;
+  transform: rotate(var(--a)) translateX(calc(var(--rr) * 2.4)) scale(.3);
+  animation: grainGather .7s cubic-bezier(.2,.8,.2,1) var(--d) both;
+}
+@keyframes grainGather {
+  0%   { opacity: 0; transform: rotate(var(--a)) translateX(calc(var(--rr) * 2.4)) scale(.3); }
+  60%  { opacity: 1; }
+  100% { opacity: .92; transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1); }
+}
+
 .lottie-logo {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 140px;
-  height: 140px;
+  width: 132px;
+  height: 132px;
   border-radius: 50%;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(.7);
-  animation: lottieLogoReveal .6s ease .05s forwards;
+  box-shadow: 0 0 0 1px rgba(232,201,122,.25), 0 18px 40px rgba(0,0,0,.35);
+  transform: translate(-50%, -50%) scale(.72);
+  animation: lottieLogoReveal .6s cubic-bezier(.2,.8,.2,1) .32s forwards;
 }
 @keyframes lottieLogoReveal {
   to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
+
 .lottie-word {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  max-width: 90vw;
+  gap: 8px;
+  max-width: 340px;
   text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: lottieWordRise .55s cubic-bezier(.2,.8,.2,1) .58s forwards;
 }
-.lottie-eyebrow {
-  font-family: 'Outfit', sans-serif;
-  font-size: 10.5px;
-  font-weight: 600;
-  color: var(--or);
-  letter-spacing: 4px;
-  text-transform: uppercase;
+@keyframes lottieWordRise {
+  to { opacity: 1; transform: translateY(0); }
 }
 .lottie-word strong {
   font-family: 'Cormorant', serif;
   color: var(--or-clair);
-  font-size: 28px;
+  font-size: 27px;
   font-weight: 700;
-  letter-spacing: .25em;
+  letter-spacing: .22em;
   text-transform: uppercase;
 }
 .lottie-sub {
@@ -1713,11 +1738,32 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   color: var(--ivoire);
   font-size: 12.5px;
   font-weight: 400;
-  letter-spacing: .02em;
+  letter-spacing: .01em;
   max-width: 320px;
-  line-height: 1.5;
-  opacity: .85;
+  line-height: 1.55;
+  opacity: .82;
 }
+
+/* Pages/clics hors première visite de session : rien à démontrer une
+   deuxième fois — grains, logo et texte apparaissent déjà en place,
+   sans rejouer l'entrée (voir isFirstVisit dans script.js). */
+.lottie-overlay.fast .lottie-grains i,
+.lottie-overlay.fast .lottie-logo,
+.lottie-overlay.fast .lottie-word {
+  animation: none !important;
+  opacity: 1 !important;
+}
+.lottie-overlay.fast .lottie-grains i {
+  opacity: .92 !important;
+  transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1) !important;
+}
+.lottie-overlay.fast .lottie-logo {
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+.lottie-overlay.fast .lottie-word {
+  transform: translateY(0) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lottie-overlay { display: none !important; }
 }

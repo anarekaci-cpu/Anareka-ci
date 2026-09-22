@@ -757,34 +757,32 @@
   }
 
   /* ============================================================
-     TRANSITION DE PAGE ANIMÉE (Lottie) — v2, optimisée vitesse
-     Overlay affiché par défaut au chargement (masque le flash de
-     navigation). Le sceau complet (~2s) ne se joue qu'à la toute
-     première page vue de la session (sessionStorage) : le rejouer en
-     entier à chaque page (x22) ou bloquer chaque clic dessus n'ajoute
-     rien à la marque, ça ralentit juste la navigation. Toute page ou
-     clic suivant dans la même session n'attend que le fondu CSS de
-     l'overlay (FADE_MS), pendant lequel le logo rejoue son animation
-     d'entrée — la navigation elle-même ne dépend plus jamais de la
-     fin de l'animation Lottie. Repli sans animation si la librairie
-     Lottie, le JSON ou sessionStorage ne sont pas disponibles — la
-     navigation ne doit jamais être bloquée par un échec externe.
+     TRANSITION DE PAGE (grains → sceau) — CSS/SVG pur, sans librairie
+     externe. Overlay affiché par défaut au chargement (masque le
+     flash de navigation). La choréographie complète (grains qui se
+     rassemblent → logo → texte, ~1.1s, voir style.css) ne se joue
+     qu'à la toute première page vue de la session (sessionStorage) :
+     la rejouer en entier à chaque page (x22) ou bloquer chaque clic
+     dessus n'ajoute rien à la marque, ça ralentit juste la
+     navigation. Toute page ou clic suivant dans la même session passe
+     en mode .fast (tout est déjà en place, voir style.css) et
+     n'attend que le fondu CSS de l'overlay (FADE_MS) — la navigation
+     ne dépend jamais de la durée d'une animation.
   ============================================================ */
   function initLottiePageTransition() {
     var overlay = document.getElementById('lottie-overlay');
-    var ring = document.getElementById('lottie-ring');
-    var logo = document.querySelector('.lottie-logo');
-    if (!overlay || !ring) return;
+    if (!overlay) return;
 
     // L'overlay est déjà display:none via CSS sous prefers-reduced-motion:
-    // reduce. On sort ici aussi pour ne rien charger/animer inutilement et
-    // laisser les liens naviguer normalement, sans délai, pour ces visiteurs.
+    // reduce. On sort ici aussi pour ne rien animer inutilement et laisser
+    // les liens naviguer normalement, sans délai, pour ces visiteurs.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     // Doit correspondre à la durée de transition CSS de .lottie-overlay.
     var FADE_MS = 350;
-    var animData = null;
-    var anim = null;
+    // Le temps de laisser la choréographie complète se jouer et se poser
+    // (dernière étape : le texte, qui termine vers 1.13s — voir style.css).
+    var FIRST_VISIT_DISPLAY_MS = 1300;
     var navigating = false;
 
     var SEEN_KEY = 'anarekaSealSeen';
@@ -797,25 +795,11 @@
       try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* non bloquant */ }
     }
 
-    function replayLogoReveal() {
-      if (!logo) return;
-      logo.style.animation = 'none';
-      void logo.offsetWidth; // force reflow so the animation restarts
-      logo.style.animation = '';
-    }
-
-    function play() {
-      replayLogoReveal();
-      if (typeof window.lottie === 'undefined' || !animData) return;
-      if (anim) { anim.destroy(); anim = null; }
-      ring.innerHTML = '';
-      anim = window.lottie.loadAnimation({
-        container: ring,
-        renderer: 'svg',
-        loop: false,
-        autoplay: true,
-        animationData: animData
-      });
+    if (!isFirstVisit) {
+      // Page suivante de la même session : rien à démontrer une deuxième
+      // fois, grains/logo/texte apparaissent déjà en place (voir
+      // .lottie-overlay.fast en CSS).
+      overlay.classList.add('fast');
     }
 
     var startTime = Date.now();
@@ -824,33 +808,11 @@
       if (revealed) return;
       revealed = true;
       markSeen();
-      // Première visite de la session : on laisse le sceau se montrer
-      // (~2s, borné par le filet de sécurité plus bas). Pages suivantes :
-      // seul le fondu CSS de l'overlay compte, pas de flash instantané
-      // mais pas d'attente inutile non plus.
-      var minDisplay = isFirstVisit ? 500 : FADE_MS;
+      var minDisplay = isFirstVisit ? FIRST_VISIT_DISPLAY_MS : FADE_MS;
       var wait = Math.max(0, minDisplay - (Date.now() - startTime));
       setTimeout(function () { overlay.classList.add('hidden'); }, wait);
     }
-
-    if (typeof window.lottie === 'undefined' || !isFirstVisit) {
-      revealOnce();
-    } else {
-      // Filet de sécurité dur, aligné sur la durée réelle de l'animation
-      // (2.0s) : quoi qu'il arrive (réseau lent/coupé, fetch qui ne
-      // répond jamais, CDN bloqué), l'overlay ne reste jamais affiché
-      // plus de 2.1s au chargement.
-      setTimeout(revealOnce, 2100);
-
-      fetch('/assets/json/anareka-seal-reveal.json?v=20260913b')
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          animData = data;
-          play();
-          if (anim) anim.addEventListener('complete', revealOnce);
-        })
-        .catch(revealOnce);
-    }
+    revealOnce();
 
     var internalLinks = document.querySelectorAll(
       'a[href]:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"])'
@@ -863,12 +825,10 @@
         var targetUrl = link.getAttribute('href');
         e.preventDefault();
         navigating = true;
+        // Un clic n'a jamais le temps (FADE_MS) de montrer la
+        // choréographie complète : on passe directement à l'état final.
+        overlay.classList.add('fast');
         overlay.classList.remove('hidden');
-        play();
-        // La navigation ne dépend plus de la fin de l'animation (~2s,
-        // c'était l'essentiel de la lenteur perçue) : le temps du fondu
-        // CSS (FADE_MS) suffit à couvrir la transition visuellement — la
-        // page suivante affiche son propre overlay dès son chargement.
         setTimeout(function () { window.location.href = targetUrl; }, FADE_MS);
       });
     });
