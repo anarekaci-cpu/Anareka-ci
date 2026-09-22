@@ -757,12 +757,18 @@
   }
 
   /* ============================================================
-     TRANSITION DE PAGE ANIMÉE (Lottie)
+     TRANSITION DE PAGE ANIMÉE (Lottie) — v2, optimisée vitesse
      Overlay affiché par défaut au chargement (masque le flash de
-     navigation), qui rejoue le sceau ANAREKA-CI à chaque clic sur un
-     lien interne avant de naviguer. Repli sans animation si la
-     librairie Lottie ou le JSON ne se chargent pas — la navigation ne
-     doit jamais être bloquée par un échec de chargement externe.
+     navigation). Le sceau complet (~2s) ne se joue qu'à la toute
+     première page vue de la session (sessionStorage) : le rejouer en
+     entier à chaque page (x22) ou bloquer chaque clic dessus n'ajoute
+     rien à la marque, ça ralentit juste la navigation. Toute page ou
+     clic suivant dans la même session n'attend que le fondu CSS de
+     l'overlay (FADE_MS), pendant lequel le logo rejoue son animation
+     d'entrée — la navigation elle-même ne dépend plus jamais de la
+     fin de l'animation Lottie. Repli sans animation si la librairie
+     Lottie, le JSON ou sessionStorage ne sont pas disponibles — la
+     navigation ne doit jamais être bloquée par un échec externe.
   ============================================================ */
   function initLottiePageTransition() {
     var overlay = document.getElementById('lottie-overlay');
@@ -775,9 +781,21 @@
     // laisser les liens naviguer normalement, sans délai, pour ces visiteurs.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    // Doit correspondre à la durée de transition CSS de .lottie-overlay.
+    var FADE_MS = 350;
     var animData = null;
     var anim = null;
     var navigating = false;
+
+    var SEEN_KEY = 'anarekaSealSeen';
+    var isFirstVisit = true;
+    try { isFirstVisit = !sessionStorage.getItem(SEEN_KEY); } catch (e) {
+      // Stockage indisponible (navigation privée, quota…) : traiter comme
+      // première visite plutôt que de planter.
+    }
+    function markSeen() {
+      try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* non bloquant */ }
+    }
 
     function replayLogoReveal() {
       if (!logo) return;
@@ -786,9 +804,9 @@
       logo.style.animation = '';
     }
 
-    function play(onDone) {
+    function play() {
       replayLogoReveal();
-      if (typeof window.lottie === 'undefined' || !animData) { onDone(); return; }
+      if (typeof window.lottie === 'undefined' || !animData) return;
       if (anim) { anim.destroy(); anim = null; }
       ring.innerHTML = '';
       anim = window.lottie.loadAnimation({
@@ -798,47 +816,41 @@
         autoplay: true,
         animationData: animData
       });
-      var done = false;
-      function finish() {
-        if (done) return;
-        done = true;
-        onDone();
-      }
-      anim.addEventListener('complete', finish);
-      setTimeout(finish, 2300);
     }
 
-    // Durée d'affichage minimale de l'overlay au chargement (1s) : même si
-    // le JSON/l'animation se chargent instantanément (cache chaud) ou que
-    // Lottie est indisponible, le moment de marque reste visible au moins
-    // 1s, jamais un flash instantané.
     var startTime = Date.now();
-    var MIN_DISPLAY_MS = 1000;
     var revealed = false;
     function revealOnce() {
       if (revealed) return;
       revealed = true;
-      var wait = Math.max(0, MIN_DISPLAY_MS - (Date.now() - startTime));
+      markSeen();
+      // Première visite de la session : on laisse le sceau se montrer
+      // (~2s, borné par le filet de sécurité plus bas). Pages suivantes :
+      // seul le fondu CSS de l'overlay compte, pas de flash instantané
+      // mais pas d'attente inutile non plus.
+      var minDisplay = isFirstVisit ? 500 : FADE_MS;
+      var wait = Math.max(0, minDisplay - (Date.now() - startTime));
       setTimeout(function () { overlay.classList.add('hidden'); }, wait);
     }
 
-    if (typeof window.lottie === 'undefined') {
+    if (typeof window.lottie === 'undefined' || !isFirstVisit) {
       revealOnce();
-      return;
+    } else {
+      // Filet de sécurité dur, aligné sur la durée réelle de l'animation
+      // (2.0s) : quoi qu'il arrive (réseau lent/coupé, fetch qui ne
+      // répond jamais, CDN bloqué), l'overlay ne reste jamais affiché
+      // plus de 2.1s au chargement.
+      setTimeout(revealOnce, 2100);
+
+      fetch('/assets/json/anareka-seal-reveal.json?v=20260913b')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          animData = data;
+          play();
+          if (anim) anim.addEventListener('complete', revealOnce);
+        })
+        .catch(revealOnce);
     }
-
-    // Filet de sécurité dur : quoi qu'il arrive (réseau lent/coupé, fetch qui
-    // ne répond jamais, CDN bloqué), l'overlay ne reste jamais affiché plus
-    // de 4s au chargement. Le site ne doit jamais paraître "bloqué".
-    setTimeout(revealOnce, 4000);
-
-    fetch('/assets/json/anareka-seal-reveal.json?v=20260913b')
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        animData = data;
-        play(revealOnce);
-      })
-      .catch(revealOnce);
 
     var internalLinks = document.querySelectorAll(
       'a[href]:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"])'
@@ -852,7 +864,12 @@
         e.preventDefault();
         navigating = true;
         overlay.classList.remove('hidden');
-        play(function () { window.location.href = targetUrl; });
+        play();
+        // La navigation ne dépend plus de la fin de l'animation (~2s,
+        // c'était l'essentiel de la lenteur perçue) : le temps du fondu
+        // CSS (FADE_MS) suffit à couvrir la transition visuellement — la
+        // page suivante affiche son propre overlay dès son chargement.
+        setTimeout(function () { window.location.href = targetUrl; }, FADE_MS);
       });
     });
   }

@@ -18,3 +18,4 @@ node_modules/
 # Outillage local (agents/skills Claude Code, hors périmètre du site)
 .agents/
 .claude/
+.playwright-mcp/
