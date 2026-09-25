@@ -9,6 +9,9 @@
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
+/emoji/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.webp
   Cache-Control: public, max-age=31536000, immutable
 

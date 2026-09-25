@@ -62,6 +62,22 @@ manual edit:
    the changed file. `check-page-scaffold` fails the build on purpose if the
    version param isn't identical across all pages.
 
+## Emojis
+
+Never paste raw emoji characters into page bodies — they render differently on
+Android, iOS and Windows (flags show as letters "CI" on Windows). Use the Fluent
+Emoji 3D images in `/emoji/` (MIT, see `emoji/LICENSE-fluent-emoji.txt`), always
+decorative inside an `aria-hidden="true"` parent:
+
+```html
+<span aria-hidden="true"><img class="emo" src="/emoji/herb.webp" alt="" width="96" height="96" decoding="async"></span>
+```
+
+Size follows the parent's `font-size` (`.emo` = 1.25em). To add a new one, take
+`assets/<Name>/3D/*_3d.png` from github.com/microsoft/fluentui-emoji and convert
+it to a 96×96 WebP (quality ~82) in `/emoji/`. The Côte d'Ivoire flag is
+`/emoji/flag-ci.svg` (`class="emo emo-flag"`, 36×26).
+
 ## Local setup
 
 ```
