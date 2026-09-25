@@ -54,9 +54,9 @@ manual edit:
    using `changefreq=monthly`/`priority=0.7` (permanent pages range 0.3–1.0 instead).
 4. Category must reuse an existing value exactly — do not invent a new one.
    Known categories: `Visite d'échange`, `Patrimoine & Savoir-faire`,
-   `Nomination officielle`, `Hygiène & Salubrité`, `Partenariat`. (Note: the site
-   currently has both `Visite d'échange` and `Visite d'échanges` in the wild from
-   past inconsistency — pick one for anything new, don't add a third variant.)
+   `Nomination officielle`, `Hygiène & Salubrité`, `Partenariat`. (The former
+   variant `Visite d'échanges` was unified to `Visite d'échange` in Sept. 2026 —
+   don't reintroduce it.)
 5. If — and only if — the edit also touched `style.css` or `script.js`, bump the
    `?v=...` cache-busting query param on **every single page** that references
    the changed file. `check-page-scaffold` fails the build on purpose if the

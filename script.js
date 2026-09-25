@@ -520,10 +520,15 @@
     if (!title) return;
 
     const text = title.textContent.trim();
+    // Les lecteurs d'écran lisent le titre d'un bloc (aria-label) au lieu
+    // d'épeler les lettres une à une. Le style de « -CI » (ex-<em>) est
+    // reproduit en CSS via :nth-last-child sur les .split-char.
+    title.setAttribute('aria-label', text);
     title.innerHTML = '';
     [...text].forEach((char, i) => {
       const span = document.createElement('span');
       span.textContent = char;
+      span.setAttribute('aria-hidden', 'true');
       span.classList.add('split-char');
       span.style.setProperty('--i', i);
       title.appendChild(span);
