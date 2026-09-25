@@ -21,9 +21,8 @@ Réunis :
   à l'identique, n'invente pas une variante singulier/pluriel) :
   `Visite d'échange`, `Patrimoine & Savoir-faire`, `Nomination officielle`,
   `Hygiène & Salubrité`, `Partenariat`.
-  ⚠️ Le site a actuellement deux graphies pour la même catégorie
-  (`Visite d'échange` et `Visite d'échanges` selon l'article) — à
-  uniformiser un jour, mais choisis-en une seule pour tout nouvel article.
+  La graphie `Visite d'échanges` (au pluriel) a été uniformisée en
+  `Visite d'échange` en septembre 2026 : ne pas la réintroduire.
 
 ## 1. Créer le fichier de l'article
 
