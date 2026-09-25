@@ -629,6 +629,20 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
   white-space:nowrap; cursor:pointer; position:relative; overflow:hidden;
 }
 .btn-ghost:hover { border-color:var(--or); color:var(--or); transform:translateY(-3px); }
+/* Variante sur fond clair (sections ivoire hors hero) : le blanc y
+   était illisible (contraste ~1:1). Texte vert, bordure verte ;
+   au survol, fond vert plein et texte ivoire. */
+.section .btn-ghost {
+  color:var(--vert);
+  border-color:rgba(26,61,43,.45);
+  font-weight:600;
+}
+.section .btn-ghost:hover,
+.section .btn-ghost:focus-visible {
+  background:var(--vert);
+  border-color:var(--vert);
+  color:var(--ivoire);
+}
 
 /* ===== GALERIE ===== */
 .galerie { background:var(--vert); position:relative; overflow:hidden; }
