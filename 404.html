@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Page introuvable — ANAREKA-CI</title>
-<meta name="description" content="Page introuvable sur le site officiel de l'ANAREKA-CI.">
+<meta name="description" content="Cette page est introuvable sur le site officiel de l'ANAREKA-CI. Retournez à l'accueil pour découvrir l'association et la filière attiéké.">
 <meta name="robots" content="noindex, follow">
-<link rel="icon" type="image/webp" href="logo.webp">
+<link rel="icon" type="image/webp" href="/logo.webp">
 <link rel="manifest" href="/site.webmanifest">
 <style>
   :root{
@@ -14,6 +14,8 @@
     --or:#c9a84c; --or-clair:#e8c97a;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{overflow-x:hidden;overflow-y:auto;}
+  body{position:relative;}
   body{
     font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
     min-height:100vh;
@@ -47,14 +49,15 @@
 </style>
 </head>
 <body>
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="wrap">
-    <img src="logo.webp" alt="ANAREKA-CI" class="logo">
+  <div class="orb orb1" aria-hidden="true"></div>
+  <div class="orb orb2" aria-hidden="true"></div>
+  <main class="wrap">
+    <img src="/logo.webp" alt="ANAREKA-CI" class="logo" width="96" height="96">
     <div class="code">404</div>
     <h1>Cette page est introuvable</h1>
     <p>Le lien que vous avez suivi n'existe pas ou a été déplacé. Retournons à l'accueil pour découvrir l'ANAREKA-CI.</p>
     <a href="/" class="btn">Retour à l'accueil</a>
-  </div>
+    <p style="margin:18px 0 0;font-size:13px"><a href="/en/" style="color:var(--or-clair)" lang="en">Page not found — back to the English homepage</a></p>
+  </main>
 </body>
 </html>

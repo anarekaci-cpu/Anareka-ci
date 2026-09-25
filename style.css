@@ -12,6 +12,7 @@
   --vert-clair:  #2d6b4f;
   --vert-pale:   #edf4ef;
   --or:          #c9a84c;
+  --or-texte:    #86661a; /* or assombri pour petit texte sur fond clair (contraste AA ≥ 4.5:1) */
   --or-clair:    #e8c97a;
   --or-pale:     #fdf8ec;
   --terre:       #6b3a1f;
@@ -955,7 +956,7 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .timeline::before { content:''; position:absolute; left:106px; top:0; bottom:0; width:1px; background:linear-gradient(to bottom,var(--or),transparent); transform-origin:top; }
 .section.reveal.on .timeline::before { animation:drawLine 1.2s cubic-bezier(.22,1,.36,1) forwards; }
 .tl-item { position:relative; margin-bottom:36px; }
-.tl-annee { position:absolute; left:-130px; top:2px; width:106px; text-align:right; padding-right:22px; font-family:'Cormorant', serif; font-size:15px; font-weight:700; color:var(--or); line-height:1.2; }
+.tl-annee { position:absolute; left:-130px; top:2px; width:106px; text-align:right; padding-right:22px; font-family:'Cormorant', serif; font-size:15px; font-weight:700; color:var(--or-texte); line-height:1.2; }
 .tl-point { position:absolute; left:-14px; top:5px; width:12px; height:12px; border-radius:50%; background:var(--vert); border:2px solid var(--blanc); box-shadow:0 0 0 2px var(--vert); transition:transform .3s; }
 .section.reveal.on .tl-point { animation:bounceIn .5s cubic-bezier(.34,1.56,.64,1) both; }
 .section.reveal.on .tl-item:nth-child(1) .tl-point { animation-delay:.1s; }
@@ -988,7 +989,7 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .eq-avatar-photo img { width:100%; height:100%; object-fit:cover; }
 .equipe-card:hover .eq-avatar { animation-play-state:paused; transform:scale(1.08) rotate(4deg); border-color:var(--or); }
 .equipe-card.fondateur .eq-avatar { background:rgba(201,168,76,.15); color:var(--or); }
-.eq-role { display:inline-flex; align-items:center; gap:7px; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--or); margin-bottom:6px; }
+.eq-role { display:inline-flex; align-items:center; gap:7px; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--or-texte); margin-bottom:6px; }
 .eq-role::before { content:''; width:14px; height:1px; background:var(--or); opacity:.6; }
 .eq-nom { font-family:'Cormorant', serif; font-size:20px; font-weight:700; color:var(--noir); margin-bottom:4px; letter-spacing:.2px; }
 .eq-bio { font-size:13px; color:var(--gris); line-height:1.6; }
@@ -1040,7 +1041,7 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 }
 
 .faq-mini { max-width:640px; margin:0 auto; padding:28px 20px; }
-.faq-mini-titre { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--or); margin-bottom:10px; }
+.faq-mini-titre { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--or-texte); margin-bottom:10px; }
 .faq-item { border-bottom:1px solid var(--bordure); }
 .faq-item:first-of-type { border-top:1px solid var(--bordure); }
 .faq-item summary { padding:12px 2px; font-size:15.5px; font-weight:600; color:var(--vert); cursor:pointer; list-style:none; }
@@ -1196,7 +1197,7 @@ a:not(.btn-or):not(.btn-ghost):not(.cta-btn):not(.social-btn):not(.part-card):no
 .article-video-links { display:flex; flex-wrap:wrap; gap:10px 20px; margin:0 0 32px; font-size:13px; }
 .article-video-links a { color:var(--vert); font-weight:600; text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s, color .2s; }
 .article-video-links a:hover { color:var(--or); border-bottom-color:var(--or); }
-.article-meta { font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--or); margin-bottom:14px; }
+.article-meta { font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--or-texte); margin-bottom:14px; }
 .article-meta a { color:inherit; text-decoration:none; }
 .article-meta a:hover { text-decoration:underline; }
 .article-body { font-size:16px; line-height:1.85; color:#3a3a3a; max-width:720px; }
@@ -1508,7 +1509,7 @@ footer .tagline { font-size:12.5px; color:rgba(255,255,255,.58); margin-bottom:2
 .social-btn.tel { background:var(--vert); color:#fff; }
 .social-btn svg { width:20px; height:20px; }
 .footer-hr { border:none; border-top:1px solid rgba(255,255,255,.08); max-width:300px; margin:0 auto 20px; }
-footer small { font-size:11.5px; color:rgba(255,255,255,.28); display:block; margin-top:5px; }
+footer small { font-size:11.5px; color:rgba(255,255,255,.6); display:block; margin-top:5px; }
 
 .js footer .footer-logo,.js footer .tagline,.js footer .footer-nav,.js footer .footer-social { opacity:0; transform:translateY(16px); transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1); }
 footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} footer.footer-in .tagline{opacity:1;transform:none;transition-delay:.15s} footer.footer-in .footer-nav{opacity:1;transform:none;transition-delay:.25s} footer.footer-in .footer-social{opacity:1;transform:none;transition-delay:.35s}
@@ -1670,6 +1671,14 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   visibility: hidden;
   pointer-events: none;
 }
+/* Garde-fous : l'overlay recouvre toute la page tant que script.js ne
+   l'a pas masqué. JavaScript désactivé (pas de classe .js sur <html>) →
+   jamais affiché. script.js lent ou en échec (réseau mobile, bloqueur) →
+   masqué d'office après 4 s tant que le script n'a pas pris la main
+   (classe .ready, posée par initLottiePageTransition). */
+html:not(.js) .lottie-overlay { display: none; }
+.lottie-overlay:not(.ready) { animation: lottie-overlay-failsafe 0s linear 4s forwards; }
+@keyframes lottie-overlay-failsafe { to { opacity: 0; visibility: hidden; } }
 
 .lottie-box { position: relative; z-index: 1; width: 208px; height: 208px; }
 

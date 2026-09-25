@@ -54,20 +54,37 @@ manual edit:
    using `changefreq=monthly`/`priority=0.7` (permanent pages range 0.3–1.0 instead).
 4. Category must reuse an existing value exactly — do not invent a new one.
    Known categories: `Visite d'échange`, `Patrimoine & Savoir-faire`,
-   `Nomination officielle`, `Hygiène & Salubrité`, `Partenariat`. (Note: the site
-   currently has both `Visite d'échange` and `Visite d'échanges` in the wild from
-   past inconsistency — pick one for anything new, don't add a third variant.)
+   `Nomination officielle`, `Hygiène & Salubrité`, `Partenariat`. (The former
+   variant `Visite d'échanges` was unified to `Visite d'échange` in Sept. 2026 —
+   don't reintroduce it.)
 5. If — and only if — the edit also touched `style.css` or `script.js`, bump the
    `?v=...` cache-busting query param on **every single page** that references
    the changed file. `check-page-scaffold` fails the build on purpose if the
    version param isn't identical across all pages.
+
+## Local setup
+
+```
+npm install        # installs node-html-parser (only dev dependency)
+npm run check      # scaffold + hreflang + CSP hash guards (same as CI)
+npm run dev        # wrangler pages dev on http://localhost:8788 — applies _headers/_redirects like production
+```
 
 ## CI guard scripts (run locally with Node + `node-html-parser`)
 
 ```
 node .github/scripts/check-page-scaffold.js
 node .github/scripts/check-hreflang.js
+node .github/scripts/check-csp-hashes.js
 ```
+
+- **`check-csp-hashes.js`**: `script-src` in `_headers` does **not** allow
+  `'unsafe-inline'`; every executable inline `<script>` must have its
+  `'sha256-…'` listed there. Fails on a missing hash, an obsolete hash, or any
+  inline `on*=` event handler. If you edit an inline script (e.g. the
+  `document.documentElement.classList.add('js')` line in every `<head>`, or the
+  legacy-anchor redirect script in `index.html`), copy the hash it prints into
+  `_headers`.
 
 - **`check-page-scaffold.js`**: three checks in one. (1) `<nav id="mainNav">` and
   `<footer>` must be byte-identical across all FR pages, and separately across all
@@ -100,9 +117,9 @@ node .github/scripts/check-hreflang.js
 ## Security headers (`_headers`)
 
 Cloudflare Pages headers file sets HSTS, `X-Content-Type-Options`,
-`X-Frame-Options`, a `Content-Security-Policy` allowlisting specific external
-origins (Cloudflare Insights/Turnstile, Google, cdnjs, Google Fonts, Formspree,
-YouTube), and long-lived immutable caching for fonts/images vs. short
+`X-Frame-Options`, a `Content-Security-Policy` allowlisting only the external
+origins actually used (Cloudflare Web Analytics, Formspree, YouTube nocookie
+embeds; fonts are self-hosted) and inline scripts by hash, and long-lived immutable caching for fonts/images vs. short
 `must-revalidate` caching for CSS/JS/HTML. If you add a new external
 script/style/font/frame source, update the matching CSP directive here or it will
 be silently blocked in production.
@@ -111,3 +128,11 @@ be silently blocked in production.
 Cloudflare Pages' default folder resolution handles every other extensionless
 route, so don't add per-page redirect rules for pages that already exist as
 `{slug}/index.html`.
+
+Cloudflare's zone-level "Add security headers" managed transform (dashboard →
+Rules → Transform Rules → Managed Transforms) overrides `Referrer-Policy` with
+`same-origin` and adds `X-XSS-Protection`/`Expect-CT` — that is why the served
+`Referrer-Policy` differs from `_headers`. Change it there, not in this repo.
+
+Everything in the repo is publicly served, including `CLAUDE.md`, `.github/`,
+`package.json` and `templates/`. Never commit secrets or private notes.

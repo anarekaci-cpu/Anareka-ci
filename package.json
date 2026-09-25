@@ -1,0 +1,12 @@
+{
+  "name": "anarekaci-site",
+  "private": true,
+  "description": "Site institutionnel ANAREKA-CI (anarekaci.com) — HTML/CSS/JS statique servi tel quel par Cloudflare Pages, sans étape de build.",
+  "scripts": {
+    "dev": "npx --yes wrangler@4 pages dev . --port 8788",
+    "check": "node .github/scripts/check-page-scaffold.js && node .github/scripts/check-hreflang.js && node .github/scripts/check-csp-hashes.js"
+  },
+  "devDependencies": {
+    "node-html-parser": "^7.0.1"
+  }
+}

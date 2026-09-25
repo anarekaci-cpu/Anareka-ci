@@ -520,10 +520,15 @@
     if (!title) return;
 
     const text = title.textContent.trim();
+    // Les lecteurs d'écran lisent le titre d'un bloc (aria-label) au lieu
+    // d'épeler les lettres une à une. Le style de « -CI » (ex-<em>) est
+    // reproduit en CSS via :nth-last-child sur les .split-char.
+    title.setAttribute('aria-label', text);
     title.innerHTML = '';
     [...text].forEach((char, i) => {
       const span = document.createElement('span');
       span.textContent = char;
+      span.setAttribute('aria-hidden', 'true');
       span.classList.add('split-char');
       span.style.setProperty('--i', i);
       title.appendChild(span);
@@ -772,6 +777,9 @@
   function initLottiePageTransition() {
     var overlay = document.getElementById('lottie-overlay');
     if (!overlay) return;
+    // Désarme le masquage de secours CSS (voir .lottie-overlay:not(.ready)
+    // dans style.css) : à partir d'ici, c'est ce script qui pilote l'overlay.
+    overlay.classList.add('ready');
 
     // L'overlay est déjà display:none via CSS sous prefers-reduced-motion:
     // reduce. On sort ici aussi pour ne rien animer inutilement et laisser
@@ -818,10 +826,23 @@
       'a[href]:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"])'
     );
 
+    // Retour arrière depuis le cache (bfcache) : la page est restaurée
+    // telle qu'on l'a quittée, overlay affiché et navigating=true. Sans
+    // ceci, le visiteur revient sur un écran vert bloqué.
+    window.addEventListener('pageshow', function (e) {
+      if (!e.persisted) return;
+      navigating = false;
+      overlay.classList.add('hidden');
+    });
+
     internalLinks.forEach(function (link) {
       if (link.hostname && link.hostname !== window.location.hostname) return;
       link.addEventListener('click', function (e) {
         if (navigating) return;
+        // Ctrl/Cmd/Maj-clic, clic molette, lien de téléchargement : laisser
+        // le navigateur faire (ouverture dans un nouvel onglet, etc.).
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey ||
+            e.shiftKey || e.altKey || link.hasAttribute('download')) return;
         var targetUrl = link.getAttribute('href');
         e.preventDefault();
         navigating = true;
