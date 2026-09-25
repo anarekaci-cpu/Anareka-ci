@@ -82,7 +82,7 @@ node .github/scripts/check-csp-hashes.js
   `'unsafe-inline'`; every executable inline `<script>` must have its
   `'sha256-…'` listed there. Fails on a missing hash, an obsolete hash, or any
   inline `on*=` event handler. If you edit an inline script (e.g. the
-  `document.documentElement.classList.add('js')` line in every `<head>`, or the
+  `document.documentElement.classList.add('js')…` line in every `<head>` (it also sets `.seal-seen` for the page transition), or the
   legacy-anchor redirect script in `index.html`), copy the hash it prints into
   `_headers`.
 

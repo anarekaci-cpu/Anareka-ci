@@ -7,6 +7,11 @@
 (function () {
   'use strict';
 
+  // Déclarées avant ready() : script.js est en defer, donc ready()
+  // exécute les init immédiatement, avant la suite de ce fichier.
+  var sealRevealCallbacks = [];
+  var sealRevealed = false;
+
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
@@ -17,8 +22,15 @@
     initNavMenu();
     initScrollEffects();
     initBackToTopClick();
-    initReveal();
-    initCounter();
+    // Animations d'entrée : lancées quand le sceau découvre la page,
+    // pour qu'elles se jouent sous les yeux du visiteur et pas sous
+    // l'overlay (immédiat si pas d'overlay ou mouvement réduit).
+    onSealReveal(function () {
+      initReveal();
+      initCounter();
+      initSplitText();
+      initTimelineAnimation();
+    });
     initTrainDuplication();
     patchAlbumCards();
     initManiocTimeline();
@@ -29,11 +41,9 @@
     initImageFade();
 
     // --- INITIALISATIONS EXISTANTES ---
-    initSplitText();
     initParallax();
     initRippleEffect();
     initTiltCards();
-    initTimelineAnimation();
 
     // --- NOUVEAU v9 ---
     initSoftTilt3D();
@@ -762,96 +772,153 @@
   }
 
   /* ============================================================
-     TRANSITION DE PAGE (grains → sceau) — CSS/SVG pur, sans librairie
-     externe. Overlay affiché par défaut au chargement (masque le
-     flash de navigation). La choréographie complète (grains qui se
-     rassemblent → logo → texte, ~1.1s, voir style.css) ne se joue
-     qu'à la toute première page vue de la session (sessionStorage) :
-     la rejouer en entier à chaque page (x22) ou bloquer chaque clic
-     dessus n'ajoute rien à la marque, ça ralentit juste la
-     navigation. Toute page ou clic suivant dans la même session passe
-     en mode .fast (tout est déjà en place, voir style.css) et
-     n'attend que le fondu CSS de l'overlay (FADE_MS) — la navigation
-     ne dépend jamais de la durée d'une animation.
+     TRANSITION DE PAGE « SCEAU » — CSS pur piloté par classes, aucune
+     librairie. Trois temps, tous en transform/opacity (composités) :
+
+     1. INTRO (1re page vue de la session) : les grains d'or se
+        rassemblent en anneau, le logo se pose, le nom apparaît.
+        Un tap / clic / touche passe l'intro.
+     2. OUVERTURE (chaque page) : le disque vert se referme sur le
+        sceau et découvre la page, les grains s'envolent vers
+        l'extérieur. Les animations d'entrée de la page (titre,
+        révélations au scroll) ne démarrent qu'à ce moment-là.
+     3. FERMETURE (clic sur un lien interne) : le disque vert s'ouvre
+        depuis le point cliqué, les grains se regroupent, le sceau se
+        pose — puis la navigation part. La page suivante démarre dans
+        cet état exact (continuité visuelle), et enchaîne sur 2.
+
+     L'état « déjà vu » est posé dès le <head> (classe .seal-seen sur
+     <html>, script inline autorisé par hash dans _headers), pour que
+     la 2e page n'affiche jamais un bout d'intro avant que ce script
+     ne tourne. Sans JS : overlay jamais affiché (style.css).
   ============================================================ */
+  function onSealReveal(fn) {
+    if (sealRevealed) fn(); else sealRevealCallbacks.push(fn);
+  }
+  function fireSealReveal() {
+    if (sealRevealed) return;
+    sealRevealed = true;
+    sealRevealCallbacks.splice(0).forEach(function (fn) {
+      try { fn(); } catch (e) { console.error(e); }
+    });
+  }
+
   function initLottiePageTransition() {
     var overlay = document.getElementById('lottie-overlay');
-    if (!overlay) return;
-    // Désarme le masquage de secours CSS (voir .lottie-overlay:not(.ready)
-    // dans style.css) : à partir d'ici, c'est ce script qui pilote l'overlay.
+    if (!overlay) { fireSealReveal(); return; }
+    // Désarme le masquage de secours CSS (.lottie-overlay:not(.ready)).
     overlay.classList.add('ready');
 
-    // L'overlay est déjà display:none via CSS sous prefers-reduced-motion:
-    // reduce. On sort ici aussi pour ne rien animer inutilement et laisser
-    // les liens naviguer normalement, sans délai, pour ces visiteurs.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Mouvement réduit : l'overlay est display:none en CSS ; rien à
+    // animer, les liens naviguent normalement, sans délai.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      fireSealReveal();
+      return;
+    }
 
-    // Doit correspondre à la durée de transition CSS de .lottie-overlay.
-    var FADE_MS = 350;
-    // Le temps de laisser la choréographie complète se jouer et se poser
-    // (dernière étape : le texte, qui termine vers 1.13s — voir style.css).
-    var FIRST_VISIT_DISPLAY_MS = 1300;
-    var navigating = false;
-
+    var root = document.documentElement;
+    var INTRO_MS = 1150;   // fin de la choréographie d'intro (voir style.css)
+    var REVEAL_MS = 620;   // durée de l'ouverture (.is-revealing)
+    var CLOSE_MS = 460;    // durée de la fermeture avant navigation
     var SEEN_KEY = 'anarekaSealSeen';
-    var isFirstVisit = true;
-    try { isFirstVisit = !sessionStorage.getItem(SEEN_KEY); } catch (e) {
-      // Stockage indisponible (navigation privée, quota…) : traiter comme
-      // première visite plutôt que de planter.
+    var navigating = false;
+    var revealTimer = null;
+    var revealStarted = false;
+
+    var isFirstVisit = !root.classList.contains('seal-seen');
+    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* non bloquant */ }
+
+    // Rayon du disque : distance du point d'origine au coin le plus
+    // éloigné, pour que le disque couvre tout l'écran, sans plus.
+    function setOrigin(x, y) {
+      var w = window.innerWidth, h = window.innerHeight;
+      var r = Math.ceil(Math.hypot(Math.max(x, w - x), Math.max(y, h - y))) + 2;
+      overlay.style.setProperty('--ox', x + 'px');
+      overlay.style.setProperty('--oy', y + 'px');
+      overlay.style.setProperty('--dr', r + 'px');
     }
-    function markSeen() {
-      try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* non bloquant */ }
+    setOrigin(window.innerWidth / 2, window.innerHeight / 2);
+
+    function reveal() {
+      if (revealStarted) return;
+      revealStarted = true;
+      clearTimeout(revealTimer);
+      setOrigin(window.innerWidth / 2, window.innerHeight / 2);
+      overlay.classList.remove('is-closing');
+      overlay.classList.add('is-revealing');
+      // Fin de l'intro : les prochaines fermetures/ouvertures de cette
+      // page ne doivent plus rejouer la choréographie d'entrée.
+      root.classList.add('seal-seen');
+      // Les entrées de page démarrent quand le disque commence à
+      // découvrir le contenu, pas sous l'overlay.
+      setTimeout(fireSealReveal, 160);
+      setTimeout(function () {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('is-revealing');
+      }, REVEAL_MS);
     }
 
-    if (!isFirstVisit) {
-      // Page suivante de la même session : rien à démontrer une deuxième
-      // fois, grains/logo/texte apparaissent déjà en place (voir
-      // .lottie-overlay.fast en CSS).
-      overlay.classList.add('fast');
+    function scheduleReveal() {
+      revealTimer = setTimeout(reveal, isFirstVisit ? INTRO_MS : 0);
     }
 
-    var startTime = Date.now();
-    var revealed = false;
-    function revealOnce() {
-      if (revealed) return;
-      revealed = true;
-      markSeen();
-      var minDisplay = isFirstVisit ? FIRST_VISIT_DISPLAY_MS : FADE_MS;
-      var wait = Math.max(0, minDisplay - (Date.now() - startTime));
-      setTimeout(function () { overlay.classList.add('hidden'); }, wait);
+    // Page préchargée en arrière-plan (Speculation Rules de Cloudflare) :
+    // attendre qu'elle soit réellement affichée, sinon l'ouverture se
+    // jouerait dans le vide et la page apparaîtrait d'un coup.
+    if (document.prerendering) {
+      document.addEventListener('prerenderingchange', scheduleReveal, { once: true });
+    } else {
+      // Deux frames : laisse le navigateur peindre l'état couvert avant
+      // d'animer, sinon l'ouverture peut sauter sur une page légère.
+      requestAnimationFrame(function () { requestAnimationFrame(scheduleReveal); });
     }
-    revealOnce();
 
-    var internalLinks = document.querySelectorAll(
-      'a[href]:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"])'
-    );
+    // Passer l'intro d'un tap, d'un clic ou d'une touche.
+    function skipIntro() { if (isFirstVisit && !revealStarted) reveal(); }
+    overlay.addEventListener('click', skipIntro);
+    document.addEventListener('keydown', skipIntro, { once: true });
 
-    // Retour arrière depuis le cache (bfcache) : la page est restaurée
-    // telle qu'on l'a quittée, overlay affiché et navigating=true. Sans
-    // ceci, le visiteur revient sur un écran vert bloqué.
+    // Retour arrière depuis le cache (bfcache) : la page revient telle
+    // qu'on l'a quittée (fermée) → la rouvrir.
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) return;
       navigating = false;
-      overlay.classList.add('hidden');
+      revealStarted = false;
+      isFirstVisit = false;
+      overlay.classList.remove('hidden');
+      reveal();
     });
 
-    internalLinks.forEach(function (link) {
-      if (link.hostname && link.hostname !== window.location.hostname) return;
-      link.addEventListener('click', function (e) {
-        if (navigating) return;
-        // Ctrl/Cmd/Maj-clic, clic molette, lien de téléchargement : laisser
-        // le navigateur faire (ouverture dans un nouvel onglet, etc.).
-        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey ||
-            e.shiftKey || e.altKey || link.hasAttribute('download')) return;
-        var targetUrl = link.getAttribute('href');
-        e.preventDefault();
-        navigating = true;
-        // Un clic n'a jamais le temps (FADE_MS) de montrer la
-        // choréographie complète : on passe directement à l'état final.
-        overlay.classList.add('fast');
-        overlay.classList.remove('hidden');
-        setTimeout(function () { window.location.href = targetUrl; }, FADE_MS);
-      });
+    document.addEventListener('click', function (e) {
+      if (navigating || e.defaultPrevented) return;
+      // Ctrl/Cmd/Maj-clic, clic molette : comportement natif (nouvel onglet…).
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var link = e.target.closest && e.target.closest('a[href]');
+      if (!link || link.hasAttribute('download')) return;
+      if (link.target && link.target !== '_self') return;
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || /^(mailto|tel|javascript):/i.test(href)) return;
+      if (link.origin !== window.location.origin) return;
+      // Ancre sur la page courante : simple défilement, pas de transition.
+      if (link.pathname.replace(/\/$/, '') === window.location.pathname.replace(/\/$/, '') &&
+          link.search === window.location.search) return;
+
+      e.preventDefault();
+      navigating = true;
+
+      // Origine du disque : point cliqué, ou centre du lien si activé au
+      // clavier (Entrée → clientX/Y valent 0).
+      var x = e.clientX, y = e.clientY;
+      if (!e.detail || (x === 0 && y === 0)) {
+        var r = link.getBoundingClientRect();
+        x = r.left + r.width / 2; y = r.top + r.height / 2;
+      }
+      setOrigin(x, y);
+      overlay.classList.remove('hidden', 'is-revealing');
+      // Reflow : repart de scale(0) même si une animation vient de finir.
+      void overlay.offsetWidth;
+      overlay.classList.add('is-closing');
+      setTimeout(function () { window.location.href = link.href; }, CLOSE_MS);
     });
   }
 

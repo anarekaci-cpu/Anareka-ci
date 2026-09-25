@@ -1642,16 +1642,23 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
      un clic sur un lien doit naviguer tout de suite, sans délai. */
 }
 
-/* ===== TRANSITION DE PAGE (grains → sceau) =====
-   Overlay affiché par défaut au chargement (masque le flash de
-   navigation d'une page à l'autre). Le motif : de petits grains d'or
-   se rassemblent en anneau — une référence directe à la semoule
-   d'attiéké elle-même plutôt qu'une forme abstraite. CSS/SVG pur,
-   aucune librairie externe. Le choréographie complète (grains → logo
-   → texte) ne se joue qu'une fois par session, à la première page vue
-   (voir script.js) ; sur .lottie-overlay.fast (pages/clics suivants),
-   tout est déjà en place, seul l'overlay fait un fondu. */
+/* ===== TRANSITION DE PAGE « SCEAU » =====
+   Motif : des grains d'or (la semoule d'attiéké) se rassemblent en
+   anneau autour du logo. Tout est en transform/opacity → animé par le
+   compositeur, fluide même sur un téléphone d'entrée de gamme.
+   États (posés par script.js, voir initLottiePageTransition) :
+     (aucun)        couvert, tout en place — état de départ d'une page
+     html:not(.seal-seen)  1re page de la session : intro complète
+     .is-revealing  ouverture : le disque se referme sur le sceau
+     .is-closing    fermeture : le disque s'ouvre depuis le point cliqué
+     .hidden        retiré (visibility:hidden)
+   Variables : --ox/--oy origine du disque, --dr son rayon (px). */
 .lottie-overlay {
+  --ox: 50vw;
+  --oy: 50vh;
+  --dr: 75vmax;
+  --ease-io: cubic-bezier(.76,0,.24,1);
+  --ease-out: cubic-bezier(.2,.8,.2,1);
   position: fixed;
   inset: 0;
   z-index: 10050;
@@ -1660,28 +1667,42 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
   align-items: center;
   justify-content: center;
   gap: 22px;
-  background: radial-gradient(circle at 50% 42%, #234d38 0%, var(--vert) 45%, #0d2015 100%);
-  opacity: 1;
-  visibility: visible;
+  overflow: hidden;
   pointer-events: auto;
-  transition: opacity .35s ease, visibility .35s ease;
+  visibility: visible;
+}
+/* Le « disque » vert : un cercle qui couvre tout l'écran depuis
+   (--ox, --oy). Animer son scale est bien moins coûteux qu'animer un
+   clip-path, et le reflet du dégradé suit le point cliqué. */
+.lottie-overlay::before {
+  content: '';
+  position: absolute;
+  left: var(--ox);
+  top: var(--oy);
+  width: calc(var(--dr) * 2);
+  height: calc(var(--dr) * 2);
+  margin: calc(var(--dr) * -1) 0 0 calc(var(--dr) * -1);
+  border-radius: 50%;
+  background: radial-gradient(circle, #2a5a41 0%, #1f4731 22%, var(--vert) 48%, #0d2015 100%);
+  transform: scale(1);
+  will-change: transform;
 }
 .lottie-overlay.hidden {
-  opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
-/* Garde-fous : l'overlay recouvre toute la page tant que script.js ne
-   l'a pas masqué. JavaScript désactivé (pas de classe .js sur <html>) →
-   jamais affiché. script.js lent ou en échec (réseau mobile, bloqueur) →
-   masqué d'office après 4 s tant que le script n'a pas pris la main
-   (classe .ready, posée par initLottiePageTransition). */
+.lottie-overlay.hidden::before { transform: scale(0); }
+
+/* Garde-fous : sans JS (pas de .js sur <html>) → jamais affiché ;
+   script.js lent ou en échec → masqué d'office après 4 s tant que le
+   script n'a pas pris la main (classe .ready). */
 html:not(.js) .lottie-overlay { display: none; }
-.lottie-overlay:not(.ready) { animation: lottie-overlay-failsafe 0s linear 4s forwards; }
+.lottie-overlay:not(.ready) { animation: lottie-overlay-failsafe .3s ease 4s forwards; }
 @keyframes lottie-overlay-failsafe { to { opacity: 0; visibility: hidden; } }
 
 .lottie-box { position: relative; z-index: 1; width: 208px; height: 208px; }
 
+/* --- Grains : posés sur l'anneau par défaut --- */
 .lottie-grains { position: absolute; inset: 0; --rr: 96px; }
 .lottie-grains i {
   position: absolute;
@@ -1692,16 +1713,16 @@ html:not(.js) .lottie-overlay { display: none; }
   margin: calc(var(--sz) / -2);
   border-radius: 50%;
   background: radial-gradient(circle at 32% 30%, var(--or-clair), var(--or) 70%);
-  opacity: 0;
-  transform: rotate(var(--a)) translateX(calc(var(--rr) * 2.4)) scale(.3);
-  animation: grainGather .7s cubic-bezier(.2,.8,.2,1) var(--d) both;
+  box-shadow: 0 0 6px rgba(232,201,122,.35);
+  opacity: .92;
+  transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1);
 }
-@keyframes grainGather {
-  0%   { opacity: 0; transform: rotate(var(--a)) translateX(calc(var(--rr) * 2.4)) scale(.3); }
-  60%  { opacity: 1; }
-  100% { opacity: .92; transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1); }
-}
+/* L'anneau tourne lentement tant que le sceau est affiché : il « vit »
+   au lieu d'être un écran figé. */
+.lottie-grains { animation: sealSpin 9s linear infinite; }
+@keyframes sealSpin { to { transform: rotate(360deg); } }
 
+/* --- Logo : halo doré qui respire --- */
 .lottie-logo {
   position: absolute;
   top: 50%;
@@ -1709,15 +1730,30 @@ html:not(.js) .lottie-overlay { display: none; }
   width: 132px;
   height: 132px;
   border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 0 0 1px rgba(232,201,122,.25), 0 18px 40px rgba(0,0,0,.35);
-  transform: translate(-50%, -50%) scale(.72);
-  animation: lottieLogoReveal .6s cubic-bezier(.2,.8,.2,1) .32s forwards;
+  box-shadow: 0 0 0 1px rgba(232,201,122,.3), 0 18px 40px rgba(0,0,0,.35);
+  transform: translate(-50%, -50%) scale(1);
 }
-@keyframes lottieLogoReveal {
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.lottie-box::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(232,201,122,.45), 0 0 34px 6px rgba(201,168,76,.28);
+  opacity: 0;
+  animation: sealHalo 2.4s ease-in-out .9s infinite;
+  pointer-events: none;
+}
+@keyframes sealHalo {
+  0%   { opacity: 0;   transform: scale(.9); }
+  45%  { opacity: .9;  transform: scale(1.06); }
+  100% { opacity: 0;   transform: scale(1.22); }
 }
 
+/* --- Nom + sous-titre --- */
 .lottie-word {
   position: relative;
   z-index: 1;
@@ -1726,13 +1762,8 @@ html:not(.js) .lottie-overlay { display: none; }
   align-items: center;
   gap: 8px;
   max-width: 340px;
+  padding: 0 16px;
   text-align: center;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: lottieWordRise .55s cubic-bezier(.2,.8,.2,1) .58s forwards;
-}
-@keyframes lottieWordRise {
-  to { opacity: 1; transform: translateY(0); }
 }
 .lottie-word strong {
   font-family: 'Cormorant', serif;
@@ -1753,24 +1784,107 @@ html:not(.js) .lottie-overlay { display: none; }
   opacity: .82;
 }
 
-/* Pages/clics hors première visite de session : rien à démontrer une
-   deuxième fois — grains, logo et texte apparaissent déjà en place,
-   sans rejouer l'entrée (voir isFirstVisit dans script.js). */
-.lottie-overlay.fast .lottie-grains i,
-.lottie-overlay.fast .lottie-logo,
-.lottie-overlay.fast .lottie-word {
-  animation: none !important;
-  opacity: 1 !important;
+/* ========== 1. INTRO (1re page vue de la session, ~1,15 s) ==========
+   Pilotée par l'absence de .seal-seen sur <html> (posée dans le <head>
+   dès la 2e page, et par script.js à la fin de l'intro) : l'intro part
+   dès la première peinture, sans attendre script.js (defer), donc
+   jamais d'état final affiché une fraction de seconde avant l'intro. */
+html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie-grains i {
+  animation: grainGather .75s var(--ease-out) var(--d) both;
 }
-.lottie-overlay.fast .lottie-grains i {
-  opacity: .92 !important;
-  transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1) !important;
+@keyframes grainGather {
+  0%   { opacity: 0;   transform: rotate(calc(var(--a) - 70deg)) translateX(calc(var(--rr) * 2.6)) scale(.3); }
+  55%  { opacity: 1; }
+  82%  { transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r) - 5px)) scale(1.15); }
+  100% { opacity: .92; transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1); }
 }
-.lottie-overlay.fast .lottie-logo {
-  transform: translate(-50%, -50%) scale(1) !important;
+html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie-logo {
+  animation: sealLogoIn .7s cubic-bezier(.34,1.45,.64,1) .34s both;
 }
-.lottie-overlay.fast .lottie-word {
-  transform: translateY(0) !important;
+@keyframes sealLogoIn {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(.55) rotate(-8deg); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie-word strong {
+  animation: sealWordIn .6s var(--ease-out) .6s both;
+}
+html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie-sub {
+  animation: sealSubIn .6s var(--ease-out) .74s both;
+}
+@keyframes sealWordIn {
+  0%   { opacity: 0; transform: translateY(12px); letter-spacing: .5em; }
+  100% { opacity: 1; transform: translateY(0);   letter-spacing: .22em; }
+}
+@keyframes sealSubIn {
+  0%   { opacity: 0;   transform: translateY(8px); }
+  100% { opacity: .82; transform: translateY(0); }
+}
+
+/* ========== 2. OUVERTURE (chaque page, .62 s) ==========
+   Le disque se referme sur le sceau ; les grains s'envolent. */
+.lottie-overlay.is-revealing { pointer-events: none; }
+.lottie-overlay.is-revealing::before {
+  animation: sealDiscClose .62s var(--ease-io) .06s both;
+}
+@keyframes sealDiscClose {
+  from { transform: scale(1); }
+  to   { transform: scale(0); }
+}
+.lottie-overlay.is-revealing .lottie-grains i {
+  animation: grainScatter .5s cubic-bezier(.5,0,.75,0) calc(var(--d) * .4) both;
+}
+@keyframes grainScatter {
+  from { opacity: .92; transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1); }
+  to   { opacity: 0;   transform: rotate(calc(var(--a) + 40deg)) translateX(calc(var(--rr) * 3.2)) scale(.4); }
+}
+.lottie-overlay.is-revealing .lottie-logo {
+  animation: sealLogoOut .5s cubic-bezier(.5,0,.75,0) both;
+}
+@keyframes sealLogoOut {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(.35); }
+}
+.lottie-overlay.is-revealing .lottie-word,
+.lottie-overlay.is-revealing .lottie-box::after {
+  animation: sealFadeOut .22s ease-in both;
+}
+@keyframes sealFadeOut { to { opacity: 0; transform: translateY(-6px); } }
+
+/* ========== 3. FERMETURE (clic sur un lien, .46 s) ==========
+   Le disque s'ouvre depuis le point cliqué, le sceau se reforme. */
+.lottie-overlay.is-closing::before {
+  animation: sealDiscOpen .46s var(--ease-io) both;
+}
+@keyframes sealDiscOpen {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+.lottie-overlay.is-closing .lottie-grains i {
+  animation: grainGatherFast .34s var(--ease-out) calc(.1s + var(--d) * .4) both;
+}
+@keyframes grainGatherFast {
+  from { opacity: 0;   transform: rotate(calc(var(--a) - 40deg)) translateX(calc(var(--rr) * 2)) scale(.4); }
+  to   { opacity: .92; transform: rotate(var(--a)) translateX(calc(var(--rr) + var(--r))) scale(1); }
+}
+.lottie-overlay.is-closing .lottie-logo {
+  animation: sealLogoPop .32s cubic-bezier(.34,1.45,.64,1) .14s both;
+}
+@keyframes sealLogoPop {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(.6); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.lottie-overlay.is-closing .lottie-word {
+  animation: sealFadeIn .25s ease-out .2s both;
+}
+@keyframes sealFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 480px) {
+  .lottie-box { width: 176px; height: 176px; }
+  .lottie-grains { --rr: 82px; }
+  .lottie-logo { width: 112px; height: 112px; }
+  .lottie-box::after { width: 128px; height: 128px; margin: -64px 0 0 -64px; }
+  .lottie-word strong { font-size: 23px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
