@@ -13,7 +13,7 @@ name: CI
 
 on:
   push:
-    branches: [main, lot3-decoupage-multipages, transition-fondu-natif, feature/lottie-page-transition]
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -151,3 +151,16 @@ jobs:
 
       - name: Verify hreflang reciprocity across pages and sitemap.xml
         run: node .github/scripts/check-hreflang.js
+
+  check-csp-hashes:
+    name: CSP — scripts inline autorisés par hash
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify every inline script hash is allowlisted in _headers
+        run: node .github/scripts/check-csp-hashes.js
