@@ -54,36 +54,25 @@
      MENU MOBILE
   ============================================================ */
   /* ============================================================
-     Fond animé par page (voir « FONDS ANIMÉS PAR PAGE » dans style.css).
-     La variante dépend de l'URL, FR comme EN (/en/... = même fond).
+     Wallpaper anime en haut de chaque page interieure + rails de pagne
+     sur les bords (voir WALLPAPER ANIME dans style.css). Accueil : rails seuls.
      ============================================================ */
   function initBrandBackdrop() {
-    if (document.querySelector('.brand-bg')) return;
-    var path = window.location.pathname
-      .replace(/^\/en(?=\/|$)/, '')
-      .replace(/\/index\.html$/, '')
-      .replace(/\.html$/, '')
-      .replace(/\/+$/, '') || '/';
-    var variants = {
-      '/': 'grains',
-      '/adhesion': 'grains',
-      '/association': 'aurore',
-      '/contact': 'aurore',
-      '/missions': 'pagne',
-      '/attieke': 'vapeur',
-      '/blog': 'papier',
-      '/mentions-legales': 'calme'
-    };
-    var variant = variants[path] || (path.indexOf('/blog/') === 0 ? 'papier' : 'calme');
-    var bg = document.createElement('div');
-    bg.className = 'brand-bg brand-bg--' + variant;
-    bg.setAttribute('aria-hidden', 'true');
-    document.body.insertBefore(bg, document.body.firstChild);
-  var rails = document.createElement('div');
-  rails.className = 'brand-rails';
-  rails.setAttribute('aria-hidden', 'true');
-  rails.innerHTML = '<i></i><i></i>';
-  document.body.insertBefore(rails, bg.nextSibling);
+    if (document.querySelector('.page-wallpaper, .brand-rails')) return;
+    var main = document.getElementById('main-content');
+    var isHome = /^(\/en)?\/?(index\.html)?$/.test(window.location.pathname);
+    if (main && !isHome) {
+      var wp = document.createElement('div');
+      wp.className = 'page-wallpaper';
+      wp.setAttribute('aria-hidden', 'true');
+      wp.innerHTML = '<i></i><i></i><i></i>';
+      main.insertBefore(wp, main.firstChild);
+    }
+    var rails = document.createElement('div');
+    rails.className = 'brand-rails';
+    rails.setAttribute('aria-hidden', 'true');
+    rails.innerHTML = '<i></i><i></i>';
+    document.body.insertBefore(rails, document.body.firstChild);
   }
 
   function initNavMenu() {

@@ -2020,116 +2020,11 @@ html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie
   animation: pagneMarch 3s linear infinite, sealSubIn .6s var(--ease-out) .86s both;
 }
 
-/* ============================================================
-   FONDS ANIMÉS PAR PAGE  (posés par script.js : initBrandBackdrop)
-   Un seul calque fixe derrière le contenu, uniquement transform
-   et opacity (compositeur) : fluide sur téléphone d'entrée de
-   gamme. Immobile si « réduire les animations » est activé.
-   ============================================================ */
-.brand-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-  contain: strict;
-}
-.brand-bg::before,
-.brand-bg::after { content: ''; position: absolute; will-change: transform; }
-
-@keyframes bgRise   { to { transform: translate3d(0, -240px, 0); } }
-@keyframes bgDriftA { to { transform: translate3d(32vmax, 22vmax, 0) scale(1.15); } }
-@keyframes bgDriftB { to { transform: translate3d(-30vmax, -20vmax, 0) scale(.9); } }
-@keyframes bgMarch  { to { transform: translate3d(-80px, 0, 0); } }
-@keyframes bgPulse  { from { opacity: .55; transform: scale(.92); } to { opacity: 1; transform: scale(1.08); } }
-@keyframes bgSweep  { to { transform: translate3d(320%, 0, 0); } }
-@keyframes bgSteam {
-  0%   { transform: translate3d(0, 10vmax, 0) scale(.9);  opacity: .3; }
-  50%  { opacity: .95; }
-  100% { transform: translate3d(4vmax, -55vmax, 0) scale(1.2); opacity: .2; }
-}
-
-/* Accueil + Adhésion : grains de semoule dorés qui montent */
-.brand-bg--grains::before {
-  left: 0; top: 0; width: 100%; height: calc(100% + 240px);
-  background-image:
-    radial-gradient(circle, rgba(201,168,76,.5) 0 2px, transparent 3px),
-    radial-gradient(circle, rgba(45,107,79,.32) 0 1.5px, transparent 2.5px);
-  background-size: 120px 120px, 240px 240px;
-  background-position: 0 0, 60px 90px;
-  animation: bgRise 32s linear infinite;
-}
-.brand-bg--grains::after {
-  left: 0; top: 0; width: 100%; height: calc(100% + 240px);
-  background-image: radial-gradient(circle, rgba(232,201,122,.5) 0 3px, transparent 4.5px);
-  background-size: 240px 240px;
-  background-position: 130px 40px;
-  animation: bgRise 52s linear infinite;
-}
-
-/* Association + Contact : aurore or et vert qui dérive */
-.brand-bg--aurore::before {
-  width: 90vmax; height: 90vmax; left: -25vmax; top: -30vmax;
-  background: radial-gradient(circle, rgba(201,168,76,.22) 0%, transparent 62%);
-  animation: bgDriftA 28s ease-in-out infinite alternate;
-}
-.brand-bg--aurore::after {
-  width: 100vmax; height: 100vmax; right: -35vmax; bottom: -45vmax;
-  background: radial-gradient(circle, rgba(45,107,79,.22) 0%, transparent 62%);
-  animation: bgDriftB 34s ease-in-out infinite alternate;
-}
-
-/* Missions : texture de pagne très discrète qui défile, halo doré */
-.brand-bg--pagne::before {
-  top: 0; bottom: 0; left: 0; right: -80px;
-  background: var(--pagne) 0 0 / 80px 40px;
-  opacity: .075;
-  animation: bgMarch 40s linear infinite;
-}
-.brand-bg--pagne::after {
-  width: 80vmax; height: 80vmax; left: 50%; top: -20vmax; margin-left: -40vmax;
-  background: radial-gradient(circle, rgba(201,168,76,.2) 0%, transparent 60%);
-  animation: bgPulse 12s ease-in-out infinite alternate;
-}
-
-/* Attiéké : vapeur dorée et verte qui monte */
-.brand-bg--vapeur::before {
-  left: -10vmax; bottom: -30vmax; width: 70vmax; height: 70vmax;
-  background: radial-gradient(ellipse at center, rgba(232,201,122,.42) 0%, rgba(201,168,76,.14) 40%, transparent 66%);
-  animation: bgSteam 19s ease-in-out infinite;
-}
-.brand-bg--vapeur::after {
-  right: -12vmax; bottom: -34vmax; width: 80vmax; height: 80vmax;
-  background: radial-gradient(ellipse at center, rgba(45,107,79,.24) 0%, rgba(45,107,79,.08) 42%, transparent 68%);
-  animation: bgSteam 26s ease-in-out -9s infinite;
-}
-
-/* Actualités + articles : reflet doré qui balaie la page */
-.brand-bg--papier::before {
-  top: -10%; bottom: -10%; left: -60%; width: 60%;
-  background: linear-gradient(105deg, transparent 0%, rgba(201,168,76,.14) 45%, rgba(255,255,255,.4) 50%, rgba(201,168,76,.14) 55%, transparent 100%);
-  animation: bgSweep 20s ease-in-out infinite;
-}
-.brand-bg--papier::after {
-  width: 60vmax; height: 60vmax; right: -20vmax; top: -25vmax;
-  background: radial-gradient(circle, rgba(45,107,79,.16), transparent 62%);
-  animation: bgPulse 14s ease-in-out infinite alternate;
-}
-
-/* Mentions légales et pages sans variante : halo calme */
-.brand-bg--calme::before {
-  width: 90vmax; height: 90vmax; left: 50%; top: -40vmax; margin-left: -45vmax;
-  background: radial-gradient(circle, rgba(201,168,76,.16), transparent 60%);
-  animation: bgPulse 16s ease-in-out infinite alternate;
-}
-
-@media print { .brand-bg { display: none; } }
 
 /* « Réduire les animations » (réglage du téléphone ou économiseur
    de batterie) : bandes et fonds restent visibles mais immobiles. */
 @media (prefers-reduced-motion: reduce) {
   #mainNav::after, footer::before, .pagne-band--anime, .lottie-word::after { animation: none !important; }
-  .brand-bg::before, .brand-bg::after { animation: none !important; }
 }
 
 /* ============================================================
@@ -2139,7 +2034,6 @@ html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie
    ============================================================ */
 :root {
   --pagne-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='40'%3E%3Crect width='20' height='40' fill='%234a2a12'/%3E%3Cpath d='M10 0L20 10L10 20L0 10Z' fill='%23efc94c'/%3E%3Cpath d='M10 20L20 30L10 40L0 30Z' fill='%232e9b4a'/%3E%3Cpath d='M10 10L15 15L10 20L5 15Z' fill='%23fff6d6'/%3E%3Cpath d='M10 30L15 35L10 40L5 35Z' fill='%23fff6d6'/%3E%3Cpath d='M10 0L15 5L10 10L5 5Z' fill='%234a2a12'/%3E%3Cpath d='M10 20L15 25L10 30L5 25Z' fill='%234a2a12'/%3E%3C/svg%3E");
-  --lattice: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 20L40 0L80 20L40 40Z' fill='none' stroke='%23c9a84c' stroke-opacity='.14'/%3E%3Cpath d='M40 14L46 20L40 26L34 20Z' fill='%23c9a84c' fill-opacity='.10'/%3E%3C/svg%3E");
 }
 @keyframes railMarch { to { transform: translate3d(0, var(--rt, 24px), 0); } }
 
@@ -2160,26 +2054,53 @@ html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie
 @media (max-width: 767px) { .brand-rails { --rw: 6px; --rt: 12px; } }
 @media print { .brand-rails { display: none; } }
 
-/* Fond : treillis de losanges dorés, immobile, sous les halos animés */
-.brand-bg { background-image: var(--lattice); background-size: 80px 40px; }
-
-/* Fonds animés : nettement plus visibles qu'avant */
-.brand-bg--grains::before {
-  background-image:
-    radial-gradient(circle, rgba(201,168,76,.8) 0 2.5px, transparent 3.5px),
-    radial-gradient(circle, rgba(45,107,79,.55) 0 2px, transparent 3px);
-}
-.brand-bg--grains::after { background-image: radial-gradient(circle, rgba(232,201,122,.8) 0 4px, transparent 5.5px); }
-.brand-bg--aurore::before { background: radial-gradient(circle, rgba(201,168,76,.4) 0%, transparent 62%); }
-.brand-bg--aurore::after  { background: radial-gradient(circle, rgba(45,107,79,.36) 0%, transparent 62%); }
-.brand-bg--pagne::before  { opacity: .17; }
-.brand-bg--pagne::after   { background: radial-gradient(circle, rgba(201,168,76,.34) 0%, transparent 60%); }
-.brand-bg--vapeur::before { background: radial-gradient(ellipse at center, rgba(232,201,122,.62) 0%, rgba(201,168,76,.24) 40%, transparent 66%); }
-.brand-bg--vapeur::after  { background: radial-gradient(ellipse at center, rgba(45,107,79,.38) 0%, rgba(45,107,79,.12) 42%, transparent 68%); }
-.brand-bg--papier::before { background: linear-gradient(105deg, transparent 0%, rgba(201,168,76,.26) 45%, rgba(255,255,255,.65) 50%, rgba(201,168,76,.26) 55%, transparent 100%); }
-.brand-bg--papier::after  { background: radial-gradient(circle, rgba(45,107,79,.28), transparent 62%); }
-.brand-bg--calme::before  { background: radial-gradient(circle, rgba(201,168,76,.3), transparent 60%); }
-
 @media (prefers-reduced-motion: reduce) {
   .brand-rails i, .album-rule { animation: none !important; }
+}
+
+/* ============================================================
+   WALLPAPER ANIMÃ‰ EN HAUT DE CHAQUE PAGE (posÃ© par script.js)
+   Bandeau vert profond : lueurs or et vert qui dÃ©rivent, grains
+   dorÃ©s qui montent, bande de pagne en bas. transform/opacity
+   uniquement. Immobile si Â« rÃ©duire les animations Â».
+   ============================================================ */
+@keyframes wpDriftA { to { transform: translate3d(22vw, 6%, 0) scale(1.2); } }
+@keyframes wpDriftB { to { transform: translate3d(-24vw, -8%, 0) scale(.9); } }
+@keyframes wpRise   { to { transform: translate3d(0, -160px, 0); } }
+.page-wallpaper {
+  position: relative; overflow: hidden; isolation: isolate;
+  height: clamp(150px, 20vw, 260px);
+  background: linear-gradient(135deg, #0e1a12 0%, #1a3d2b 55%, #123022 100%);
+  contain: layout paint;
+}
+.page-wallpaper i, .page-wallpaper::before { position: absolute; will-change: transform; }
+.page-wallpaper i:nth-child(1) {
+  width: 55vmax; height: 55vmax; left: -15vmax; top: -30vmax;
+  background: radial-gradient(circle, rgba(201,168,76,.5) 0%, transparent 62%);
+  animation: wpDriftA 22s ease-in-out infinite alternate;
+}
+.page-wallpaper i:nth-child(2) {
+  width: 60vmax; height: 60vmax; right: -18vmax; top: -34vmax;
+  background: radial-gradient(circle, rgba(46,155,74,.45) 0%, transparent 62%);
+  animation: wpDriftB 28s ease-in-out infinite alternate;
+}
+.page-wallpaper i:nth-child(3) {
+  left: 0; top: 0; width: 100%; height: calc(100% + 160px);
+  background-image: radial-gradient(circle, rgba(232,201,122,.85) 0 2px, transparent 3px);
+  background-size: 90px 80px; opacity: .55;
+  animation: wpRise 14s linear infinite;
+}
+.page-wallpaper::before {
+  content: ''; inset: 0; z-index: 1;
+  background: repeating-linear-gradient(115deg, transparent 0 46px, rgba(201,168,76,.07) 46px 47px);
+}
+.page-wallpaper::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  --pw: 20px; height: 10px;
+  background: var(--pagne) repeat-x 0 0 / 20px 10px;
+  animation: pagneMarch 6s linear infinite;
+}
+@media print { .page-wallpaper { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .page-wallpaper i, .page-wallpaper::after { animation: none !important; }
 }
