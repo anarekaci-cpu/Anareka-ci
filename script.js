@@ -79,6 +79,11 @@
     bg.className = 'brand-bg brand-bg--' + variant;
     bg.setAttribute('aria-hidden', 'true');
     document.body.insertBefore(bg, document.body.firstChild);
+  var rails = document.createElement('div');
+  rails.className = 'brand-rails';
+  rails.setAttribute('aria-hidden', 'true');
+  rails.innerHTML = '<i></i><i></i>';
+  document.body.insertBefore(rails, bg.nextSibling);
   }
 
   function initNavMenu() {
