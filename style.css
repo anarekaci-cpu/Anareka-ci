@@ -1966,3 +1966,166 @@ html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie
 @media (prefers-reduced-motion: reduce) {
   .vine-progress { display: none !important; }
 }
+
+/* ============================================================
+   MARQUE - LE « PAGNE » (bande de losanges dorés et verts)
+   Même motif que l'application des membres. Kit SVG pour les
+   affiches : /assets/marque/ (voir LISEZ-MOI-marque.md).
+   Le pagne marche lentement vers la gauche, comme dans l'app.
+   ============================================================ */
+:root {
+  --pagne: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Crect width='40' height='20' fill='%234a2a12'/%3E%3Cpath d='M0 10L10 0L20 10L10 20Z' fill='%23efc94c'/%3E%3Cpath d='M20 10L30 0L40 10L30 20Z' fill='%232e9b4a'/%3E%3Cpath d='M10 10L15 5L20 10L15 15Z' fill='%23fff6d6'/%3E%3Cpath d='M30 10L35 5L40 10L35 15Z' fill='%23fff6d6'/%3E%3Cpath d='M0 10L5 5L10 10L5 15Z' fill='%234a2a12'/%3E%3Cpath d='M20 10L25 5L30 10L25 15Z' fill='%234a2a12'/%3E%3C/svg%3E");
+}
+@keyframes pagneMarch { to { background-position-x: calc(var(--pw, 40px) * -1); } }
+
+/* Bande réutilisable : <div class="pagne-band pagne-band--anime" aria-hidden="true"></div> */
+.pagne-band { --pw: 20px; height: 10px; background: var(--pagne) repeat-x 0 0 / 20px 10px; }
+.pagne-band--epais { --pw: 40px; height: 20px; background-size: 40px 20px; }
+.pagne-band--anime { animation: pagneMarch 6s linear infinite; }
+
+/* Sous le menu : la bande pend sous la barre de navigation */
+#mainNav::after {
+  --pw: 12px;
+  bottom: -6px;
+  height: 6px;
+  background: var(--pagne) repeat-x 0 0 / 12px 6px;
+  opacity: 1;
+  animation: pagneMarch 6s linear infinite;
+}
+#mainNav.scrolled::after { opacity: 1; }
+
+/* Haut du pied de page */
+footer::before {
+  --pw: 16px;
+  height: 8px;
+  background: var(--pagne) repeat-x 0 0 / 16px 8px;
+  animation: pagneMarch 8s linear infinite;
+}
+
+/* Transition de page : la bande marche sous le nom de l'association */
+.lottie-word::after {
+  content: '';
+  display: block;
+  --pw: 16px;
+  width: min(260px, 70vw);
+  height: 8px;
+  margin-top: 12px;
+  border-radius: 2px;
+  background: var(--pagne) repeat-x 0 0 / 16px 8px;
+  animation: pagneMarch 3s linear infinite;
+}
+html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie-word::after {
+  animation: pagneMarch 3s linear infinite, sealSubIn .6s var(--ease-out) .86s both;
+}
+
+/* ============================================================
+   FONDS ANIMÉS PAR PAGE  (posés par script.js : initBrandBackdrop)
+   Un seul calque fixe derrière le contenu, uniquement transform
+   et opacity (compositeur) : fluide sur téléphone d'entrée de
+   gamme. Immobile si « réduire les animations » est activé.
+   ============================================================ */
+.brand-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+.brand-bg::before,
+.brand-bg::after { content: ''; position: absolute; will-change: transform; }
+
+@keyframes bgRise   { to { transform: translate3d(0, -240px, 0); } }
+@keyframes bgDriftA { to { transform: translate3d(32vmax, 22vmax, 0) scale(1.15); } }
+@keyframes bgDriftB { to { transform: translate3d(-30vmax, -20vmax, 0) scale(.9); } }
+@keyframes bgMarch  { to { transform: translate3d(-80px, 0, 0); } }
+@keyframes bgPulse  { from { opacity: .55; transform: scale(.92); } to { opacity: 1; transform: scale(1.08); } }
+@keyframes bgSweep  { to { transform: translate3d(320%, 0, 0); } }
+@keyframes bgSteam {
+  0%   { transform: translate3d(0, 10vmax, 0) scale(.9);  opacity: .3; }
+  50%  { opacity: .95; }
+  100% { transform: translate3d(4vmax, -55vmax, 0) scale(1.2); opacity: .2; }
+}
+
+/* Accueil + Adhésion : grains de semoule dorés qui montent */
+.brand-bg--grains::before {
+  left: 0; top: 0; width: 100%; height: calc(100% + 240px);
+  background-image:
+    radial-gradient(circle, rgba(201,168,76,.5) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(45,107,79,.32) 0 1.5px, transparent 2.5px);
+  background-size: 120px 120px, 240px 240px;
+  background-position: 0 0, 60px 90px;
+  animation: bgRise 32s linear infinite;
+}
+.brand-bg--grains::after {
+  left: 0; top: 0; width: 100%; height: calc(100% + 240px);
+  background-image: radial-gradient(circle, rgba(232,201,122,.5) 0 3px, transparent 4.5px);
+  background-size: 240px 240px;
+  background-position: 130px 40px;
+  animation: bgRise 52s linear infinite;
+}
+
+/* Association + Contact : aurore or et vert qui dérive */
+.brand-bg--aurore::before {
+  width: 90vmax; height: 90vmax; left: -25vmax; top: -30vmax;
+  background: radial-gradient(circle, rgba(201,168,76,.22) 0%, transparent 62%);
+  animation: bgDriftA 28s ease-in-out infinite alternate;
+}
+.brand-bg--aurore::after {
+  width: 100vmax; height: 100vmax; right: -35vmax; bottom: -45vmax;
+  background: radial-gradient(circle, rgba(45,107,79,.22) 0%, transparent 62%);
+  animation: bgDriftB 34s ease-in-out infinite alternate;
+}
+
+/* Missions : texture de pagne très discrète qui défile, halo doré */
+.brand-bg--pagne::before {
+  top: 0; bottom: 0; left: 0; right: -80px;
+  background: var(--pagne) 0 0 / 80px 40px;
+  opacity: .075;
+  animation: bgMarch 40s linear infinite;
+}
+.brand-bg--pagne::after {
+  width: 80vmax; height: 80vmax; left: 50%; top: -20vmax; margin-left: -40vmax;
+  background: radial-gradient(circle, rgba(201,168,76,.2) 0%, transparent 60%);
+  animation: bgPulse 12s ease-in-out infinite alternate;
+}
+
+/* Attiéké : vapeur dorée et verte qui monte */
+.brand-bg--vapeur::before {
+  left: -10vmax; bottom: -30vmax; width: 70vmax; height: 70vmax;
+  background: radial-gradient(ellipse at center, rgba(232,201,122,.42) 0%, rgba(201,168,76,.14) 40%, transparent 66%);
+  animation: bgSteam 19s ease-in-out infinite;
+}
+.brand-bg--vapeur::after {
+  right: -12vmax; bottom: -34vmax; width: 80vmax; height: 80vmax;
+  background: radial-gradient(ellipse at center, rgba(45,107,79,.24) 0%, rgba(45,107,79,.08) 42%, transparent 68%);
+  animation: bgSteam 26s ease-in-out -9s infinite;
+}
+
+/* Actualités + articles : reflet doré qui balaie la page */
+.brand-bg--papier::before {
+  top: -10%; bottom: -10%; left: -60%; width: 60%;
+  background: linear-gradient(105deg, transparent 0%, rgba(201,168,76,.14) 45%, rgba(255,255,255,.4) 50%, rgba(201,168,76,.14) 55%, transparent 100%);
+  animation: bgSweep 20s ease-in-out infinite;
+}
+.brand-bg--papier::after {
+  width: 60vmax; height: 60vmax; right: -20vmax; top: -25vmax;
+  background: radial-gradient(circle, rgba(45,107,79,.16), transparent 62%);
+  animation: bgPulse 14s ease-in-out infinite alternate;
+}
+
+/* Mentions légales et pages sans variante : halo calme */
+.brand-bg--calme::before {
+  width: 90vmax; height: 90vmax; left: 50%; top: -40vmax; margin-left: -45vmax;
+  background: radial-gradient(circle, rgba(201,168,76,.16), transparent 60%);
+  animation: bgPulse 16s ease-in-out infinite alternate;
+}
+
+@media print { .brand-bg { display: none; } }
+
+/* « Réduire les animations » (réglage du téléphone ou économiseur
+   de batterie) : bandes et fonds restent visibles mais immobiles. */
+@media (prefers-reduced-motion: reduce) {
+  #mainNav::after, footer::before, .pagne-band--anime, .lottie-word::after { animation: none !important; }
+  .brand-bg::before, .brand-bg::after { animation: none !important; }
+}

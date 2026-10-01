@@ -20,6 +20,7 @@
   ready(function () {
     initLottiePageTransition();
     initNavMenu();
+    initBrandBackdrop();
     initScrollEffects();
     initBackToTopClick();
     // Animations d'entrée : lancées quand le sceau découvre la page,
@@ -52,6 +53,34 @@
   /* ============================================================
      MENU MOBILE
   ============================================================ */
+  /* ============================================================
+     Fond animé par page (voir « FONDS ANIMÉS PAR PAGE » dans style.css).
+     La variante dépend de l'URL, FR comme EN (/en/... = même fond).
+     ============================================================ */
+  function initBrandBackdrop() {
+    if (document.querySelector('.brand-bg')) return;
+    var path = window.location.pathname
+      .replace(/^\/en(?=\/|$)/, '')
+      .replace(/\/index\.html$/, '')
+      .replace(/\.html$/, '')
+      .replace(/\/+$/, '') || '/';
+    var variants = {
+      '/': 'grains',
+      '/adhesion': 'grains',
+      '/association': 'aurore',
+      '/contact': 'aurore',
+      '/missions': 'pagne',
+      '/attieke': 'vapeur',
+      '/blog': 'papier',
+      '/mentions-legales': 'calme'
+    };
+    var variant = variants[path] || (path.indexOf('/blog/') === 0 ? 'papier' : 'calme');
+    var bg = document.createElement('div');
+    bg.className = 'brand-bg brand-bg--' + variant;
+    bg.setAttribute('aria-hidden', 'true');
+    document.body.insertBefore(bg, document.body.firstChild);
+  }
+
   function initNavMenu() {
     const nav    = document.getElementById('mainNav');
     const toggle = document.getElementById('navToggle');
