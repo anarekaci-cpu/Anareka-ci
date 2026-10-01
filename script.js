@@ -20,7 +20,6 @@
   ready(function () {
     initLottiePageTransition();
     initNavMenu();
-    initBrandBackdrop();
     initScrollEffects();
     initBackToTopClick();
     // Animations d'entrée : lancées quand le sceau découvre la page,
@@ -53,22 +52,6 @@
   /* ============================================================
      MENU MOBILE
   ============================================================ */
-  /* ============================================================
-     Wallpaper anime en haut de chaque page interieure + rails de pagne
-     sur les bords (voir WALLPAPER ANIME dans style.css). Accueil : rails seuls.
-     ============================================================ */
-  function initBrandBackdrop() {
-    if (document.querySelector('.page-wallpaper')) return;
-    var main = document.getElementById('main-content');
-    var isHome = /^(\/en)?\/?(index\.html)?$/.test(window.location.pathname);
-    if (main && !isHome) {
-      var wp = document.createElement('div');
-      wp.className = 'page-wallpaper';
-      wp.setAttribute('aria-hidden', 'true');
-      wp.innerHTML = '<i></i><i></i><i></i>';
-      main.insertBefore(wp, main.firstChild);
-    }
-  }
 
   function initNavMenu() {
     const nav    = document.getElementById('mainNav');
