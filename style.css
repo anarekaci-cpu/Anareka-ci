@@ -1936,9 +1936,6 @@ html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie
   .lottie-word strong { font-size: 23px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .lottie-overlay { display: none !important; }
-}
 
 /* ============================================================
    ANAREKA-CI — v10 : INNOVATIONS
@@ -2020,9 +2017,19 @@ html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie
   animation: pagneMarch 3s linear infinite, sealSubIn .6s var(--ease-out) .86s both;
 }
 
-
-/* « Réduire les animations » (réglage du téléphone ou économiseur
-   de batterie) : bandes et fonds restent visibles mais immobiles. */
+/* ============================================================
+   Â« RÃ©duire les animations Â» (rÃ©glage du tÃ©lÃ©phone) : version douce.
+   Le sceau s'affiche (sans effets), mais l'identitÃ© de marque
+   garde ses mouvements lents : anneaux du logo et pagne qui dÃ©file.
+   Rotation lente et bande qui glisse : pas de zoom ni de secousse.
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  #mainNav::after, footer::before, .pagne-band--anime, .lottie-word::after { animation: none !important; }
+  .hero-ring  { animation: ringRotate 12s linear infinite !important; }
+  .hero-ring2 { animation: ring2Rotate 18s linear infinite !important; }
+  .engagement-icon-wrap::after { animation: ringRotate 14s linear infinite !important; }
+  .lottie-grains { animation: sealSpin 9s linear infinite !important; }
+  #mainNav::after { animation: pagneMarch 6s linear infinite !important; }
+  footer::before { animation: pagneMarch 8s linear infinite !important; }
+  .album-rule { animation: pagneMarch 6s linear infinite !important; }
+  .lottie-word::after { animation: pagneMarch 3s linear infinite !important; }
 }

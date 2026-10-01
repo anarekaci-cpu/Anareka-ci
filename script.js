@@ -810,12 +810,7 @@
     // Désarme le masquage de secours CSS (.lottie-overlay:not(.ready)).
     overlay.classList.add('ready');
 
-    // Mouvement réduit : l'overlay est display:none en CSS ; rien à
-    // animer, les liens naviguent normalement, sans délai.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      fireSealReveal();
-      return;
-    }
+    // Mouvement reduit : le sceau reste affiche (version douce, voir style.css).
 
     var root = document.documentElement;
     var INTRO_MS = 1150;   // fin de la choréographie d'intro (voir style.css)
