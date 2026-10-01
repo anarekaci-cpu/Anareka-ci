@@ -58,7 +58,7 @@
      sur les bords (voir WALLPAPER ANIME dans style.css). Accueil : rails seuls.
      ============================================================ */
   function initBrandBackdrop() {
-    if (document.querySelector('.page-wallpaper, .brand-rails')) return;
+    if (document.querySelector('.page-wallpaper')) return;
     var main = document.getElementById('main-content');
     var isHome = /^(\/en)?\/?(index\.html)?$/.test(window.location.pathname);
     if (main && !isHome) {
@@ -68,11 +68,6 @@
       wp.innerHTML = '<i></i><i></i><i></i>';
       main.insertBefore(wp, main.firstChild);
     }
-    var rails = document.createElement('div');
-    rails.className = 'brand-rails';
-    rails.setAttribute('aria-hidden', 'true');
-    rails.innerHTML = '<i></i><i></i>';
-    document.body.insertBefore(rails, document.body.firstChild);
   }
 
   function initNavMenu() {

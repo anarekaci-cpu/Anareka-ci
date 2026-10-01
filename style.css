@@ -2028,37 +2028,6 @@ html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie
 }
 
 /* ============================================================
-   PAGNE SUR LES BORDS + FONDS PLUS PRÉSENTS (ordinateur surtout)
-   Deux rails de pagne, un de chaque côté de l'écran, qui défilent
-   en sens inverse (transform uniquement). Posés par script.js.
-   ============================================================ */
-:root {
-  --pagne-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='40'%3E%3Crect width='20' height='40' fill='%234a2a12'/%3E%3Cpath d='M10 0L20 10L10 20L0 10Z' fill='%23efc94c'/%3E%3Cpath d='M10 20L20 30L10 40L0 30Z' fill='%232e9b4a'/%3E%3Cpath d='M10 10L15 15L10 20L5 15Z' fill='%23fff6d6'/%3E%3Cpath d='M10 30L15 35L10 40L5 35Z' fill='%23fff6d6'/%3E%3Cpath d='M10 0L15 5L10 10L5 5Z' fill='%234a2a12'/%3E%3Cpath d='M10 20L15 25L10 30L5 25Z' fill='%234a2a12'/%3E%3C/svg%3E");
-}
-@keyframes railMarch { to { transform: translate3d(0, var(--rt, 24px), 0); } }
-
-.brand-rails {
-  --rw: 12px; --rt: 24px;
-  position: fixed; inset: 0; z-index: 40;
-  overflow: hidden; pointer-events: none; contain: strict;
-}
-.brand-rails i {
-  position: absolute; top: calc(var(--rt) * -1);
-  width: var(--rw); height: calc(100% + var(--rt));
-  background: var(--pagne-v) repeat-y 0 0 / var(--rw) var(--rt);
-  animation: railMarch 7s linear infinite;
-  will-change: transform;
-}
-.brand-rails i:first-child { left: 0; box-shadow: 2px 0 10px rgba(14,26,18,.25); }
-.brand-rails i:last-child  { right: 0; animation-direction: reverse; box-shadow: -2px 0 10px rgba(14,26,18,.25); }
-@media (max-width: 767px) { .brand-rails { --rw: 6px; --rt: 12px; } }
-@media print { .brand-rails { display: none; } }
-
-@media (prefers-reduced-motion: reduce) {
-  .brand-rails i, .album-rule { animation: none !important; }
-}
-
-/* ============================================================
    WALLPAPER ANIMÃ‰ EN HAUT DE CHAQUE PAGE (posÃ© par script.js)
    Bandeau vert profond : lueurs or et vert qui dÃ©rivent, grains
    dorÃ©s qui montent, bande de pagne en bas. transform/opacity
