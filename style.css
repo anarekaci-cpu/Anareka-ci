@@ -1677,7 +1677,10 @@ footer.footer-in .footer-logo{opacity:1;transform:none;transition-delay:.05s} fo
 
 /* ===== ACCESSIBILITÉ — MOUVEMENT RÉDUIT ===== */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  /* Le sceau (transition de page) garde sa choregraphie complete. */
+  *:not(.lottie-overlay):not(.lottie-overlay *),
+  *:not(.lottie-overlay):not(.lottie-overlay *)::before,
+  *:not(.lottie-overlay):not(.lottie-overlay *)::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
