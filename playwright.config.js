@@ -1,8 +1,8 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
 
-// wrangler pages dev applique _headers / _redirects comme en production :
-// un script bloqué par la CSP fait donc échouer les tests.
+// tests/serve.js applique _headers (CSP comprise) et les URLs propres comme Cloudflare Pages :
+// un script bloqué par la CSP fait donc échouer les tests. (Pas de wrangler : workerd ne démarre pas sur le runner CI.)
 const PORT = 8788;
 
 module.exports = defineConfig({
@@ -21,7 +21,7 @@ module.exports = defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'], ...(process.env.CI ? {} : { channel: 'chrome' }) }, grep: /@mobile/ },
   ],
   webServer: {
-    command: `npx --yes wrangler@4 pages dev . --port ${PORT} --compatibility-date=2026-05-01`,
+    command: `node tests/serve.js ${PORT}`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
