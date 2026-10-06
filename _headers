@@ -29,3 +29,34 @@
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+
+/.well-known/*
+  Content-Type: text/plain; charset=utf-8
+
+/site.webmanifest
+  Cache-Control: public, max-age=86400
+
+# Fichiers du dépôt servis tels quels mais sans intérêt pour la recherche.
+/.github/*
+  X-Robots-Tag: noindex, nofollow
+
+/templates/*
+  X-Robots-Tag: noindex, nofollow
+
+/tests/*
+  X-Robots-Tag: noindex, nofollow
+
+/assets/marque/*
+  X-Robots-Tag: noindex, nofollow
+
+/CLAUDE.md
+  X-Robots-Tag: noindex, nofollow
+
+/CHANGELOG.md
+  X-Robots-Tag: noindex, nofollow
+
+/package.json
+  X-Robots-Tag: noindex, nofollow
+
+/package-lock.json
+  X-Robots-Tag: noindex, nofollow

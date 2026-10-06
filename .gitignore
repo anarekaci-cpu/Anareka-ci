@@ -19,3 +19,6 @@ node_modules/
 .agents/
 .claude/
 .playwright-mcp/
+
+test-results/
+playwright-report/

@@ -127,8 +127,8 @@ jobs:
             echo "**Total: ${orig_total} → ${min_total} bytes (saved ${saved} bytes, ${pct}%)**"
           } >> "$GITHUB_STEP_SUMMARY"
 
-  check-page-scaffold:
-    name: Cohérence du scaffold entre pages (nav, footer, version, copyright)
+  guards:
+    name: Garde-fous (scaffold, hreflang, CSP, contenu, JSON-LD, sitemap, blog, hygiène)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -136,15 +136,16 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '20'
+          cache: npm
 
-      - name: Install HTML parser
+      - name: Install dependencies
         run: npm ci
 
-      - name: Compare nav/footer/version/copyright across all pages
-        run: node .github/scripts/check-page-scaffold.js
+      - name: Run every guard (same as npm run check)
+        run: npm run check
 
-  check-hreflang:
-    name: Réciprocité hreflang FR/EN (pages + sitemap)
+  e2e:
+    name: Tests de bout en bout (Playwright, avec les en-têtes _headers)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -152,22 +153,21 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '20'
+          cache: npm
 
-      - name: Install HTML parser
+      - name: Install dependencies
         run: npm ci
 
-      - name: Verify hreflang reciprocity across pages and sitemap.xml
-        run: node .github/scripts/check-hreflang.js
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
 
-  check-csp-hashes:
-    name: CSP — scripts inline autorisés par hash
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Run smoke tests
+        run: npx playwright test
 
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - name: Upload Playwright traces on failure
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          node-version: '20'
-
-      - name: Verify every inline script hash is allowlisted in _headers
-        run: node .github/scripts/check-csp-hashes.js
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7

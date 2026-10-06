@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /templates/
+Disallow: /.github/
+Disallow: /tests/
 
 Sitemap: https://anarekaci.com/sitemap.xml

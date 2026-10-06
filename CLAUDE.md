@@ -91,7 +91,8 @@ it to a 96×96 WebP (quality ~82) in `/emoji/`. The Côte d'Ivoire flag is
 
 ```
 npm install        # installs node-html-parser (only dev dependency)
-npm run check      # scaffold + hreflang + CSP hash guards (same as CI)
+npm run check      # every guard: scaffold, hreflang, CSP hashes, content, JSON-LD, sitemap, blog links, repo hygiene, page count (same as CI)
+npm run test:e2e   # Playwright smoke tests against wrangler pages dev (applies _headers); needs Chrome locally
 npm run dev        # wrangler pages dev on http://localhost:8788 — applies _headers/_redirects like production
 ```
 

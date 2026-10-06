@@ -265,6 +265,15 @@
      DUPLICATION DES TRAINS
   ============================================================ */
   function initTrainDuplication() {
+    // Le bandeau ne défile que lorsqu'il est à l'écran (voir .in-view en CSS).
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => e.target.classList.toggle('in-view', e.isIntersecting));
+      }, { rootMargin: '120px' });
+      document.querySelectorAll('.train-wrap').forEach(w => io.observe(w));
+    } else {
+      document.querySelectorAll('.train-wrap').forEach(w => w.classList.add('in-view'));
+    }
     document.querySelectorAll('.train-track').forEach(track => {
       const cards = [...track.children];
       cards.forEach(card => {

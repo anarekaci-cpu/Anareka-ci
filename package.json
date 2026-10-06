@@ -4,9 +4,11 @@
   "description": "Site institutionnel ANAREKA-CI (anarekaci.com) — HTML/CSS/JS statique servi tel quel par Cloudflare Pages, sans étape de build.",
   "scripts": {
     "dev": "npx --yes wrangler@4 pages dev . --port 8788",
-    "check": "node .github/scripts/check-page-scaffold.js && node .github/scripts/check-hreflang.js && node .github/scripts/check-csp-hashes.js"
+    "check": "node .github/scripts/check-page-scaffold.js && node .github/scripts/check-hreflang.js && node .github/scripts/check-csp-hashes.js && node .github/scripts/check-content.js && node .github/scripts/check-structured-data.js && node .github/scripts/check-sitemap.js && node .github/scripts/check-blog-links.js && node .github/scripts/check-hygiene.js && node .github/scripts/check-page-count.js",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "node-html-parser": "^7.0.1"
   }
 }
