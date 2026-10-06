@@ -60,13 +60,15 @@ for (const file of findHtmlFiles(ROOT)) {
     if (/\bsrc\s*=/.test(attrs)) continue;
     const type = ((attrs.match(/\btype\s*=\s*["']([^"']*)["']/i) || [, ''])[1]).toLowerCase();
     if (!EXEC_TYPES.includes(type)) continue;
-    const hash = crypto.createHash('sha256').update(m[2], 'utf8').digest('base64');
+    const hash = crypto.createHash('sha256').update(m[2].replace(/\r\n/g, '\n'), 'utf8').digest('base64');
     used.add(hash);
     if (!unsafeInline && !allowed.has(hash)) {
       errors.push(`${rel} : script inline non autorisé par la CSP — ajouter 'sha256-${hash}' à script-src dans _headers`);
     }
   }
-  const handler = html.match(/<[a-z][^>]*\son[a-z]+\s*=\s*["']/i);
+  // Hors <script>/<style> : leur contenu (JSON-LD, CSS) n'est pas du balisage.
+  const markup = html.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, '');
+  const handler = markup.match(/<[a-z][^>]*\son[a-z]+\s*=\s*["']/i);
   if (handler) errors.push(`${rel} : gestionnaire d'événement inline (${handler[0].slice(0, 60)}…) bloqué par la CSP — le déplacer dans script.js`);
 }
 

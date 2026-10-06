@@ -77,6 +77,18 @@
     <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/adhesion"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/adhesion"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/adhesion"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/adhesion</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/adhesion"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/adhesion"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/adhesion"/>
   </url>
   <url>
     <loc>https://anarekaci.com/contact</loc>

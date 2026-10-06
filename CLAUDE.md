@@ -23,9 +23,18 @@ piling on more manual duplication.
 - **Bilingual mirror**: FR lives at the repo root, EN under `/en/` as a parallel
   directory tree (`en/association/`, `en/attieke/`, `en/blog/`, etc.). Blog articles
   are FR-only — they intentionally have no EN equivalent and no hreflang tags.
+- **Membership form**: `/adhesion` and `/en/adhesion` are a proper FR/EN pair (hreflang +
+  sitemap). The form strings in `script.js` (`initAdhesionForm`) switch on `<html lang>`.
+- **Motion**: `script.js` adds a "pause animations" button in the footer (`html.motion-off`,
+  remembered in localStorage); `prefers-reduced-motion` hides the page-transition seal
+  entirely. Any new continuous animation must stop under both.
+- **Not site pages**: `assets/marque/` is a print/poster brand kit (pagne SVGs, not served by
+  any page); `google585682904543b912.html` is the Search Console verification file.
 - **Clean URLs**: every page is `{slug}/index.html`, not `{slug}.html`. Internal
   links must always use the extensionless clean URL (`/blog/{slug}`, never
   `/blog/{slug}.html`) — this applies to `<a href>` and to URLs embedded in JSON-LD.
+  The one exception is the blog articles themselves, which live at `blog/{slug}.html`
+  (served at `/blog/{slug}`); the listing pages are `blog/index.html` and `en/blog/index.html`.
 - **Paths are root-absolute**, never relative (`/style.css`, `/association`, not
   `../style.css`) — required for the scaffold to be byte-identical regardless of a
   page's folder depth.
@@ -45,7 +54,7 @@ manual edit:
    `loading="eager"` (it's the LCP); every other image is `loading="lazy"`, and
    `width`/`height` must be the image's real pixel dimensions (avoids CLS).
 2. Update internal linking in three places, each maintained by hand:
-   - `blog.html` — the new article becomes `.blog-card-featured`; the previous
+   - `blog/index.html` — the new article becomes `.blog-card-featured`; the previous
      featured card drops into `.blog-grid`.
    - `index.html`'s `.album-blog-list` — keeps exactly 4 cards, newest first.
    - The `<aside class="article-sidebar">` of the 3 most recent *other*
@@ -97,10 +106,12 @@ node .github/scripts/check-csp-hashes.js
 - **`check-csp-hashes.js`**: `script-src` in `_headers` does **not** allow
   `'unsafe-inline'`; every executable inline `<script>` must have its
   `'sha256-…'` listed there. Fails on a missing hash, an obsolete hash, or any
-  inline `on*=` event handler. If you edit an inline script (e.g. the
-  `document.documentElement.classList.add('js')…` line in every `<head>` (it also sets `.seal-seen` for the page transition), or the
-  legacy-anchor redirect script in `index.html`), copy the hash it prints into
-  `_headers`.
+  inline `on*=` event handler. If you edit an inline script, copy the hash it
+  prints into `_headers`. Two inline scripts exist: the
+  `document.documentElement.classList.add('js')…` line in every `<head>` (it also
+  sets `.seal-seen` for the page transition) and the legacy-anchor redirect script
+  in `index.html`. Hashes are computed on LF line endings — `.gitattributes`
+  forces `eol=lf`, so don't re-enable `core.autocrlf` on a checkout of this repo.
 
 - **`check-page-scaffold.js`**: three checks in one. (1) `<nav id="mainNav">` and
   `<footer>` must be byte-identical across all FR pages, and separately across all

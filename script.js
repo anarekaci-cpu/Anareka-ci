@@ -1,7 +1,7 @@
 /* =====================================================
-   ANAREKA-CI — SCRIPT v9.0 enrichi
-   Nouveautés v9 : Tilt 3D subtil sur cartes Missions & Partenaires
-   (gestion via mousemove + variables CSS, reset propre au mouseleave)
+   ANAREKA-CI — SCRIPT
+   Menu, effets de scroll, transition « sceau », trains photo,
+   lightbox, formulaire d'adhésion, tilt 3D subtil des cartes.
    ===================================================== */
 
 (function () {
@@ -17,36 +17,37 @@
     else document.addEventListener('DOMContentLoaded', fn);
   }
 
+  // Une init qui plante ne doit pas empêcher les suivantes.
+  function safe(fn) {
+    try { fn(); } catch (e) { if (window.console) console.error(fn.name || 'init', e); }
+  }
+
   ready(function () {
-    initLottiePageTransition();
-    initNavMenu();
-    initScrollEffects();
-    initBackToTopClick();
+    safe(initLottiePageTransition);
+    safe(initNavMenu);
+    safe(initScrollEffects);
+    safe(initBackToTopClick);
+    safe(initMotionToggle);
     // Animations d'entrée : lancées quand le sceau découvre la page,
     // pour qu'elles se jouent sous les yeux du visiteur et pas sous
     // l'overlay (immédiat si pas d'overlay ou mouvement réduit).
     onSealReveal(function () {
-      initReveal();
-      initCounter();
-      initSplitText();
-      initTimelineAnimation();
+      safe(initReveal);
+      safe(initCounter);
+      safe(initSplitText);
     });
-    initTrainDuplication();
-    patchAlbumCards();
-    initManiocTimeline();
-    initLightbox();
-    initAdhesionForm();
-    initSignature();
-    initFooterYear();
-    initImageFade();
-
-    // --- INITIALISATIONS EXISTANTES ---
-    initParallax();
-    initRippleEffect();
-    initTiltCards();
-
-    // --- NOUVEAU v9 ---
-    initSoftTilt3D();
+    safe(initTrainDuplication);
+    safe(patchAlbumCards);
+    safe(initManiocTimeline);
+    safe(initLightbox);
+    safe(initAdhesionForm);
+    safe(initSignature);
+    safe(initFooterYear);
+    safe(initImageFade);
+    safe(initParallax);
+    safe(initRippleEffect);
+    safe(initTiltCards);
+    safe(initSoftTilt3D);
   });
 
   /* ============================================================
@@ -73,6 +74,15 @@
       })
     );
 
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && links.classList.contains('open')) {
+        links.classList.remove('open');
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
+      }
+    });
+
     document.addEventListener('click', (e) => {
       if (!nav.contains(e.target) && links.classList.contains('open')) {
         links.classList.remove('open');
@@ -94,6 +104,7 @@
     if (btnFloat) {
       btnFloat.style.opacity      = '0';
       btnFloat.style.pointerEvents = 'none';
+      btnFloat.style.visibility    = 'hidden';
     }
 
     let ticking = false;
@@ -108,6 +119,7 @@
         const vis = y > 200;
         btnFloat.style.opacity       = vis ? '1' : '0';
         btnFloat.style.pointerEvents = vis ? 'auto' : 'none';
+        btnFloat.style.visibility    = vis ? 'visible' : 'hidden';
       }
 
       if (whatsapp) {
@@ -115,6 +127,7 @@
         const vis = y > 200 && !nearBottom;
         whatsapp.style.opacity = vis ? '1' : '0';
         whatsapp.style.pointerEvents = vis ? 'auto' : 'none';
+        whatsapp.style.visibility = vis ? 'visible' : 'hidden';
       }
 
       ticking = false;
@@ -171,8 +184,9 @@
      RÉVÉLATION AU SCROLL (étendue)
   ============================================================ */
   function initReveal() {
+    document.documentElement.classList.add('reveal-ready');
     if (!('IntersectionObserver' in window)) {
-      document.querySelectorAll('.reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text').forEach(el =>
+      document.querySelectorAll('.reveal, .reveal-l, .reveal-scale, .reveal-text').forEach(el =>
         el.classList.add('on')
       );
       return;
@@ -187,7 +201,7 @@
       });
     }, { threshold: 0.08 });
 
-    document.querySelectorAll('.reveal, .reveal-l, .reveal-rotate, .reveal-scale, .reveal-text').forEach(el =>
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-scale, .reveal-text').forEach(el =>
       observer.observe(el)
     );
   }
@@ -210,8 +224,10 @@
      COMPTEUR AMÉLIORÉ
   ============================================================ */
   function initCounter() {
+    if (!('IntersectionObserver' in window)) return;
     function animate(el) {
       const target = parseInt(el.dataset.target, 10);
+      if (isNaN(target)) return;
       const suffix = el.dataset.suffix || '';
       const dur    = 2000;
       const start  = performance.now();
@@ -240,7 +256,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
 
     document.querySelectorAll('.chiffres').forEach(el => observer.observe(el));
   }
@@ -251,7 +267,13 @@
   function initTrainDuplication() {
     document.querySelectorAll('.train-track').forEach(track => {
       const cards = [...track.children];
-      cards.forEach(card => track.appendChild(card.cloneNode(true)));
+      cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.setAttribute('tabindex', '-1');
+        clone.removeAttribute('role');
+        track.appendChild(clone);
+      });
     });
   }
 
@@ -263,8 +285,6 @@
       document.querySelectorAll('.train-card').forEach(card => {
         if (card.dataset.patched) return;
         card.dataset.patched = '1';
-
-        const cap = card.dataset.cap || '';
 
         if (!card.querySelector('.card-shine')) {
           const s = document.createElement('span');
@@ -280,24 +300,10 @@
           exp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>`;
           card.appendChild(exp);
         }
-
-        if (cap && !card.querySelector('.train-card-caption')) {
-          const c = document.createElement('div');
-          c.className = 'train-card-caption';
-          c.setAttribute('aria-hidden', 'true');
-          const label = document.createElement('span');
-          label.className = 'card-label-text';
-          label.textContent = cap;
-          c.appendChild(label);
-          card.appendChild(c);
-        }
       });
     }
 
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      patch();
-      setTimeout(patch, 300);
-    }));
+    patch();
   }
 
   /* ============================================================
@@ -310,11 +316,23 @@
     const slides = root.querySelectorAll('.manioc-slide');
     const buttons = root.querySelectorAll('.manioc-stage-btn');
     const progress = document.getElementById('maniocRailProgress');
+    if (slides.length < 2) return;
+    const en = document.documentElement.lang === 'en';
     let current = 0;
 
+    root.setAttribute('aria-roledescription', en ? 'carousel' : 'carrousel');
+
     function render() {
-      slides.forEach((el, idx) => el.classList.toggle('active', idx === current));
-      buttons.forEach((el, idx) => el.classList.toggle('active', idx === current));
+      slides.forEach((el, idx) => {
+        const on = idx === current;
+        el.classList.toggle('active', on);
+        el.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+      buttons.forEach((el, idx) => {
+        const on = idx === current;
+        el.classList.toggle('active', on);
+        if (on) el.setAttribute('aria-current', 'true'); else el.removeAttribute('aria-current');
+      });
       if (progress) progress.style.width = (current / (slides.length - 1) * 100) + '%';
     }
 
@@ -323,13 +341,27 @@
       render();
     }
 
-    buttons.forEach((btn, idx) => btn.addEventListener('click', () => goTo(idx)));
+    buttons.forEach((btn, idx) => {
+      btn.addEventListener('click', () => goTo(idx));
+      const label = btn.textContent.trim() || btn.getAttribute('aria-label') || '';
+      btn.setAttribute('aria-label', (en ? 'Step ' : 'Étape ') + (idx + 1) + (en ? ' of ' : ' sur ') + buttons.length + (label ? ' : ' + label : ''));
+    });
 
     render();
 
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setInterval(() => goTo(current + 1), 5200);
-    }
+    // Défilement automatique : suspendu au survol, au focus, onglet masqué,
+    // mouvement réduit ou bascule « pause des animations » (WCAG 2.2.2).
+    let hovering = false;
+    const reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+    root.addEventListener('mouseenter', () => { hovering = true; });
+    root.addEventListener('mouseleave', () => { hovering = false; });
+    root.addEventListener('focusin', () => { hovering = true; });
+    root.addEventListener('focusout', () => { hovering = false; });
+    setInterval(() => {
+      if (hovering || document.hidden || reduceMQ.matches) return;
+      if (document.documentElement.classList.contains('motion-off')) return;
+      goTo(current + 1);
+    }, 5200);
   }
 
   /* ============================================================
@@ -344,6 +376,9 @@
     if (!lb || !lbImg || !lbCap || !overlay || !closeBtn) return;
 
     let lastFocused = null;
+    let clearTimer = null;
+    const background = document.querySelectorAll('#mainNav, main, footer');
+    lbCap.setAttribute('aria-hidden', 'true');
 
     function trapFocus(e) {
       if (e.key !== 'Tab') return;
@@ -368,6 +403,8 @@
     function open(src, cap, trigger) {
       if (!src) return;
       lastFocused = trigger || document.activeElement;
+      clearTimeout(clearTimer);
+      background.forEach(el => el.setAttribute('inert', ''));
       
       lbImg.style.opacity = '0';
       lbImg.src = src;
@@ -394,7 +431,8 @@
       document.body.style.overflow = '';
       document.removeEventListener('keydown', onEsc);
       document.removeEventListener('keydown', trapFocus);
-      setTimeout(() => { lbImg.src = ''; lbImg.alt = ''; }, 350);
+      background.forEach(el => el.removeAttribute('inert'));
+      clearTimer = setTimeout(() => { lbImg.src = ''; lbImg.alt = ''; }, 350);
       if (lastFocused && typeof lastFocused.focus === 'function') {
         lastFocused.focus();
       }
@@ -431,6 +469,58 @@
 
     const ENDPOINT     = 'https://formspree.io/f/xbdezwjg';
     const CONTACT_MAIL = 'info@anarekaci.com';
+    // Page FR ou EN : t(français, english)
+    const EN = document.documentElement.lang === 'en';
+    const t = (fr, en) => (EN ? en : fr);
+
+    // Messages d'erreur textuels, reliés aux champs (WCAG 3.3.1 / 3.3.3).
+    const summary = document.createElement('p');
+    summary.className = 'form-error-summary';
+    summary.setAttribute('role', 'alert');
+    form.insertBefore(summary, form.firstChild);
+
+    function errorText(field) {
+      const v = field.validity;
+      if (field.type === 'tel') return v.valueMissing ? t('Indiquez votre numéro de téléphone.', 'Enter your phone number.') : t('Numéro de téléphone invalide.', 'Invalid phone number.');
+      if (field.type === 'email') return t('Adresse e-mail invalide (exemple : nom@domaine.com).', 'Invalid e-mail address (example: name@domain.com).');
+      if (field.tagName === 'SELECT') return t("Choisissez votre type d'activité.", 'Choose your type of business.');
+      if (field.name === 'prenom_nom') return t('Indiquez votre prénom et votre nom.', 'Enter your first and last name.');
+      if (field.name === 'ville') return t('Indiquez votre ville ou quartier.', 'Enter your city or neighbourhood.');
+      return t('Ce champ est obligatoire.', 'This field is required.');
+    }
+
+    function showFieldError(field) {
+      const id = 'err-' + field.id;
+      let msg = document.getElementById(id);
+      if (!msg) {
+        msg = document.createElement('span');
+        msg.id = id;
+        msg.className = 'field-error';
+        field.insertAdjacentElement('afterend', msg);
+      }
+      msg.textContent = errorText(field);
+      field.setAttribute('aria-invalid', 'true');
+      field.setAttribute('aria-describedby', id);
+      field.classList.add('is-invalid');
+      field.addEventListener('input', function clear() {
+        if (!field.validity.valid) return;
+        field.removeAttribute('aria-invalid');
+        field.removeAttribute('aria-describedby');
+        field.classList.remove('is-invalid');
+        msg.remove();
+        field.removeEventListener('input', clear);
+      });
+    }
+
+    function clearErrors() {
+      summary.textContent = '';
+      form.querySelectorAll('.field-error').forEach(el => el.remove());
+      form.querySelectorAll('[aria-invalid]').forEach(el => {
+        el.removeAttribute('aria-invalid');
+        el.removeAttribute('aria-describedby');
+        el.classList.remove('is-invalid');
+      });
+    }
 
     function showSuccess(msg) {
       const p = success ? success.querySelector('p') : null;
@@ -446,7 +536,7 @@
       const btn   = form.querySelector('.form-submit');
       const label = btn ? btn.querySelector('span:first-child') : null;
       if (btn) btn.disabled = false;
-      if (label) label.textContent = "Envoyer ma demande d'adhésion";
+      if (label) label.textContent = t("Envoyer ma demande d'adhésion", 'Send my membership request');
     }
 
     form.addEventListener('submit', async (e) => {
@@ -455,17 +545,15 @@
       const honeypot = form.querySelector('[name="_gotcha"]');
       if (honeypot && honeypot.value) return;
 
+      clearErrors();
       const invalidFields = form.querySelectorAll(':invalid');
-      invalidFields.forEach(field => {
-        field.style.borderColor = '#e74c3c';
-        field.style.transition = 'border-color 0.3s ease';
-        field.addEventListener('input', function resetBorder() {
-          this.style.borderColor = '';
-          this.removeEventListener('input', resetBorder);
-        }, { once: true });
-      });
+      invalidFields.forEach(showFieldError);
 
       if (invalidFields.length > 0) {
+        const n = invalidFields.length;
+        summary.textContent = EN
+          ? (n === 1 ? '1 field to fix before sending the form.' : n + ' fields to fix before sending the form.')
+          : (n === 1 ? "1 champ à corriger avant d'envoyer le formulaire." : n + " champs à corriger avant d'envoyer le formulaire.");
         invalidFields[0].focus();
         return;
       }
@@ -473,7 +561,8 @@
       const btn   = form.querySelector('.form-submit');
       const label = btn ? btn.querySelector('span:first-child') : null;
       if (btn) btn.disabled = true;
-      if (label) label.textContent = 'Envoi en cours…';
+      if (label) label.textContent = t('Envoi en cours…', 'Sending…');
+      if (btn) btn.setAttribute('aria-live', 'polite');
 
       const data = new FormData(form);
 
@@ -484,8 +573,14 @@
           body: data
         });
         if (res.ok) {
-          showSuccess('Merci ! Votre demande a bien été envoyée.');
+          showSuccess(t('Merci ! Votre demande a bien été envoyée.', 'Thank you! Your request has been sent.'));
           form.reset();
+          return;
+        }
+        if (res.status >= 400 && res.status < 500) {
+          // Refus de validation côté serveur : ne pas annoncer un succès.
+          resetBtn();
+          summary.textContent = t("Le serveur a refusé l'envoi. Vérifiez vos informations ou écrivez-nous à ", 'The server rejected the request. Check your details or write to us at ') + CONTACT_MAIL + '.';
           return;
         }
         throw new Error('HTTP ' + res.status);
@@ -494,23 +589,22 @@
       }
 
       const champs = {
-        'Nom'             : data.get('prenom_nom') || '',
-        'Téléphone'       : data.get('tel') || '',
-        'E-mail'          : data.get('email') || '',
-        'Ville / Quartier': data.get('ville') || '',
-        "Type d'activité" : data.get('activite') || '',
-        'Établissement'   : data.get('etablissement') || '',
-        'Message'         : data.get('message') || ''
+        [t('Nom', 'Name')]                    : data.get('prenom_nom') || '',
+        [t('Téléphone', 'Phone')]             : data.get('tel') || '',
+        'E-mail'                              : data.get('email') || '',
+        [t('Ville / Quartier', 'City / Neighbourhood')]: data.get('ville') || '',
+        [t("Type d'activité", 'Type of business')]: data.get('activite') || '',
+        [t('Établissement', 'Business')]      : data.get('etablissement') || '',
+        'Message'                             : data.get('message') || ''
       };
-      let corps = "Demande d'adhésion ANAREKA-CI\n\n";
+      let corps = t("Demande d'adhésion ANAREKA-CI", 'ANAREKA-CI membership request') + '\n\n';
       for (const [k, v] of Object.entries(champs)) corps += k + ' : ' + (v || '—') + '\n';
 
       window.location.href = 'mailto:' + CONTACT_MAIL
-        + '?subject=' + encodeURIComponent("Demande d'adhésion — " + (data.get('prenom_nom') || ''))
+        + '?subject=' + encodeURIComponent(t("Demande d'adhésion — ", 'Membership request — ') + (data.get('prenom_nom') || ''))
         + '&body='    + encodeURIComponent(corps);
 
-      showSuccess("Votre messagerie va s'ouvrir avec votre demande pré-remplie.");
-      setTimeout(resetBtn, 2000);
+      showSuccess(t("Votre messagerie va s'ouvrir avec votre demande pré-remplie.", 'Your e-mail app will open with your request pre-filled.'));
     });
   }
 
@@ -692,7 +786,7 @@
 
   /* ============================================================
      TILT 3D SUBTIL — CARTES MISSIONS & PARTENAIRES
-     Rotation légère (max ~6deg) + petite profondeur (translateZ),
+     Rotation légère (max ~6deg) + petite profondeur (translateY léger),
      désactivé automatiquement si prefers-reduced-motion ou sur
      appareils tactiles (pas d'événement mousemove pertinent).
      Réagit en direct (événement "change") si l'utilisateur bascule
@@ -755,21 +849,34 @@
   }
 
   /* ============================================================
-     ANIMATION TIMELINE
+     PAUSE DES ANIMATIONS (WCAG 2.2.2)
+     Bouton discret qui coupe les mouvements continus (pagne, anneaux,
+     défilement des photos…). Préférence mémorisée si possible.
   ============================================================ */
-  function initTimelineAnimation() {
-    const timeline = document.querySelector('.timeline');
-    if (!timeline) return;
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    
-    observer.observe(timeline);
+  function initMotionToggle() {
+    var root = document.documentElement;
+    var en = root.lang === 'en';
+    var KEY = 'anarekaMotionOff';
+    try { if (localStorage.getItem(KEY) === '1') root.classList.add('motion-off'); } catch (e) { /* non bloquant */ }
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'motion-toggle';
+    function sync() {
+      var off = root.classList.contains('motion-off');
+      btn.setAttribute('aria-pressed', String(off));
+      btn.textContent = off
+        ? (en ? 'Resume animations' : 'Reprendre les animations')
+        : (en ? 'Pause animations' : 'Mettre en pause les animations');
+    }
+    btn.addEventListener('click', function () {
+      var off = root.classList.toggle('motion-off');
+      try { localStorage.setItem(KEY, off ? '1' : '0'); } catch (e) { /* non bloquant */ }
+      sync();
+    });
+    sync();
+    var footer = document.querySelector('footer');
+    if (footer) footer.appendChild(btn); else document.body.appendChild(btn);
   }
 
   /* ============================================================
@@ -810,18 +917,18 @@
     // Désarme le masquage de secours CSS (.lottie-overlay:not(.ready)).
     overlay.classList.add('ready');
 
-    // Mouvement reduit : le sceau reste affiche (version douce, voir style.css).
-
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var root = document.documentElement;
     var INTRO_MS = 1150;   // fin de la choréographie d'intro (voir style.css)
     var REVEAL_MS = 620;   // durée de l'ouverture (.is-revealing)
-    var CLOSE_MS = 460;    // durée de la fermeture avant navigation
+    var CLOSE_MS = reduceMotion ? 0 : 460;    // fermeture avant navigation (aucune en mouvement réduit)
     var SEEN_KEY = 'anarekaSealSeen';
     var navigating = false;
     var revealTimer = null;
     var revealStarted = false;
 
-    var isFirstVisit = !root.classList.contains('seal-seen');
+    // Mouvement réduit : pas d'intro animée, simple fondu (voir style.css).
+    var isFirstVisit = !root.classList.contains('seal-seen') && !reduceMotion;
     try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* non bloquant */ }
 
     // Rayon du disque : distance du point d'origine au coin le plus
@@ -872,7 +979,12 @@
     // Passer l'intro d'un tap, d'un clic ou d'une touche.
     function skipIntro() { if (isFirstVisit && !revealStarted) reveal(); }
     overlay.addEventListener('click', skipIntro);
-    document.addEventListener('keydown', skipIntro, { once: true });
+    function onKeySkip(e) {
+      if (e.key === 'Tab') return; // Tab sert à atteindre le lien d'évitement
+      document.removeEventListener('keydown', onKeySkip);
+      skipIntro();
+    }
+    document.addEventListener('keydown', onKeySkip);
 
     // Retour arrière depuis le cache (bfcache) : la page revient telle
     // qu'on l'a quittée (fermée) → la rouvrir.
@@ -915,19 +1027,23 @@
       void overlay.offsetWidth;
       overlay.classList.add('is-closing');
       setTimeout(function () { window.location.href = link.href; }, CLOSE_MS);
+      // Si la navigation n'aboutit pas (arrêt, téléchargement, PDF…), ne
+      // pas laisser la page recouverte.
+      setTimeout(function () {
+        if (!navigating) return;
+        navigating = false;
+        overlay.classList.remove('is-closing');
+        overlay.classList.add('hidden');
+      }, CLOSE_MS + 4000);
     });
   }
 
 })();
 
 /* ============================================================
-   ANAREKA-CI — innovations.js (v10 — corrigé)
-   Script additif autonome — ne modifie rien de script.js.
-   À inclure APRÈS script.js, juste avant </body> :
-   <script src="innovations.js" defer></script>
-
-   NOTE : le curseur "grain" doré a été retiré à la demande
-   de l'utilisateur (ancienne section 2 supprimée).
+   ANAREKA-CI — enrichissements autonomes (script.js est en defer :
+   le DOM est complet à l'exécution de ce bloc) : barre de progression
+   « vigne », boutons magnétiques, pause des animations hors écran.
    ============================================================ */
 (function () {
   "use strict";

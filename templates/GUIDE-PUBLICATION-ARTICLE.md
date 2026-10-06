@@ -47,7 +47,7 @@ Le nouvel article doit être atteignable depuis 3 endroits. Chacun a sa
 propre logique de "3 ou 4 plus récents" — il n'y a pas de génération
 automatique, chaque emplacement se modifie à la main.
 
-### a) `blog.html` — page listing
+### a) `blog/index.html` — page listing
 
 - La carte actuellement en `.blog-card-featured` (la plus récente) devient
   une carte normale dans `.blog-grid`.
@@ -105,9 +105,13 @@ Dans ce cas, incrémente `?v=...` sur **toutes** les pages (le garde-fou CI
 - **JSON-LD valide** : les 2 blocs (`BlogPosting`, `BreadcrumbList`) sont du
   JSON strictement valide — une virgule oubliée après un champ suffit à
   tout casser silencieusement pour les moteurs de recherche.
+- **og:image:alt et twitter:image:alt** : renseignés (reprendre l'`alt` de la
+  première image de l'article).
 - **Aucun lien en `.html`** : tous les liens internes (y compris dans le
   JSON-LD, pas seulement les `<a href>`) utilisent l'URL propre
   (`/blog/{slug}`, jamais `/blog/{slug}.html`).
+- Lance `npm run check` en local (scaffold, hreflang, hashes CSP — les mêmes
+  garde-fous que la CI).
 - La CI vérifie automatiquement à la prochaine ouverture de pull request :
   `Validate HTML` (syntaxe), `Check local links & image references`
   (liens et images cassés), `Cohérence du scaffold entre pages` (nav,

@@ -57,7 +57,7 @@ for (const file of files) {
   const root = parse(html);
   const canonicalEl = root.querySelector('link[rel="canonical"]');
   const alternates = root.querySelectorAll('link[rel="alternate"][hreflang]');
-  if (alternates.length === 0) continue; // page sans hreflang (ex. adhesion.html, article de blog) : ignorée
+  if (alternates.length === 0) continue; // page sans hreflang (ex. article de blog) : ignorée
 
   if (!canonicalEl) {
     ok = false;

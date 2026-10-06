@@ -110,6 +110,19 @@ const records = files.map((file) => {
 let ok = true;
 const problems = [];
 
+// Une page qui perd son nav/footer/version/année ne doit pas être ignorée en
+// silence par les comparaisons ci-dessous : elle doit faire échouer la CI.
+// Seule 404.html (page autonome, sans gabarit) est exemptée.
+const STANDALONE = new Set(['404.html']);
+for (const r of records) {
+  if (STANDALONE.has(path.basename(r.file))) continue;
+  const missing = ['nav', 'footer', 'cssV', 'jsV', 'year'].filter((k) => r[k] === null);
+  if (missing.length) {
+    ok = false;
+    problems.push(`\n✗ ${r.file} — gabarit incomplet, élément(s) introuvable(s) : ${missing.join(', ')}`);
+  }
+}
+
 // Cohérence interne : une référence par langue, pas une référence globale.
 function checkFieldPerLanguage(label, key) {
   for (const lang of ['fr', 'en']) {
@@ -151,10 +164,6 @@ const FR_TO_EN_HREF_EXCEPTIONS = {
   // accueil -> home dans en/index.html, donc le lien logo doit pointer
   // vers /en/#home et non /en/#accueil (dérivation mécanique erronée).
   '/#accueil': '/en/#home',
-  // /adhesion (formulaire d'adhésion) reste volontairement FR-only : les
-  // pages EN renvoient vers l'original FR plutôt que vers une page /en/adhesion
-  // qui n'existe pas.
-  '/adhesion': '/adhesion',
 };
 
 function mapFrHrefToEn(frHref) {
