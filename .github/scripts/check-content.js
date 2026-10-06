@@ -6,7 +6,7 @@
  *  - chemins racine-absolus (jamais ../ ni relatifs) pour href/src/srcset/poster
  *  - aucun lien interne en .html
  *  - toute <img> a un alt et des width/height numériques
- *  - aucun emoji brut dans le texte (utiliser /emoji/*.webp)
+ *  - aucun emoji brut dans le texte (utiliser /emoji/*.svg)
  *  - <img class="emo"> : alt="" et parent aria-hidden="true"
  *  - une seule <h1>, pas de saut de niveau de titre, <html lang> cohérent,
  *    <title> et meta description non vides et uniques
@@ -74,7 +74,7 @@ for (const file of findHtmlFiles()) {
     const clone = body.clone();
     clone.querySelectorAll('script, style').forEach((n) => n.remove());
     const m = clone.text.match(EMOJI);
-    if (m) problems.push(`${r} : emoji brut « ${m[0]} » dans le texte (utiliser /emoji/*.webp)`);
+    if (m) problems.push(`${r} : emoji brut « ${m[0]} » dans le texte (utiliser /emoji/*.svg)`);
   }
 
   // --- liens externes
