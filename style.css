@@ -166,7 +166,6 @@ html { scroll-padding-top:96px; scroll-padding-bottom:96px; }
 @keyframes leafSway     { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(10deg)} }
 @keyframes btnShine     { 0%{left:-130%} 100%{left:170%} }
 @keyframes cardShine    { 0%{transform:translateX(-120%) skewX(-15deg)} 100%{transform:translateX(220%) skewX(-15deg)} }
-@keyframes cardGlowPulse{ 0%,100%{box-shadow:0 8px 26px rgba(0,0,0,.4), 0 0 0 1px rgba(201,168,76,.14), 0 0 14px rgba(201,168,76,.06)} 50%{box-shadow:0 8px 26px rgba(0,0,0,.4), 0 0 0 1px rgba(201,168,76,.24), 0 0 22px rgba(201,168,76,.12)} }
 @keyframes vineGlowPulse{ 0%,100%{filter:drop-shadow(0 0 3px rgba(201,168,76,.45))} 50%{filter:drop-shadow(0 0 11px rgba(201,168,76,.9))} }
 @keyframes vineLeafSway { 0%,100%{transform:scale(1) rotate(var(--rot,0deg))} 50%{transform:scale(1.09) rotate(calc(var(--rot,0deg) + 7deg))} }
 @keyframes seedTwinkle  { 0%,100%{opacity:.85;transform:scale(1)} 50%{opacity:1;transform:scale(1.4)} }
@@ -1460,9 +1459,9 @@ html:not(.reveal-ready) .reveal, html:not(.reveal-ready) .reveal-l, html:not(.re
 .train-wrap::after { right:0; background:linear-gradient(to left, #122a1e 0%, transparent 100%); }
 .train-track { display:flex; flex-wrap:nowrap; width:max-content; gap:var(--card-gap); padding:16px 24px 20px; animation:trainLeft 55s linear infinite; }
 .train-track.train-reverse { animation:trainRight 50s linear infinite; }
-.train-wrap:hover .train-track, .train-wrap:focus-within .train-track { animation-play-state:paused; }
-.train-card { position:relative; width:var(--card-w); height:var(--card-h); min-width:var(--card-w); border-radius:14px; overflow:hidden; cursor:pointer; flex-shrink:0; flex-grow:0; display:block; border:1.5px solid rgba(201,168,76,.3); animation:cardGlowPulse 4.5s ease-in-out infinite; transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s cubic-bezier(.22,1,.36,1), border-color .3s; will-change:transform; }
-.train-card:hover { transform:translateY(-10px) scale(1.035); border-color:rgba(201,168,76,.9); animation-play-state:paused; box-shadow:0 26px 60px rgba(0,0,0,.55), 0 0 0 1.5px rgba(201,168,76,.55), 0 0 40px rgba(201,168,76,.28); }
+.train-wrap:hover .train-track, .train-wrap:focus-within .train-track, .train-wrap:not(.in-view) .train-track { animation-play-state:paused; }
+.train-card { position:relative; width:var(--card-w); height:var(--card-h); min-width:var(--card-w); border-radius:14px; overflow:hidden; cursor:pointer; flex-shrink:0; flex-grow:0; display:block; border:1.5px solid rgba(201,168,76,.3); transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s cubic-bezier(.22,1,.36,1), border-color .3s; }
+.train-card:hover { transform:translateY(-10px) scale(1.035); border-color:rgba(201,168,76,.9); box-shadow:0 26px 60px rgba(0,0,0,.55), 0 0 0 1.5px rgba(201,168,76,.55), 0 0 40px rgba(201,168,76,.28); }
 .train-card img { width:100% !important; height:100% !important; object-fit:cover !important; display:block !important; max-width:none !important; margin:0 !important; border-radius:0 !important; filter:brightness(.95) saturate(1.18) contrast(1.08); transition:transform .55s cubic-bezier(.22,1,.36,1), filter .45s; }
 .train-card:hover img { transform:scale(1.08); filter:brightness(1.02) saturate(1.28) contrast(1.1); }
 .train-card::before { content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(to top, rgba(8,20,12,.28) 0%, transparent 30%); pointer-events:none; }
@@ -1470,13 +1469,13 @@ html:not(.reveal-ready) .reveal, html:not(.reveal-ready) .reveal-l, html:not(.re
 .train-card:hover::after { opacity:1; }
 .train-card .card-shine { position:absolute; top:0; bottom:0; left:-130%; width:55%; background:linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent); transform:skewX(-15deg); z-index:3; pointer-events:none; opacity:0; }
 .train-card:hover .card-shine { animation:cardShine .8s ease forwards; }
-.card-expand { position:absolute; top:14px; right:14px; z-index:4; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.16); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,.28); display:flex; align-items:center; justify-content:center; font-size:13px; color:rgba(255,255,255,.85); opacity:0; transform:scale(.75); transition:opacity .3s, transform .35s cubic-bezier(.34,1.56,.64,1); }
+.card-expand { position:absolute; top:14px; right:14px; z-index:4; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.28); display:flex; align-items:center; justify-content:center; font-size:13px; color:rgba(255,255,255,.85); opacity:0; transform:scale(.75); transition:opacity .3s, transform .35s cubic-bezier(.34,1.56,.64,1); }
 .train-card:hover .card-expand { opacity:1; transform:scale(1); }
 
 /* ===== LIGHTBOX ===== */
 .lightbox { position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; padding:20px; }
 .lightbox.open { display:flex; }
-.lightbox-overlay { position:absolute; inset:0; background:rgba(14,26,18,.95); -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px); }
+.lightbox-overlay { position:absolute; inset:0; background:rgba(14,26,18,.95); }
 .lightbox-content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; animation:lbIn .3s cubic-bezier(.22,1,.36,1); max-width:92vw; border:1px solid rgba(201,168,76,.2); border-radius:16px; overflow:hidden; }
 #lightboxImg { max-width:92vw; max-height:82vh; border-radius:14px; box-shadow:0 24px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(201,168,76,.25); object-fit:contain; display:block; filter:brightness(1) saturate(1.08); border:2px solid rgba(201,168,76,.15); }
 .lightbox-cap { color:var(--or-clair); font-size:14px; margin:14px 0 0; text-align:center; max-width:80vw; line-height:1.5; text-shadow:0 1px 4px rgba(0,0,0,.5); }
@@ -2032,3 +2031,10 @@ html.motion-off .train-track { transform: none; }
 }
 .motion-toggle:hover { background: rgba(255,255,255,.12); }
 .motion-toggle[aria-pressed="true"] { background: rgba(232,201,122,.2); border-color: var(--or-clair); }
+
+/* Petits écrans : pas de flou d'arrière-plan (coûteux sur Android d'entrée de gamme). */
+@media (max-width: 768px) {
+  #mainNav, #mainNav.scrolled, .nav-links, .manioc-eyebrow, .manioc-rail-wrap, .manioc-slide-content {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+}
