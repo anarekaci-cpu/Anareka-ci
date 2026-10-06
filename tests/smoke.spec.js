@@ -115,3 +115,16 @@ test('menu mobile : s\'ouvre, se ferme avec Échap @mobile', async ({ page }) =>
   await expect(page.locator('#navLinks')).not.toHaveClass(/open/);
   await expect(page.locator('#navToggle')).toBeFocused();
 });
+
+test('aucun emoji surdimensionné (accueil FR et EN)', async ({ page }) => {
+  for (const url of ['/', '/en/']) {
+    await page.goto(url);
+    await page.waitForLoadState('networkidle');
+    const tooBig = await page.evaluate(() => [...document.querySelectorAll('img.emo')].map((i) => {
+      const b = i.getBoundingClientRect();
+      const fs = parseFloat(getComputedStyle(i.parentElement).fontSize);
+      return { src: i.getAttribute('src'), w: Math.round(b.width), max: Math.max(48, fs * 2.4) };
+    }).filter((x) => x.w > x.max));
+    expect(tooBig, url).toEqual([]);
+  }
+});
