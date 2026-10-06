@@ -2038,3 +2038,34 @@ html.motion-off .train-track { transform: none; }
     -webkit-backdrop-filter: none; backdrop-filter: none;
   }
 }
+
+/* ===== POLISSAGE UX (lisibilité et zones tactiles) =====
+   Texte courant jamais sous 12px ; cibles tactiles ≥ 44×44px sur mobile ;
+   bandeau du haut qui passe à la ligne au lieu d'être coupé. */
+.hero-eyebrow, .chiffre-label, .engagement-tag, .engagement-badge-label, .engagement-trust-titre,
+.cta-eyebrow, .album-blog-tag, .nav-logo-text small, .tag, .galerie-tag, .album-tag, .album-featured-tag, .manioc-eyebrow { font-size: 12px; }
+footer small { font-size: 12px; }
+
+@media (max-width: 600px) {
+  .topbar { white-space: normal; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 14px; text-align: center; overflow: visible; }
+  .topbar span { margin: 0; }
+  .btn-or, .btn-ghost { font-size: 12px; }
+}
+@media (max-width: 1080px), (pointer: coarse) {
+  .nav-toggle { width: 44px; height: 44px; }
+  .lang-switch a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 8px; }
+  .manioc-stage-btn { min-width: 44px; min-height: 44px; justify-content: center; }
+  .footer-nav a { display: inline-flex; align-items: center; min-height: 44px; padding-bottom: 0; }
+  .motion-toggle { min-height: 44px; }
+}
+.topbar, .topbar strong, .topbar span, .footer-nav a, .lang-switch a, .manioc-stage-label { font-size: 12px; }
+.nav-toggle { flex-shrink: 0; }
+.nav-logo-text { white-space: nowrap; }
+@media (max-width: 600px) {
+  /* Le sous-titre allongeait la barre sur 4 lignes ; l'accueil le répète juste en dessous. */
+  .nav-logo-text small { display: none; }
+  .lang-switch { gap: 0; }
+}
+@media (max-width: 1080px), (pointer: coarse) {
+  .btn-or, .btn-ghost, .section .btn-ghost, .social-btn { min-height: 44px; }
+}
