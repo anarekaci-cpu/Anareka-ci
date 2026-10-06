@@ -21,7 +21,7 @@ module.exports = defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'], ...(process.env.CI ? {} : { channel: 'chrome' }) }, grep: /@mobile/ },
   ],
   webServer: {
-    command: `npx --yes wrangler@4 pages dev . --port ${PORT}`,
+    command: `npx --yes wrangler@4 pages dev . --port ${PORT} --compatibility-date=2026-05-01`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
