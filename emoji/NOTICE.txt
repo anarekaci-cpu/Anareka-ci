@@ -1,0 +1,4 @@
+Emojis : Noto Color Emoji (Google), https://github.com/googlefonts/noto-emoji (tag v2.047).
+Images SVG copiées telles quelles. Licence : voir LICENSE-noto-emoji.txt ; le dépôt
+d'origine indique les images sous licence Apache 2.0 et les polices sous SIL OFL 1.1.
+Le drapeau de la Côte d'Ivoire (flag-ci.svg) est propre au site.
