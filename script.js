@@ -493,6 +493,7 @@
       if (field.type === 'tel') return v.valueMissing ? t('Indiquez votre numéro de téléphone.', 'Enter your phone number.') : t('Numéro de téléphone invalide.', 'Invalid phone number.');
       if (field.type === 'email') return t('Adresse e-mail invalide (exemple : nom@domaine.com).', 'Invalid e-mail address (example: name@domain.com).');
       if (field.tagName === 'SELECT') return t("Choisissez votre type d'activité.", 'Choose your type of business.');
+      if (field.type === 'checkbox') return t('Cochez la case pour accepter le traitement de vos données.', 'Tick the box to accept the processing of your data.');
       if (field.name === 'prenom_nom') return t('Indiquez votre prénom et votre nom.', 'Enter your first and last name.');
       if (field.name === 'ville') return t('Indiquez votre ville ou quartier.', 'Enter your city or neighbourhood.');
       return t('Ce champ est obligatoire.', 'This field is required.');

@@ -35,7 +35,7 @@
 <link rel="dns-prefetch" href="https://wa.me">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/cormorant-roman-300-700-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/outfit-100-900-latin.woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=20261006l" fetchpriority="high">
+<link rel="stylesheet" href="/style.css?v=20261015a" fetchpriority="high">
 <link rel="icon" type="image/webp" href="/logo.webp">
 <link rel="apple-touch-icon" href="/logo.webp">
 <link rel="manifest" href="/site.webmanifest">
@@ -200,7 +200,7 @@
           <p>Merci pour votre intérêt. Notre équipe vous contactera dans les 48h au numéro indiqué.</p>
         </div>
         <form class="adhesion-form" id="adhesionForm" action="https://formspree.io/f/xbdezwjg" method="POST" novalidate>
-          <p class="form-note"><span aria-hidden="true">*</span> Champs obligatoires — Vos données restent confidentielles.</p>
+          <p class="form-note"><span aria-hidden="true">*</span> Champs obligatoires — Vos données ne servent qu'à traiter votre demande.</p>
           <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form-row">
             <div class="form-group">
@@ -241,6 +241,9 @@
           <div class="form-group">
             <label for="f-message">Message (facultatif)</label>
             <textarea id="f-message" name="message" rows="3" placeholder="Parlez-nous de votre activité..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="f-consent" style="display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px;"><input id="f-consent" type="checkbox" name="consentement" value="oui" required aria-required="true" style="width:22px;height:22px;flex:none;margin-top:2px;"><span>J'accepte que mes données soient transmises à l'ANAREKA-CI (via Formspree) pour traiter ma demande d'adhésion et conservées 1 an. <a href="/mentions-legales#donnees" style="color:var(--or);font-weight:600;">En savoir plus</a> <span aria-hidden="true">*</span></span></label>
           </div>
           <button type="submit" class="form-submit ripple-btn">
             <span>Envoyer ma demande d'adhésion</span>
@@ -312,6 +315,6 @@
   <small>Filière structurée en 1996 (SYNAREK-CI) — ANAREKA-CI créée en 2025, partenaire du syndicat SYNAREK-CI — Cocody Riviera Bonoumin, Cité Syninfo, Abidjan</small>
 </footer>
 
-<script src="/script.js?v=20261006l" defer></script>
+<script src="/script.js?v=20261015a" defer></script>
 </body>
 </html>
