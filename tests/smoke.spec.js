@@ -63,6 +63,11 @@ test.describe('formulaire d\'adhésion', () => {
       await page.fill('#f-tel', '+225 07 00 00 00 00');
       await page.fill('#f-ville', 'Abidjan');
       await page.selectOption('#f-activite', { index: 1 });
+      // Sans consentement, l'envoi est refusé avec une erreur lisible.
+      await page.locator('#adhesionForm .form-submit').click();
+      await expect(page.locator('#err-f-consent')).toBeVisible();
+      await expect(page.locator('#formSuccess')).toBeHidden();
+      await page.check('#f-consent');
       await page.locator('#adhesionForm .form-submit').click();
       await expect(page.locator('#formSuccess')).toBeVisible();
     });
