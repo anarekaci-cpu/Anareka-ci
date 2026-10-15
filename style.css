@@ -2072,3 +2072,6 @@ footer small { font-size: 12px; }
 
 /* « Moment phare » : emoji et texte sur la même ligne, y compris sur mobile */
 .album-featured-tag { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+/* Texte réservé aux lecteurs d'écran et aux moteurs de recherche */
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
