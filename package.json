@@ -9,6 +9,6 @@
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
-    "node-html-parser": "^7.0.1"
+    "node-html-parser": "^9.0.4"
   }
 }
