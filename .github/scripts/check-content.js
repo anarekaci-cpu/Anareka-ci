@@ -61,6 +61,10 @@ for (const file of findHtmlFiles()) {
     if (!/^\d+$/.test(img.getAttribute('width') || '') || !/^\d+$/.test(img.getAttribute('height') || '')) {
       problems.push(`${r} : <img src="${src}"> sans width/height numériques (CLS)`);
     }
+    // Vignettes de 56/72 px (cartes de l'accueil, barres latérales) : miniature /thumbs/*, jamais la photo entière.
+    if (img.closest('.album-blog-img, .sidebar-post-img') && !/^\/thumbs\/[^/]+-160\.webp$/.test(src)) {
+      problems.push(`${r} : vignette <img src="${src}"> — utiliser une miniature /thumbs/*-160.webp (voir le guide de publication)`);
+    }
     if ((img.getAttribute('class') || '').split(/\s+/).includes('emo')) {
       if (img.getAttribute('alt') !== '') problems.push(`${r} : <img class="emo" src="${src}"> doit avoir alt=""`);
       const hidden = img.parentNode && img.parentNode.getAttribute && img.parentNode.getAttribute('aria-hidden') === 'true';

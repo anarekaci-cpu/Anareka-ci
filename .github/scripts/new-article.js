@@ -56,6 +56,23 @@ function webpSize(file) {
   return die(`format .webp non reconnu dans ${file}`);
 }
 
+// Miniature carrée 160 px (cartes de l'accueil 56 px, barres latérales 72 px) : évite de charger la photo entière.
+// Utilise ImageMagick (`convert`) ; à défaut, la photo entière sert de repli et la commande à lancer est affichée.
+function ensureThumb(image, dryRun) {
+  const out = `thumbs/${path.basename(image, '.webp')}-160.webp`;
+  if (fs.existsSync(rel(out))) return out;
+  const cmd = ['convert', rel(image), '-resize', '160x160^', '-gravity', 'center', '-extent', '160x160', '-quality', '72', rel(out)];
+  if (dryRun) return out;
+  try {
+    fs.mkdirSync(rel('thumbs'), { recursive: true });
+    require('child_process').execFileSync(cmd[0], cmd.slice(1), { stdio: 'ignore' });
+    return out;
+  } catch (_) {
+    console.warn(`Attention : miniature non créée (ImageMagick absent ?). Lance : ${cmd.join(' ')}`);
+    return image;
+  }
+}
+
 function articlesOnDisk() {
   const list = [];
   for (const f of fs.readdirSync(rel('blog'))) {
@@ -94,6 +111,8 @@ function main() {
   const put = (f, content) => writes.set(f, content);
 
   const { w, h } = webpSize(rel(o.image));
+  const thumb = ensureThumb(o.image, dryRun);
+  const tsz = thumb === o.image ? { w, h } : { w: 160, h: 160 };
   const slug = o.slug;
   const url = `https://anarekaci.com/blog/${slug}`;
   const dateFr = frDate(o.date);
@@ -169,7 +188,7 @@ function main() {
       </a>
 `;
   // barres latérales : blocs existants réutilisés tels quels, bloc du nouvel article généré
-  const blocks = { [slug]: sideBlock(slug, o.image, o.alt, w, h, o.title) };
+  const blocks = { [slug]: sideBlock(slug, thumb, o.alt, tsz.w, tsz.h, o.title) };
   for (const a of all) if (a.slug !== slug) for (const m of get(a.file).matchAll(sidebarRe)) if (!blocks[m[1]]) blocks[m[1]] = m[0].replace(/^\s*/, '      ');
   for (const a of all) {
     const want = all.filter((x) => x.slug !== a.slug).slice(0, 3).map((x) => blocks[x.slug]);
@@ -199,7 +218,7 @@ function main() {
         <span class="album-blog-lien" aria-hidden="true">→</span>
       </a>
 `;
-  cards[slug] = homeCard(slug, o.image, o.alt, w, h, 'newspaper', 'Nouvel article', o.shortTitle || o.title);
+  cards[slug] = homeCard(slug, thumb, o.alt, tsz.w, tsz.h, 'newspaper', 'Nouvel article', o.shortTitle || o.title);
   const top4 = all.slice(0, 4);
   const list = top4.map((a) => {
     let c = cards[a.slug];

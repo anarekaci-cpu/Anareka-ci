@@ -23,7 +23,9 @@ npm run new-article -- --slug mon-slug --title "Titre de l'article" \
   [--keywords "mot 2,mot 3"] [--body corps.html] [--dry-run]
 ```
 
-Le script lit les dimensions réelles de l'image, copie nav/footer de l'article
+Le script lit les dimensions réelles de l'image, crée la miniature carrée
+`thumbs/{image}-160.webp` (ImageMagick `convert`) utilisée par les cartes de l'accueil
+et les barres latérales, copie nav/footer de l'article
 le plus récent, met à jour `blog/index.html`, l'accueil, les barres latérales
 de tous les articles et `sitemap.xml`. Il refuse une catégorie inconnue ou un
 slug déjà pris. Sans `--body`, le corps du gabarit reste à écrire à la main.
@@ -60,6 +62,8 @@ Réunis :
      de la page) ; toutes les images suivantes `loading="lazy"`.
    - `width`/`height` = dimensions réelles du fichier `.webp` utilisé, pas
      une valeur approximative (sinon décalage de mise en page CLS).
+   - Les vignettes (accueil, sidebars) utilisent `/thumbs/{image}-160.webp` (160×160,
+     recadrage centré) et jamais la photo entière : `check-content` le vérifie.
    - Les 3 articles de la sidebar "Actualités récentes" : à jour avec les
      3 articles les plus récents du site **hors celui-ci** (voir section 2).
 

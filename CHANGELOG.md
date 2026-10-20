@@ -14,6 +14,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 - En-têtes `X-Robots-Tag: noindex` sur les fichiers du dépôt servis sans intérêt pour la recherche.
 
 ### Modifié
+- Performance : les vignettes de l'accueil (56 px) et des barres latérales d'articles (72 px) utilisent des miniatures 160×160 (`/thumbs/`, 28 Ko au total) au lieu des photos entières (703 Ko) ; garde-fou dans `check-content`.
 - SEO : titres (`<title>`, `og:title`, `twitter:title`) des pages Adhésion, Association, Contact et Missions rendus descriptifs (FR et EN), au lieu de 21–29 caractères sans mot-clé.
 - Maillage du blog aligné sur le guide : accueil = 4 articles les plus récents (INHP, Orbaff, Tiapoum, Dibou), barres latérales d'articles limitées aux 3 plus récents autres articles.
 - Performance mobile : plus de pulsation lumineuse par carte du bandeau photo, bandeau en pause hors écran, flou d'arrière-plan retiré sur petits écrans et là où le fond est quasi opaque.
