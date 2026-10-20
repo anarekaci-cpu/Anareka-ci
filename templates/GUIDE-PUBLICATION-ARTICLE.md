@@ -8,6 +8,28 @@ de fichiers versionnés, dans l'ordre indiqué.
 Rédiger le texte de l'article reste un travail humain — ce guide couvre tout
 le reste : gabarit, maillage interne, sitemap, vérifications.
 
+## Raccourci : `npm run new-article`
+
+Les sections 1 à 3 ci-dessous (fichier de l'article, maillage interne,
+sitemap) sont automatisées. Une fois les photos, le slug et la catégorie
+prêts :
+
+```
+npm run new-article -- --slug mon-slug --title "Titre de l'article" \
+  --description "Résumé de 140 à 160 caractères" --category "Partenariat" \
+  --date AAAA-MM-JJ --image photo-hero.webp --alt "Alt de la première photo" \
+  [--caption "Légende"] [--emoji handshake] [--summary "Résumé de la carte du blog"] \
+  [--seo-title "Titre SEO | ANAREKA-CI"] [--short-title "Titre court (accueil)"] \
+  [--keywords "mot 2,mot 3"] [--body corps.html] [--dry-run]
+```
+
+Le script lit les dimensions réelles de l'image, copie nav/footer de l'article
+le plus récent, met à jour `blog/index.html`, l'accueil, les barres latérales
+de tous les articles et `sitemap.xml`. Il refuse une catégorie inconnue ou un
+slug déjà pris. Sans `--body`, le corps du gabarit reste à écrire à la main.
+Termine ensuite par la section 5 (vérifications) et `npm run check`.
+`--dry-run` liste les fichiers touchés sans rien écrire.
+
 ## Avant de commencer
 
 Réunis :
