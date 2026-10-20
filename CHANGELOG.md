@@ -6,6 +6,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 ## [Non publié]
 
 ### Ajouté
+- WhatsApp : ligne « WhatsApp » sur les pages Contact (FR/EN) et bouton « Partager sur WhatsApp » sous chaque article (également dans le gabarit et `new-article`).
 - `npm run new-article` : crée l'article depuis le gabarit et met à jour blog, accueil, barres latérales et sitemap (voir le guide de publication). Le gabarit d'article est resynchronisé avec le nav/footer actuels.
 - Contrôles automatiques : contenu (chemins, images, emojis, titres), JSON-LD/canonical, sitemap, maillage du blog, hygiène du dépôt (LF, `security.txt`), limite de pages sans build.
 - Tests de bout en bout Playwright (pages sans erreur ni violation CSP, formulaire FR/EN, lightbox, pause des animations, menu mobile).

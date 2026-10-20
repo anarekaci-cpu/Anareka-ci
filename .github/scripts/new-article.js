@@ -109,6 +109,7 @@ function main() {
   t = sub(t, T, esc(o.title));
   t = sub(t, "Résumé de l'article en une phrase, repris ensuite dans og:description et twitter:description.", esc(o.description));
   t = sub(t, "Résumé de l'article en une phrase.", esc(o.description));
+  t = sub(t, 'TITRE_URL', encodeURIComponent(o.title).replace(/[!'()*]/g, (c) => '%' + c.charCodeAt(0).toString(16).toUpperCase()));
   t = sub(t, 'slug-de-larticle', slug);
   t = sub(t, 'nom-image-hero.webp', o.image);
   t = sub(t, '<meta property="og:image:width" content="1200">', `<meta property="og:image:width" content="${w}">`);
@@ -147,7 +148,7 @@ function main() {
   if (o.body) {
     if (!fs.existsSync(o.body)) die(`--body : fichier introuvable (${o.body})`);
     const body = fs.readFileSync(o.body, 'utf8').trim();
-    const re = /(<div class="article-body">\n)[\s\S]*?(\n<\/div>\n\n<a href="\/blog" class="article-back">)/;
+    const re = /(<div class="article-body">\n)[\s\S]*?(\n<\/div>\n\n<a href=)/;
     if (!re.test(t)) die('gabarit : bloc .article-body introuvable');
     t = t.replace(re, (_, a, z) => `${a}${body}${z}`);
   }
