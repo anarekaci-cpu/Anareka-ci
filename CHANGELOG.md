@@ -12,6 +12,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 - En-têtes `X-Robots-Tag: noindex` sur les fichiers du dépôt servis sans intérêt pour la recherche.
 
 ### Modifié
+- Maillage du blog aligné sur le guide : accueil = 4 articles les plus récents (INHP, Orbaff, Tiapoum, Dibou), barres latérales d'articles limitées aux 3 plus récents autres articles.
 - Performance mobile : plus de pulsation lumineuse par carte du bandeau photo, bandeau en pause hors écran, flou d'arrière-plan retiré sur petits écrans et là où le fond est quasi opaque.
 - Page d'adhésion : formulation unique sur la fondation (« Fondée en 2025, … prolonge le travail du SYNAREK-CI, actif depuis 1996 »).
 - `sitemap.xml` : articles triés par date de publication.
