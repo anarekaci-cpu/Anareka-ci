@@ -2311,3 +2311,41 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { box-shadow:0
 /* Champs de formulaire : 48 px de haut, 16 px de texte (pas de zoom automatique sur iOS) */
 .form-group input:not([type=checkbox]):not([type=radio]), .form-group select, .form-group textarea { min-height:48px; font-size:16px; }
 .c-val a { min-height:44px; display:inline-flex; align-items:center; }
+
+/* ============================================================
+   ANAREKA-CI — v14 : MISSIONS, PARTENAIRES, PIED DE PAGE
+   Cartes plus aérées (titres en Cormorant, texte à 15 px), pastille
+   dorée derrière chaque icône, plus d'icône qui flotte en continu,
+   pied de page avec trame de losanges. Mêmes couleurs.
+   ============================================================ */
+.domaine-card { border-radius:16px; padding:34px 28px 30px; }
+.d-icon {
+  width:60px; height:60px; margin-bottom:20px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:28px;
+  background:var(--or-pale); border:1px solid rgba(201,168,76,.35);
+  box-shadow:0 6px 16px -8px rgba(201,168,76,.6);
+  animation:none;
+}
+.domaine-card h2 { font-family:'Cormorant', serif; font-size:clamp(1.35rem, 2.2vw, 1.6rem); font-weight:700; line-height:1.2; margin-bottom:12px; }
+.domaine-card p, .domaine-card li { font-size:15px; line-height:1.7; }
+.domaine-card ul li { padding-left:20px; }
+.domaine-card:hover .d-icon { transform:scale(1.06); }
+
+.part-card { border-radius:16px; padding:22px 26px; gap:20px; }
+.part-card-logo { width:64px; height:64px; }
+.part-card-info h3 { font-family:'Cormorant', serif; font-size:1.3rem; line-height:1.2; }
+.part-card-info p { font-size:14px; line-height:1.55; }
+.part-card-lien { opacity:.55; }
+.part-tag { font-size:13px; padding:9px 16px; }
+
+footer {
+  background-color:var(--noir);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 6L50 28L28 50L6 28Z' fill='none' stroke='%23c9a84c' stroke-width='.8' opacity='.09'/%3E%3C/svg%3E");
+  background-size:56px 56px;
+  padding-top:64px;
+}
+.footer-logo { font-size:clamp(2rem, 5vw, 2.6rem); letter-spacing:.5px; }
+footer .tagline { font-size:14px; color:rgba(255,255,255,.72); max-width:520px; margin-inline:auto; line-height:1.55; }
+.footer-nav { gap:8px 20px; }
+footer small { font-size:13px; line-height:1.6; }
+.domaine-card ul li::before { top:.15em; line-height:1.4; }
