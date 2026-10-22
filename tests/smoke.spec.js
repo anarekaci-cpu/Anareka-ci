@@ -133,3 +133,26 @@ test('aucun emoji surdimensionné (accueil FR et EN)', async ({ page }) => {
     expect(tooBig, url).toEqual([]);
   }
 });
+
+// Accessibilité (recommandations UI UX Pro Max) : cibles ≥ 44 px et texte ≥ 12 px sur mobile.
+// Les liens en ligne dans un paragraphe sont exemptés (WCAG 2.2 « Target Size », exception « inline »).
+test('@mobile cibles tactiles de 44 px et texte de 12 px minimum', async ({ page }) => {
+  for (const url of ['/', '/en/', '/association', '/adhesion', '/contact']) {
+    await page.goto(url);
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.querySelector('#navToggle')?.click());
+    const { petites, minuscules } = await page.evaluate(() => {
+      const visible = (e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden'; };
+      const petites = [...document.querySelectorAll('a, button, summary, select, input:not([type=hidden]):not([type=checkbox]):not([type=radio]), textarea')]
+        .filter((e) => visible(e) && !(getComputedStyle(e).display === 'inline' && e.parentElement.textContent.trim().length > e.textContent.trim().length + 10))
+        .filter((e) => { return e.offsetHeight < 44 || e.offsetWidth < 44; })
+        .map((e) => `${e.tagName}.${e.className} ${e.offsetWidth}x${e.offsetHeight}`);
+      const minuscules = [...document.querySelectorAll('body *')]
+        .filter((e) => e.children.length === 0 && e.textContent.trim() && visible(e) && parseFloat(getComputedStyle(e).fontSize) < 12)
+        .map((e) => `${e.tagName}.${e.className} ${getComputedStyle(e).fontSize}`);
+      return { petites, minuscules };
+    });
+    expect(petites, `${url} : cibles < 44 px`).toEqual([]);
+    expect(minuscules, `${url} : texte < 12 px`).toEqual([]);
+  }
+});
