@@ -14,6 +14,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 - En-têtes `X-Robots-Tag: noindex` sur les fichiers du dépôt servis sans intérêt pour la recherche.
 
 ### Modifié
+- Bureau : titres des cartes d'actualités de l'accueil sur 2 lignes au lieu d'être tronqués (…), vide de ≈ 240 px entre deux blocs `.page` ramené à ≈ 140 px, espace sous le texte de présentation avant « En savoir plus ». `?v=` de `style.css` : `20261022b`.
 - Front : cibles tactiles ≥ 24 px (liens de la page Contact, « Retour au blog »/« Partager », case de consentement 24 px), numéros de téléphone jamais coupés en deux sur mobile, `transition: all` retiré de `.c-row`, `color-scheme: light`, `touch-action: manipulation`, `text-wrap: balance/pretty`.
 - Front : « Devenir membre » et WhatsApp se masquent quand le pied de page entre à l'écran (ils en cachaient le texte sur mobile). `?v=` de `style.css` et `script.js` passé à `20261022a` partout.
 - Performance : les vignettes de l'accueil (56 px) et des barres latérales d'articles (72 px) utilisent des miniatures 160×160 (`/thumbs/`, 28 Ko au total) au lieu des photos entières (703 Ko) ; garde-fou dans `check-content`.
