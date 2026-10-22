@@ -2349,3 +2349,48 @@ footer .tagline { font-size:14px; color:rgba(255,255,255,.72); max-width:520px; 
 .footer-nav { gap:8px 20px; }
 footer small { font-size:13px; line-height:1.6; }
 .domaine-card ul li::before { top:.15em; line-height:1.4; }
+
+/* ============================================================
+   ANAREKA-CI — v16 : SECTIONS DE L'ACCUEIL
+   Le héros ne change pas. Plus de largeur (1180 px), présentation en
+   deux colonnes, engagements en fiches, photo encadrée d'or, cartes
+   « actualités » plus généreuses. Mêmes couleurs.
+   ============================================================ */
+.page-wide { max-width:1180px; padding-inline:clamp(20px, 4vw, 48px); }
+.page-wide .section { padding-block:clamp(64px, 9vw, 112px); }
+
+@media (min-width:900px) {
+  .page-wide #presentation { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:clamp(40px, 6vw, 96px); align-items:start; }
+  .page-wide #presentation > .tag,
+  .page-wide #presentation > .section-titre,
+  .page-wide #presentation > .tiret,
+  .page-wide #presentation > .pres-lead { grid-column:1; }
+  .page-wide #presentation > .pres-body { grid-column:2; grid-row:1 / span 4; align-self:center; max-width:none; margin:0; padding:30px 34px; font-size:17px; }
+  .page-wide #presentation > .btn-ghost { grid-column:2; grid-row:5; justify-self:start; margin-top:28px; }
+}
+
+/* Engagement terrain : deux colonnes plus aérées, engagements en fiches */
+.page-wide .engagement-grid { gap:clamp(36px, 6vw, 88px); margin-top:48px; }
+.page-wide .engagement-text h3 { font-size:clamp(1.5rem, 2.6vw, 1.9rem); }
+.page-wide .engagement-text p { font-size:16px; }
+.page-wide .engagement-list li {
+  background:var(--blanc); border:1px solid var(--bordure); border-radius:14px; padding:16px 20px; margin-bottom:14px;
+  box-shadow:0 1px 2px rgba(26,61,43,.05), 0 10px 24px -16px rgba(26,61,43,.2);
+  transition-property:transform, box-shadow; transition-duration:.3s; transition-timing-function:cubic-bezier(.22,1,.36,1);
+}
+.page-wide .engagement-list li:hover { transform:translateY(-3px); box-shadow:0 2px 4px rgba(26,61,43,.07), 0 18px 32px -16px rgba(26,61,43,.3); }
+.page-wide .engagement-list div { font-size:15px; }
+.engagement-image::before {
+  content:''; position:absolute; inset:0; border:2px solid var(--or); border-radius:24px; transform:translate(14px, 14px); pointer-events:none;
+}
+.engagement-image img { border-radius:24px; position:relative; box-shadow:0 36px 60px -36px rgba(26,61,43,.55); }
+.engagement-badge { z-index:2; }
+.page-wide .engagement-trust { margin-top:clamp(56px, 8vw, 96px); }
+.page-wide .engagement-trust-logos { gap:clamp(28px, 5vw, 64px); }
+.page-wide .engagement-trust-logos img { max-height:64px; }
+
+/* Actualités de l'accueil : cartes plus grandes, survol vers le haut */
+.album-blog-highlight { max-width:1120px; }
+.album-blog-list { gap:16px; }
+.album-blog-card { border-radius:16px; padding:14px 22px; gap:20px; }
+.album-blog-card:hover { transform:translateY(-3px); }
