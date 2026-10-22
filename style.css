@@ -2170,3 +2170,110 @@ a:focus-visible, button:focus-visible { outline-offset:3px; }
 /* Titres équilibrés, paragraphes sans ligne orpheline. */
 :is(h1, h2, h3, .section-titre) { text-wrap: balance; }
 :is(.article-body, .section) p { text-wrap: pretty; }
+
+/* ============================================================
+   ANAREKA-CI — v12 : ENRICHISSEMENT GRAPHIQUE
+   Mêmes couleurs, même ossature. On ajoute de la matière :
+   motif de pagne discret, ornements en losanges, chiffres en or,
+   cartes à ombres superposées, retour tactile sur les boutons.
+   Règles appliquées : rayons concentriques, pas de « transition: all »,
+   chiffres tabulaires, contours neutres sur les images.
+   ============================================================ */
+
+/* --- Fond ivoire : trame de losanges quasi invisible (profondeur, pas de bruit) --- */
+body {
+  background-color:var(--ivoire);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 6L50 28L28 50L6 28Z' fill='none' stroke='%23c9a84c' stroke-width='.8' opacity='.13'/%3E%3C/svg%3E");
+  background-size:56px 56px;
+}
+
+/* --- Ornement de section : mini-bande de pagne au lieu du simple tiret --- */
+.tiret {
+  width:80px; height:8px; border-radius:2px;
+  background:var(--pagne) repeat-x 0 0 / 16px 8px;
+  box-shadow:0 1px 0 rgba(26,61,43,.12);
+}
+.tag::before {
+  content:''; width:7px; height:7px; flex:none; background:var(--or); transform:rotate(45deg); border-radius:1px;
+}
+
+/* --- Héros : la règle devient une bande de pagne, titre un peu plus profond --- */
+.hero-rule {
+  width:96px; height:8px; border-radius:2px;
+  background:var(--pagne) repeat-x 0 0 / 16px 8px;
+  box-shadow:0 0 0 1px rgba(201,168,76,.25);
+  animation:ruleExpand .8s 1s both;
+}
+.hero h1 { text-shadow:0 2px 24px rgba(0,0,0,.35); }
+.hero-sous { padding-bottom:4px; }
+
+/* --- Chiffres : de grands nombres dorés, séparés par des losanges --- */
+.chiffre-item { position:relative; padding:clamp(32px,5vw,52px) 24px; border-right:0; }
+.chiffre-item + .chiffre-item::before {
+  content:''; position:absolute; left:0; top:50%; width:9px; height:9px; margin:-4.5px 0 0 -4.5px;
+  background:var(--or); transform:rotate(45deg); opacity:.7;
+}
+.chiffre-val {
+  font-size:clamp(2.8rem, 6.5vw, 4.6rem); font-variant-numeric:tabular-nums lining-nums; animation:none;
+  background:linear-gradient(180deg, #f3dc9e 0%, var(--or) 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:var(--or-clair);
+}
+.chiffre-item:hover .chiffre-val { transform:none; }
+.chiffre-label { font-size:14px; letter-spacing:.3px; text-transform:none; color:rgba(255,255,255,.82); }
+
+/* --- Présentation : le texte devient une fiche, la vision un cadre double --- */
+.pres-lead { position:relative; padding-top:34px; }
+.pres-lead::before {
+  content:'\201C'; position:absolute; top:-10px; left:-4px; font-size:96px; line-height:1; color:var(--or); opacity:.45;
+}
+.pres-body {
+  background:var(--blanc); border-left:4px solid var(--or); border-radius:4px 14px 14px 4px;
+  padding:22px 28px; box-shadow:var(--ombre);
+}
+.vision-bloc { border-radius:18px; padding:clamp(28px,4vw,44px); box-shadow:0 24px 48px -24px rgba(26,61,43,.5); }
+.vision-bloc::after {
+  content:''; position:absolute; inset:10px; border-radius:10px; border:1px solid rgba(232,201,122,.28); pointer-events:none;
+}
+
+/* --- Cartes (blog, articles) : ombres superposées, trait doré à la surbrillance --- */
+.blog-card {
+  border-radius:16px; overflow:hidden; position:relative;
+  box-shadow:0 1px 2px rgba(26,61,43,.06), 0 12px 28px -16px rgba(26,61,43,.22);
+  transition-property:transform, box-shadow; transition-duration:.35s; transition-timing-function:cubic-bezier(.22,1,.36,1);
+}
+.blog-card::after {
+  content:''; position:absolute; left:0; right:0; bottom:0; height:3px; background:linear-gradient(90deg, var(--or), var(--or-clair));
+  transform:scaleX(0); transform-origin:left; transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+.blog-card:hover { transform:translateY(-5px); box-shadow:0 2px 4px rgba(26,61,43,.08), 0 26px 44px -20px rgba(26,61,43,.32); }
+.blog-card:hover::after { transform:scaleX(1); }
+.blog-card-img img, .article-body img { outline:1px solid rgba(0,0,0,.08); outline-offset:-1px; }
+
+/* --- Galerie défilante : survol plus sobre --- */
+.train-card { border-radius:16px; }
+.train-card:hover { transform:translateY(-6px) scale(1.02); box-shadow:0 22px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(201,168,76,.6); }
+.train-card::after { display:none; }
+.train-card .card-shine { display:none; }
+
+/* --- Bandeau d'appel : calme, bouton lisible --- */
+.cta-band { padding:clamp(64px,9vw,104px) 28px; }
+.cta-titre { animation:none; text-wrap:balance; }
+.cta-eyebrow { font-size:14px; letter-spacing:.4px; text-transform:none; }
+.cta-btn {
+  animation:none; background:var(--or); background-size:auto;
+  font-size:16px; letter-spacing:.2px; text-transform:none; font-weight:700; min-height:52px;
+  box-shadow:0 10px 26px -8px rgba(201,168,76,.6);
+  transition-property:transform, box-shadow, background-color; transition-duration:.25s;
+}
+.cta-btn:hover { background:var(--or-clair); transform:translateY(-3px); box-shadow:0 16px 32px -10px rgba(201,168,76,.7); }
+
+/* --- Retour tactile : un léger enfoncement au clic --- */
+.btn-or, .btn-ghost, .cta-btn, .social-btn {
+  transition-property:transform, box-shadow, background-color, border-color, color; transition-duration:.25s; transition-timing-function:cubic-bezier(.22,1,.36,1);
+}
+.btn-or:active, .btn-ghost:active, .cta-btn:active, .social-btn:active { transform:scale(.97); }
+
+/* --- Entrée de la page : un seul mouvement, sur le héros --- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-logo-wrap { animation:heroFadeUp .9s .1s both; }
+}
