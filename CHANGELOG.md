@@ -14,6 +14,8 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 - En-têtes `X-Robots-Tag: noindex` sur les fichiers du dépôt servis sans intérêt pour la recherche.
 
 ### Modifié
+- Front : cibles tactiles ≥ 24 px (liens de la page Contact, « Retour au blog »/« Partager », case de consentement 24 px), numéros de téléphone jamais coupés en deux sur mobile, `transition: all` retiré de `.c-row`, `color-scheme: light`, `touch-action: manipulation`, `text-wrap: balance/pretty`.
+- Front : « Devenir membre » et WhatsApp se masquent quand le pied de page entre à l'écran (ils en cachaient le texte sur mobile). `?v=` de `style.css` et `script.js` passé à `20261022a` partout.
 - Performance : les vignettes de l'accueil (56 px) et des barres latérales d'articles (72 px) utilisent des miniatures 160×160 (`/thumbs/`, 28 Ko au total) au lieu des photos entières (703 Ko) ; garde-fou dans `check-content`.
 - SEO : titres (`<title>`, `og:title`, `twitter:title`) des pages Adhésion, Association, Contact et Missions rendus descriptifs (FR et EN), au lieu de 21–29 caractères sans mot-clé.
 - Maillage du blog aligné sur le guide : accueil = 4 articles les plus récents (INHP, Orbaff, Tiapoum, Dibou), barres latérales d'articles limitées aux 3 plus récents autres articles.

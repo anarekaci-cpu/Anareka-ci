@@ -1223,7 +1223,7 @@ html:not(.reveal-ready) .reveal, html:not(.reveal-ready) .reveal-l, html:not(.re
 .article-sources { font-size:12.5px; color:var(--gris); border-top:1px solid var(--bordure); padding-top:16px; margin-top:8px; }
 .article-sources a { color:var(--vert); font-weight:600; text-decoration:underline; }
 .article-sources a:hover { color:var(--or); }
-.article-back { display:inline-flex; align-items:center; gap:8px; margin-top:12px; color:var(--vert); font-weight:600; font-size:13px; text-decoration:none; }
+.article-back { display:inline-flex; align-items:center; gap:8px; min-height:44px; margin-top:4px; color:var(--vert); font-weight:600; font-size:13px; text-decoration:none; }
 .article-back:hover { color:var(--or); }
 
 .article-layout { display:flex; gap:48px; align-items:flex-start; }
@@ -1325,14 +1325,15 @@ html:not(.reveal-ready) .reveal, html:not(.reveal-ready) .reveal-l, html:not(.re
 .contact-head h2 { font-family:'Cormorant', serif; font-size:26px; color:white; margin-bottom:4px; font-weight:600; }
 .contact-head p { font-size:13px; color:rgba(255,255,255,.55); }
 .contact-corps { padding:28px 36px; }
-.c-row { display:flex; align-items:flex-start; gap:16px; padding:16px 0; border-bottom:1px solid var(--bordure); transition:all .2s; border-radius:4px; }
+.c-row { display:flex; align-items:flex-start; gap:16px; padding:16px 0; border-bottom:1px solid var(--bordure); transition:background-color .2s, padding-left .2s; border-radius:4px; }
 .c-row:last-of-type { border-bottom:none; }
 .c-row:hover { background:var(--vert-pale); padding-left:10px; }
 .c-ico { width:42px; height:42px; border-radius:var(--r); background:var(--vert-pale); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; transition:background .2s; }
 .c-row:hover .c-ico { background:var(--vert); }
 .c-lbl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gris); margin-bottom:3px; }
 .c-val { font-size:15px; font-weight:600; color:var(--noir); }
-.c-val a { color:var(--vert); text-decoration:none; }
+.c-val a { color:var(--vert); text-decoration:none; display:inline-block; padding-block:3px; }
+.c-val a[href^="tel:"] { white-space:nowrap; }
 .c-val a:hover { text-decoration:underline; color:var(--or); }
 .btn-contact {
   display:inline-block; background:var(--or); color:var(--noir);
@@ -2075,3 +2076,12 @@ footer small { font-size: 12px; }
 
 /* Texte réservé aux lecteurs d'écran et aux moteurs de recherche */
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== Finitions front (oct. 2026) ===== */
+/* Site clair uniquement : champs natifs et barres de défilement restent clairs même si le système est en mode sombre. */
+:root { color-scheme: light; }
+/* Pas de délai de double-tap ni de zoom involontaire sur les contrôles. */
+:is(a, button, summary, label, input, select, textarea, [role="button"]) { touch-action: manipulation; }
+/* Titres équilibrés, paragraphes sans ligne orpheline. */
+:is(h1, h2, h3, .section-titre) { text-wrap: balance; }
+:is(.article-body, .section) p { text-wrap: pretty; }
