@@ -115,8 +115,12 @@
       if (nav) nav.classList.toggle('scrolled', y > 60);
       if (backTop) backTop.classList.toggle('show', y > 300);
       
+      // Boutons flottants masqués dès que le pied de page entre dans l'écran (ils en cacheraient le texte).
+      const footer = document.querySelector('footer');
+      const overFooter = !!footer && footer.getBoundingClientRect().top < window.innerHeight - 60;
+
       if (btnFloat) {
-        const vis = y > 200;
+        const vis = y > 200 && !overFooter;
         btnFloat.style.opacity       = vis ? '1' : '0';
         btnFloat.style.pointerEvents = vis ? 'auto' : 'none';
         btnFloat.style.visibility    = vis ? 'visible' : 'hidden';
@@ -124,7 +128,7 @@
 
       if (whatsapp) {
         const nearBottom = y > docHeight - 400;
-        const vis = y > 200 && !nearBottom;
+        const vis = y > 200 && !nearBottom && !overFooter;
         whatsapp.style.opacity = vis ? '1' : '0';
         whatsapp.style.pointerEvents = vis ? 'auto' : 'none';
         whatsapp.style.visibility = vis ? 'visible' : 'hidden';

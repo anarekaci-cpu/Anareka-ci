@@ -42,7 +42,8 @@ piling on more manual duplication.
   the exact, step-by-step procedure for publishing a new blog article. Read the
   guide in full before adding a blog post — it covers the three places a new
   article must be linked from (see below), sitemap entry format, and the
-  pre-commit checklist. Don't improvise a different process.
+  pre-commit checklist. Don't improvise a different process. `npm run new-article` (see the guide) automates
+  steps 1-3 below (dev tooling run locally, not a build step); the article body is still written by hand.
 
 ## Publishing a blog article — key constraints from the guide
 
