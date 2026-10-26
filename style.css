@@ -2978,3 +2978,76 @@ html.motion-off .pilier:hover { transform:none; }
 
 /* Garde-fou : les filigranes décoratifs de l'article ne doivent jamais créer de défilement horizontal */
 .article-layout { overflow-x:clip; }
+
+/* ============================================================
+   v16 — Le pagne dans toute la mise en page
+   Trois motifs (assets/illustrations) : bande « kente » tissée, tissu « wax » à
+   médaillons, filets de losanges. Frises animées uniquement si le mouvement est permis.
+   ============================================================ */
+:root {
+  --kente: url('/assets/illustrations/pagne-kente.svg');
+  --wax: url('/assets/illustrations/pagne-wax.svg');
+}
+
+/* 1. Sous chaque hero : la page s'ouvre sur une bande de pagne tissée */
+.page-hero:not(.ph-mag) { border-bottom:15px solid transparent; border-image:var(--kente) 0 0 20 0 / 0 0 15px 0 round; }
+
+/* 2. Entre deux sections : une frise de pagne centrée remplace le simple filet */
+.page .section + .section::before {
+  content:''; display:block; width:min(240px, 62%); height:10px; margin:0 auto clamp(36px, 6vw, 60px);
+  background:var(--kente) repeat-x 0 0 / 32px 10px; border-radius:2px; opacity:.92;
+  box-shadow:0 6px 14px -8px rgba(58,31,13,.5);
+}
+.page .section + .section { border-top:0; }
+
+/* 3. Appel à l'action : tissu wax très discret derrière le texte */
+.cta-grains::before {
+  content:''; position:absolute; inset:0; background:var(--wax) 0 0 / 104px 104px; opacity:.09;
+  -webkit-mask-image:radial-gradient(ellipse at center, transparent 18%, #000 78%); mask-image:radial-gradient(ellipse at center, transparent 18%, #000 78%);
+}
+
+/* 4. Pied de page : bande plus large, tissée */
+footer::before { height:15px; background:var(--kente) repeat-x 0 0 / 48px 15px; --pw:48px; }
+
+/* 5. Cartes clés : la tuile sombre porte le tissu wax en filigrane ; la carte plan s'achève sur une bande */
+.kf-tile.wide { background-image:linear-gradient(150deg, rgba(26,61,43,.94), rgba(36,90,64,.94)), var(--wax); background-size:auto, 90px 90px; }
+.map-head { border-bottom:0; position:relative; padding-bottom:22px; }
+.map-head::after { content:''; position:absolute; left:0; right:0; bottom:0; height:10px; background:var(--kente) repeat-x 0 0 / 32px 10px; }
+.igp-callout { border-left:6px solid transparent; border-image:var(--kente) 0 0 0 6 / 0 0 0 6px repeat; }
+
+/* Mouvement : les bandes avancent lentement, uniquement si autorisé */
+@keyframes kenteMarch { to { background-position-x:-48px; } }
+@keyframes kenteMarchS { to { background-position-x:-32px; } }
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.motion-off) footer::before { animation:kenteMarch 14s linear infinite; }
+  html:not(.motion-off) .page .section + .section::before { animation:kenteMarchS 22s linear infinite; }
+}
+
+/* ============================================================
+   v17 — Mise en page compacte : moins de vide entre les blocs, pages moins longues
+   ============================================================ */
+.section { padding:clamp(24px, 4vw, 44px) 0; }
+.page { padding-bottom:48px; }
+.page-hero + .page { padding-top:24px !important; }
+.page .section + .section::before { margin-bottom:clamp(16px, 2.4vw, 26px); }
+.tiret { margin-bottom:20px; }
+.section-titre { margin-bottom:8px; }
+.tag { margin-bottom:8px; }
+.pres-body { margin-bottom:14px; }
+.vision-bloc { margin-top:18px; padding:clamp(22px, 3vw, 32px); }
+.article-body p { margin-bottom:14px; }
+.article-body h2 { margin:24px 0 10px; padding-bottom:14px; }
+.kf-section { padding-top:0; padding-bottom:0; }
+.kf-bento { margin:4px 0 22px; }
+.engagement-section { padding:clamp(40px, 6vw, 52px) 24px; }
+.engagement-grid, .adhesion-wrap { margin-top:18px; }
+.cta-band { padding:clamp(40px, 6vw, 64px) 28px; }
+.album-accueil { padding:44px 0 48px; }
+.blog-card-featured { margin-bottom:28px; }
+.hist-logos { margin-bottom:28px; }
+.faq-mini { padding:16px 20px; }
+.map-card { margin-top:20px; }
+@media (max-width:760px) {
+  .engagement-section { padding:40px 20px; }
+  .section { padding:22px 0; }
+}
