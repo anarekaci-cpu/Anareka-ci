@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 640" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8c97a" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#c9a84c" stop-opacity=".35"/>
+    </linearGradient>
+    <path id="lobe" d="M0 0C16-44 15-118 0-186C-15-118-16-44 0 0Z"/>
+    <g id="lobeFull">
+      <use href="#lobe" fill="url(#g)" fill-opacity=".16" stroke="url(#g)" stroke-width="1.6"/>
+      <path d="M0 -6V-168" stroke="url(#g)" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M0-50l-9-14M0-50l9-14M0-86l-8-13M0-86l8-13M0-122l-6-11M0-122l6-11" stroke="url(#g)" stroke-width=".9" stroke-linecap="round" opacity=".7"/>
+    </g>
+  </defs>
+  <path d="M200 636C196 560 204 470 200 340" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/>
+  <g transform="translate(200 340)">
+    <use href="#lobeFull" transform="rotate(-84) scale(.72)"/>
+    <use href="#lobeFull" transform="rotate(-56) scale(.9)"/>
+    <use href="#lobeFull" transform="rotate(-28) scale(1.05)"/>
+    <use href="#lobeFull" transform="rotate(0) scale(1.18)"/>
+    <use href="#lobeFull" transform="rotate(28) scale(1.05)"/>
+    <use href="#lobeFull" transform="rotate(56) scale(.9)"/>
+    <use href="#lobeFull" transform="rotate(84) scale(.72)"/>
+  </g>
+  <circle cx="200" cy="340" r="5" fill="#e8c97a"/>
+</svg>

@@ -2349,3 +2349,172 @@ footer .tagline { font-size:14px; color:rgba(255,255,255,.72); max-width:520px; 
 .footer-nav { gap:8px 20px; }
 footer small { font-size:13px; line-height:1.6; }
 .domaine-card ul li::before { top:.15em; line-height:1.4; }
+
+/* ============================================================
+   v10 — Couche « prestige » (illustrations, verre, progression)
+   Purement additive : aucune structure HTML modifiée. Tout effet
+   continu respecte prefers-reduced-motion et html.motion-off.
+   ============================================================ */
+:root {
+  --verre:        rgba(255,255,255,.07);
+  --verre-bord:   rgba(232,201,122,.28);
+  --or-degrade:   linear-gradient(135deg,#f3dc9a 0%,#c9a84c 48%,#8f6f1f 100%);
+  --ombre-prestige: 0 1px 0 rgba(255,255,255,.6) inset, 0 24px 60px -28px rgba(14,26,18,.45);
+}
+
+/* Barre de progression de lecture (CSS scroll-driven, sans JS) */
+@supports (animation-timeline: scroll()) {
+  @keyframes lecture { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  body::before {
+    content:''; position:fixed; inset:0 0 auto 0; height:3px; z-index:10050;
+    background:var(--or-degrade); transform-origin:0 50%; transform:scaleX(0);
+    animation:lecture linear both; animation-timeline:scroll(root); pointer-events:none;
+  }
+}
+
+/* Héros : feuilles de manioc dorées en filigrane de chaque côté du logo */
+.hero-inner::before,
+.hero-inner::after {
+  content:''; position:absolute; z-index:-1; pointer-events:none;
+  width:clamp(220px, 30vw, 420px); aspect-ratio:400/640;
+  background:url('/assets/illustrations/manioc-feuille.svg') center/contain no-repeat;
+  opacity:.34; filter:drop-shadow(0 0 24px rgba(201,168,76,.25));
+  top:50%; translate:0 -46%;
+}
+.hero-inner::before { right:calc(100% - 110px); rotate:-14deg; transform-origin:100% 100%; }
+.hero-inner::after  { left:calc(100% - 110px);  rotate:14deg;  scale:-1 1; transform-origin:0 100%; }
+@media (max-width:760px) {
+  .hero-inner::before, .hero-inner::after { width:200px; opacity:.22; top:62%; }
+  .hero-inner::before { right:auto; left:-90px; }
+  .hero-inner::after  { left:auto; right:-90px; }
+}
+
+/* Titres : dégradé or sur le mot accentué et filet en frise de pagne */
+.tiret, .section.reveal.on .tiret {
+  width:120px; height:24px; border-radius:0; margin-bottom:28px; animation:none;
+  background:url('/assets/illustrations/frise-pagne.svg') left center/contain no-repeat;
+}
+.engagement-titre em, .section-titre em {
+  background:var(--or-degrade); -webkit-background-clip:text; background-clip:text;
+  color:transparent; -webkit-text-fill-color:transparent;
+}
+
+/* Chiffres : trois cartes en verre sur fond vert profond */
+.chiffres-inner { gap:18px; padding:36px 20px; }
+.chiffre-item {
+  border:1px solid var(--verre-bord); border-radius:18px; padding:30px 20px;
+  background:linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.02));
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 18px 40px -26px rgba(0,0,0,.7), 0 1px 0 rgba(255,255,255,.08) inset;
+  transition:transform .35s cubic-bezier(.22,1,.36,1), border-color .35s;
+}
+.chiffre-item:last-child { border-right:1px solid var(--verre-bord); }
+.chiffre-item:hover { transform:translateY(-4px); border-color:var(--or); background:linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,255,255,.03)); }
+.chiffre-val { background:var(--or-degrade); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; }
+@media (max-width:640px) { .chiffres-inner { grid-template-columns:1fr; } }
+
+/* Cartes : bordure dégradée or, relief doux, élévation au survol */
+.domaine-card, .part-card, .blog-card, .blog-card-featured {
+  position:relative; border:1px solid transparent;
+  background:
+    linear-gradient(var(--blanc), var(--blanc)) padding-box,
+    linear-gradient(145deg, rgba(232,201,122,.85), rgba(26,61,43,.12) 45%, rgba(201,168,76,.55)) border-box;
+  box-shadow:var(--ombre-prestige);
+  transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s;
+}
+.domaine-card:hover, .part-card:hover, .blog-card:hover, .blog-card-featured:hover {
+  transform:translateY(-6px); box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 36px 70px -30px rgba(14,26,18,.55);
+}
+
+/* Section d'engagement : médaillon doré et halo */
+.engagement-icon-wrap {
+  background:radial-gradient(circle at 30% 25%, #f3dc9a, #c9a84c 60%, #8f6f1f);
+  box-shadow:0 0 0 8px rgba(201,168,76,.14), 0 0 0 18px rgba(201,168,76,.07), 0 18px 40px -12px rgba(143,111,31,.7);
+}
+
+/* Boutons : or métallique sur le principal, verre sur le secondaire */
+.btn-or, .btn-primary, .hero .btn-gold { background:var(--or-degrade); color:var(--noir); border-color:transparent; }
+
+/* Mouvement : ces effets sont discrets, mais on les neutralise si demandé */
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation:none; transform:scaleX(0); }
+  .domaine-card, .part-card, .blog-card, .blog-card-featured, .chiffre-item { transition:none; }
+  .domaine-card:hover, .part-card:hover, .blog-card:hover, .blog-card-featured:hover, .chiffre-item:hover { transform:none; }
+}
+html.motion-off .domaine-card, html.motion-off .part-card, html.motion-off .blog-card,
+html.motion-off .blog-card-featured, html.motion-off .chiffre-item { transition:none; }
+html.motion-off .domaine-card:hover, html.motion-off .part-card:hover, html.motion-off .blog-card:hover,
+html.motion-off .blog-card-featured:hover, html.motion-off .chiffre-item:hover { transform:none; }
+
+/* ============================================================
+   v10b — Grilles « bento » et illustrations Missions / Attiéké / Blog
+   ============================================================ */
+
+/* Missions : 6 axes en mosaïque (grandes cartes en 1 et 4), filigrane doré par carte */
+@media (min-width:900px) {
+  .domaines-grid.axes-grid { grid-template-columns:repeat(6,1fr); gap:20px; }
+  .axe-card { grid-column:span 2; }
+  .axe-card:nth-child(1), .axe-card:nth-child(6) { grid-column:span 6; }
+  .axe-card:nth-child(n+2):nth-child(-n+5) { grid-column:span 3; }
+}
+.axe-card { overflow:hidden; isolation:isolate; }
+.axe-card::after {
+  content:''; position:absolute; z-index:-1; pointer-events:none;
+  width:150px; height:150px; right:-34px; bottom:-34px; opacity:.2;
+  background:url('/assets/illustrations/motif-soleil.svg') center/contain no-repeat;
+  transition:transform .6s cubic-bezier(.22,1,.36,1), opacity .4s;
+}
+.axe-card:nth-child(even)::after { background-image:url('/assets/illustrations/frise-pagne.svg'); width:190px; height:38px; right:-14px; bottom:14px; opacity:.5; }
+.axe-card:nth-child(1)::after { width:220px; height:220px; }
+.axe-card:nth-child(5)::after { background-image:url('/assets/illustrations/marmite-vapeur.svg'); opacity:.22; }
+.axe-card:hover::after { transform:rotate(12deg) scale(1.08); opacity:.34; }
+.axe-card:nth-child(even):hover::after { transform:translateX(-6px); }
+.d-icon { box-shadow:0 0 0 6px rgba(201,168,76,.12), 0 6px 16px -8px rgba(201,168,76,.6); }
+
+/* Partenaires : cartes alignées en deux colonnes sur grand écran */
+@media (min-width:900px) {
+  .part-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+}
+
+/* Blog : mosaïque 6 colonnes (2 grandes cartes puis 3 moyennes, en boucle) */
+.blog-grid { grid-template-columns:1fr; gap:24px; }
+@media (min-width:760px) {
+  .blog-grid { grid-template-columns:repeat(6,1fr); }
+  .blog-grid > .blog-card { grid-column:span 2; }
+  .blog-grid > .blog-card:nth-child(5n+1), .blog-grid > .blog-card:nth-child(5n+2) { grid-column:span 3; }
+  .blog-grid > .blog-card:nth-child(5n+1) .blog-card-img,
+  .blog-grid > .blog-card:nth-child(5n+2) .blog-card-img { aspect-ratio:16/9; }
+}
+.blog-card-featured { overflow:hidden; isolation:isolate; }
+.blog-card-featured::after {
+  content:''; position:absolute; z-index:-1; right:-30px; bottom:-40px; width:200px; height:320px; opacity:.16; pointer-events:none;
+  background:url('/assets/illustrations/manioc-feuille.svg') center/contain no-repeat; rotate:-12deg;
+}
+@media (max-width:760px) { .blog-card-featured { grid-template-columns:1fr; } }
+
+/* Attiéké : racine de manioc en filigrane, marmite avant la fabrication, titres à frise */
+.article-body { position:relative; }
+.article-body:has(#definition)::before,
+.article-body:has(#fabrication)::before {
+  content:''; position:absolute; z-index:-1; top:-10px; right:-120px; width:260px; height:340px; opacity:.2; pointer-events:none;
+  background:url('/assets/illustrations/racine-manioc.svg') center/contain no-repeat;
+}
+.article-body h2 { position:relative; padding-bottom:18px; }
+.article-body h2::after {
+  content:''; position:absolute; left:0; bottom:0; width:96px; height:20px;
+  background:url('/assets/illustrations/frise-pagne.svg') left center/contain no-repeat;
+}
+.article-body h2#fabrication::before {
+  content:''; display:block; width:120px; height:112px; margin-bottom:10px; opacity:.9;
+  background:url('/assets/illustrations/marmite-vapeur.svg') left center/contain no-repeat;
+}
+@media (max-width:1100px) {
+  .article-body:has(#definition)::before, .article-body:has(#fabrication)::before { right:-30px; width:150px; height:200px; opacity:.12; }
+}
+@media (prefers-reduced-motion: reduce) { .axe-card::after { transition:none; } .axe-card:hover::after { transform:none; } }
+html.motion-off .axe-card::after { transition:none; }
+html.motion-off .axe-card:hover::after { transform:none; }
+
+/* Liens dans le corps d'article : vert de marque au lieu du bleu par défaut du navigateur */
+.article-body a:not([class]) { color:var(--vert-med); font-weight:500; text-decoration:underline; text-decoration-color:var(--or); text-decoration-thickness:2px; text-underline-offset:4px; }
+.article-body a:not([class]):hover { color:var(--noir); text-decoration-color:var(--vert); }
