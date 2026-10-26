@@ -2099,7 +2099,6 @@ p, li { text-wrap:pretty; }
 /* --- Héros : une lumière chaude, du vert profond, rien qui flotte --- */
 .hero {
   background:
-    radial-gradient(520px circle at var(--px,50%) var(--py,30%), rgba(232,201,122,.16) 0%, transparent 62%),
     radial-gradient(ellipse 70% 55% at 50% 0%, rgba(201,168,76,.16) 0%, transparent 60%),
     linear-gradient(170deg, #0e1a12 0%, #143022 60%, #1a3d2b 100%);
 }
@@ -2575,7 +2574,6 @@ html.motion-off .marquee-track { animation:none; }
 .engagement-section {
   padding:96px 24px 88px; border-color:rgba(232,201,122,.3);
   background:
-    radial-gradient(480px circle at var(--px,50%) var(--py,40%), rgba(232,201,122,.13) 0%, transparent 62%),
     radial-gradient(ellipse at 12% 18%, rgba(45,107,79,.55) 0%, transparent 55%),
     radial-gradient(ellipse at 88% 85%, rgba(201,168,76,.14) 0%, transparent 55%),
     linear-gradient(165deg, #0e1a12 0%, #163325 55%, #1a3d2b 100%);
@@ -2635,7 +2633,6 @@ html.motion-off .pilier:hover { transform:none; }
   position:relative; overflow:hidden; isolation:isolate; text-align:center;
   padding:76px 24px 84px;
   background:
-    radial-gradient(460px circle at var(--px,50%) var(--py,30%), rgba(232,201,122,.15) 0%, transparent 62%),
     radial-gradient(ellipse at 14% 10%, rgba(45,107,79,.6) 0%, transparent 55%),
     radial-gradient(ellipse at 90% 90%, rgba(201,168,76,.16) 0%, transparent 55%),
     linear-gradient(165deg, #0e1a12 0%, #163325 55%, #1a3d2b 100%);
@@ -2697,21 +2694,6 @@ html.motion-off .pilier:hover { transform:none; }
   }
 }
 
-/* Les feuilles dorées réagissent au pointeur (parallaxe en profondeur) */
-.hero-inner::before, .hero-inner::after,
-.page-hero-inner::before, .page-hero-inner::after {
-  transform:translate(calc(var(--nx,0) * -22px), calc(var(--ny,0) * -14px));
-  transition:transform .6s cubic-bezier(.22,1,.36,1);
-}
-.hero-inner::after, .page-hero-inner::after { transform:translate(calc(var(--nx,0) * 22px), calc(var(--ny,0) * -14px)); }
-.engagement-section::after { transform:translate(calc(var(--nx,0) * -26px), calc(var(--ny,0) * -18px)); transition:transform .6s cubic-bezier(.22,1,.36,1); }
-@media (prefers-reduced-motion: reduce) {
-  .hero-inner::before, .hero-inner::after, .page-hero-inner::before, .page-hero-inner::after, .engagement-section::after { transform:none; transition:none; }
-}
-html.motion-off .hero-inner::before, html.motion-off .hero-inner::after,
-html.motion-off .page-hero-inner::before, html.motion-off .page-hero-inner::after,
-html.motion-off .engagement-section::after { transform:none; transition:none; }
-
 /* Typographie cinétique : le titre s'affine puis se resserre au fil du défilement,
    les titres de section se dévoilent d'un trait (CSS scroll-driven, repli sans effet) */
 @supports (animation-timeline: view()) {
@@ -2722,4 +2704,226 @@ html.motion-off .engagement-section::after { transform:none; transition:none; }
     .page .section-titre, .article-body h2 { animation:titreDevoile linear both; animation-timeline:view(); animation-range:entry 5% entry 75%; }
     html.motion-off .page-hero h1, html.motion-off .page .section-titre, html.motion-off .article-body h2 { animation:none; }
   }
+}
+
+/* ============================================================
+   v14 — Un hero par page : mise en page, animation et design propres
+   (.page-hero.ph-*). Toute animation est neutralisée en mouvement réduit
+   et par le bouton « pause des animations ».
+   ============================================================ */
+.page-hero .hero-deco { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.page-hero .page-hero-inner { z-index:1; }
+.ph-association .page-hero-inner::before, .ph-association .page-hero-inner::after,
+.ph-missions .page-hero-inner::before, .ph-missions .page-hero-inner::after,
+.ph-adhesion .page-hero-inner::before, .ph-adhesion .page-hero-inner::after,
+.ph-contact .page-hero-inner::before, .ph-contact .page-hero-inner::after,
+.ph-recette .page-hero-inner::before, .ph-recette .page-hero-inner::after,
+.ph-garba .page-hero-inner::before, .ph-garba .page-hero-inner::after,
+.ph-unesco .page-hero-inner::before, .ph-unesco .page-hero-inner::after,
+.ph-mag .page-hero-inner::before, .ph-mag .page-hero-inner::after,
+.ph-mentions .page-hero-inner::before, .ph-mentions .page-hero-inner::after,
+.ph-guide .page-hero-inner::before, .ph-guide .page-hero-inner::after,
+.ph-article .page-hero-inner::before, .ph-article .page-hero-inner::after { display:none; }
+
+/* --- Association : écusson central, anneaux en rotation, texte à gauche --- */
+.ph-association { text-align:left; }
+.ph-association .page-hero-inner { max-width:1040px; padding-right:clamp(0px, 30vw, 360px); }
+.ph-association .tag { margin-left:0; }
+.ph-association h1, .ph-association .pres-lead { margin-left:0; text-align:left; }
+.ph-association .hero-deco { display:flex; align-items:center; justify-content:flex-end; padding-right:max(24px, calc(50% - 500px)); }
+.ph-medal { position:relative; width:clamp(150px, 22vw, 250px); aspect-ratio:1; }
+.ph-medal img { position:absolute; inset:14%; width:72%; height:72%; border-radius:50%; object-fit:cover; box-shadow:0 0 0 6px rgba(232,201,122,.25), 0 24px 60px rgba(0,0,0,.5); }
+.ph-ring { position:absolute; border-radius:50%; border:1.5px dashed rgba(232,201,122,.65); }
+.ph-ring.r1 { inset:0; }
+.ph-ring.r2 { inset:-16px; border-style:solid; border-color:rgba(232,201,122,.25); }
+@media (max-width:820px) {
+  .ph-association .page-hero-inner { padding-right:0; text-align:center; }
+  .ph-association .hero-deco { opacity:.18; justify-content:center; padding:0; }
+  .ph-association h1, .ph-association .pres-lead { margin-inline:auto; text-align:center; }
+  .ph-association .tag { margin-inline:auto; }
+}
+
+/* --- Missions : grand « 06 » en contour, balayage de lumière --- */
+.ph-missions { text-align:left; }
+.ph-missions .page-hero-inner { max-width:1040px; padding-right:clamp(0px, 26vw, 330px); }
+.ph-missions .tag { margin-left:0; }
+.ph-missions h1, .ph-missions .pres-lead { margin-left:0; text-align:left; }
+.ph-missions .hero-deco { display:flex; flex-direction:column; align-items:flex-end; justify-content:center; padding-right:max(24px, calc(50% - 500px)); }
+.ph-num {
+  font-family:'Cormorant', serif; font-weight:700; line-height:.8; font-size:clamp(7rem, 21vw, 17rem);
+  color:transparent; -webkit-text-stroke:2px rgba(232,201,122,.7);
+  background:linear-gradient(100deg, transparent 38%, rgba(232,201,122,.5) 50%, transparent 62%) 0 0/300% 100% no-repeat;
+  -webkit-background-clip:text; background-clip:text;
+}
+.ph-num-label { margin-top:6px; font-size:12px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--or-clair); }
+@media (max-width:820px) {
+  .ph-missions .page-hero-inner { padding-right:0; text-align:center; }
+  .ph-missions .hero-deco { opacity:.2; align-items:center; padding:0; }
+  .ph-missions h1, .ph-missions .pres-lead { margin-inline:auto; text-align:center; }
+  .ph-missions .tag { margin-inline:auto; }
+}
+
+/* --- Guide Attiéké et articles : photo plein cadre, zoom lent, texte en bas à gauche --- */
+.ph-guide, .ph-article { text-align:left; min-height:clamp(320px, 46vh, 460px); display:flex; align-items:flex-end; padding-top:110px; background:linear-gradient(180deg, #0e1a12, #12261b); }
+.ph-guide::before, .ph-article::before { inset:-5%; z-index:-1; opacity:.5; background-size:cover; background-position:center; background-repeat:no-repeat; }
+.ph-guide::before { background-image:linear-gradient(180deg, rgba(14,26,18,.2), rgba(14,26,18,.9)), url('/manioc-01-recolte.webp'); }
+.ph-article::before { background-image:linear-gradient(180deg, rgba(14,26,18,.2), rgba(14,26,18,.9)), var(--hero-img, none); }
+.ph-guide .page-hero-inner, .ph-article .page-hero-inner { max-width:1040px; width:100%; }
+.ph-guide .tag, .ph-article .tag { margin-left:0; }
+.ph-guide h1, .ph-article h1 { margin-left:0; text-align:left; max-width:860px; }
+.ph-guide .article-meta, .ph-article .article-meta { margin-left:0; max-width:none; }
+.ph-guide::after, .ph-article::after { left:max(24px, calc(50% - 520px)); translate:0 0; }
+
+/* --- Recette : cuisine chaude, vapeur qui monte --- */
+.ph-recette { background:radial-gradient(ellipse at 50% 100%, rgba(201,168,76,.28), transparent 60%), linear-gradient(165deg, #2a1a0c 0%, #5a3414 58%, #8a5a20 100%); }
+.ph-recette::before { opacity:.08; }
+.ph-steam { position:absolute; bottom:-30px; width:120px; height:160px; border-radius:50%; background:radial-gradient(closest-side, rgba(255,255,255,.55), transparent 70%); filter:blur(14px); opacity:0; }
+.ph-steam.s1 { left:12%; }
+.ph-steam.s2 { left:30%; width:90px; }
+.ph-steam.s3 { left:50%; width:140px; }
+.ph-steam.s4 { left:68%; width:100px; }
+.ph-steam.s5 { left:86%; }
+
+/* --- Garba : rue d'Abidjan, bandes orange-blanc-vert en diagonale --- */
+.ph-garba { text-align:left; background:#14120d; }
+.ph-garba .page-hero-inner { max-width:1000px; }
+.ph-garba .tag { margin-left:0; color:#14120d; background:#f7a21b; border-color:#f7a21b; transform:rotate(-2deg); }
+.ph-garba h1 { margin-left:0; text-align:left; text-transform:uppercase; font-family:'Outfit', sans-serif; font-weight:800; letter-spacing:-.5px; line-height:1; }
+.ph-garba .article-meta { margin-left:0; }
+.ph-band { position:absolute; top:-20%; bottom:-20%; width:34%; transform:skewX(-18deg); opacity:.28; }
+.ph-band.b1 { right:6%; background:#f77f00; }
+.ph-band.b2 { right:-4%; width:18%; background:#fff; opacity:.2; }
+.ph-band.b3 { right:-22%; width:34%; background:#009e60; }
+
+/* --- UNESCO : sceau doré rotatif sur noir profond --- */
+.ph-unesco { background:radial-gradient(circle at 50% 50%, #17241b 0%, #0a0f0c 70%); }
+.ph-unesco .hero-deco { display:flex; align-items:center; justify-content:center; }
+.ph-seal { width:min(560px, 92vw); aspect-ratio:1; color:rgba(232,201,122,.32); }
+.ph-unesco h1 { text-shadow:0 2px 40px rgba(0,0,0,.8); }
+
+/* --- Blog / MAG : mise en page de revue, fond ivoire, filets épais --- */
+.ph-mag { background:var(--ivoire); border-bottom:0; padding-top:64px; text-align:left; }
+.ph-mag::before { opacity:.05; filter:invert(1); }
+.ph-mag::after { display:none; }
+.ph-mag .page-hero-inner { max-width:1040px; border-top:6px solid var(--noir); border-bottom:1px solid var(--noir); padding:34px 0 30px; transform-origin:0 50%; }
+.ph-mag .tag { margin-left:0; color:var(--or-texte); background:transparent; border-color:var(--or-texte); }
+.page-hero.ph-mag h1, .page-hero.ph-mag h1.section-titre { margin-left:0; text-align:left; color:var(--vert); -webkit-text-fill-color:var(--vert); text-shadow:none; }
+.ph-mag .pres-lead { margin-left:0; max-width:700px; color:#2d2d2d; }
+.ph-mast { position:absolute; right:max(20px, calc(50% - 520px)); top:50%; translate:0 -50%; font-family:'Cormorant', serif; font-weight:700; font-size:clamp(7rem, 20vw, 16rem); line-height:.8; color:rgba(26,61,43,.09); letter-spacing:-6px; }
+
+/* --- Contact : ondes de signal qui partent d'un point --- */
+.ph-dot { position:absolute; left:12%; top:50%; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; background:var(--or-clair); box-shadow:0 0 0 6px rgba(232,201,122,.2); }
+.ph-ping { position:absolute; left:12%; top:50%; width:340px; height:340px; margin:-170px 0 0 -170px; border-radius:50%; border:1.5px solid rgba(232,201,122,.6); transform:scale(.05); opacity:0; }
+@media (max-width:820px) { .ph-contact .hero-deco { opacity:.4; } .ph-dot, .ph-ping { left:50%; } }
+
+/* --- Adhésion : carte de membre dorée en 3D --- */
+.ph-adhesion { text-align:left; }
+.ph-adhesion .page-hero-inner { max-width:1040px; padding-right:clamp(0px, 32vw, 400px); }
+.ph-adhesion .tag { margin-left:0; }
+.ph-adhesion h1, .ph-adhesion .pres-lead { margin-left:0; text-align:left; }
+.ph-adhesion .hero-deco { display:flex; align-items:center; justify-content:flex-end; padding-right:max(24px, calc(50% - 500px)); perspective:900px; }
+.ph-card { position:relative; width:clamp(210px, 26vw, 300px); aspect-ratio:1.6; border-radius:18px; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:16px 18px; color:var(--noir);
+  background:linear-gradient(135deg,#f3dc9a 0%, #c9a84c 50%, #8f6f1f 100%); box-shadow:0 30px 60px -20px rgba(0,0,0,.7); transform:rotateY(-18deg) rotateX(8deg) rotate(-4deg); }
+.ph-card img { width:56px; height:56px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 3px rgba(14,26,18,.25); }
+.ph-card-top { font-family:'Cormorant', serif; font-weight:700; font-size:1.2rem; letter-spacing:2px; }
+.ph-card-bottom { font-size:12px; font-weight:800; letter-spacing:5px; }
+.ph-card-shine { position:absolute; inset:0; background:linear-gradient(115deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%); transform:translateX(-120%); }
+@media (max-width:820px) {
+  .ph-adhesion .page-hero-inner { padding-right:0; text-align:center; }
+  .ph-adhesion .hero-deco { opacity:.22; justify-content:center; padding:0; }
+  .ph-adhesion h1, .ph-adhesion .pres-lead { margin-inline:auto; text-align:center; }
+  .ph-adhesion .tag { margin-inline:auto; }
+}
+
+/* --- Mentions légales : sobre, aucune animation --- */
+.ph-mentions { text-align:left; padding:56px 24px; background:#12211a; }
+.ph-mentions::before { opacity:.04; }
+.ph-mentions::after { display:none; }
+.ph-mentions .page-hero-inner { max-width:920px; border-left:3px solid var(--or); padding-left:22px; }
+.ph-mentions .tag { margin-left:0; }
+.ph-mentions h1 { margin-left:0; text-align:left; font-size:clamp(1.7rem, 4vw, 2.6rem); }
+
+/* --- Animations (uniquement sans mouvement réduit et hors pause) --- */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes phSpin { to { transform:rotate(360deg); } }
+  @keyframes phSpinRev { to { transform:rotate(-360deg); } }
+  @keyframes phSweep { from { background-position:150% 0; } to { background-position:-50% 0; } }
+  @keyframes phKen { from { transform:scale(1) translate(0,0); } to { transform:scale(1.12) translate(-1.5%,-1%); } }
+  @keyframes phRise { 0% { transform:translateY(0) scale(.7); opacity:0; } 25% { opacity:.4; } 100% { transform:translateY(-300px) scale(1.5); opacity:0; } }
+  @keyframes phBand { from { transform:skewX(-18deg) translateX(0); } to { transform:skewX(-18deg) translateX(-40px); } }
+  @keyframes phPing { 0% { transform:scale(.05); opacity:.9; } 100% { transform:scale(1); opacity:0; } }
+  @keyframes phFloat { 0%,100% { transform:rotateY(-18deg) rotateX(8deg) rotate(-4deg) translateY(0); } 50% { transform:rotateY(-12deg) rotateX(6deg) rotate(-3deg) translateY(-10px); } }
+  @keyframes phShine { 0%,55% { transform:translateX(-120%); } 100% { transform:translateX(120%); } }
+  @keyframes phMast { from { letter-spacing:12px; opacity:0; } to { letter-spacing:-6px; opacity:1; } }
+  @keyframes phRule { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  html:not(.motion-off) .ph-ring.r1 { animation:phSpin 40s linear infinite; }
+  html:not(.motion-off) .ph-ring.r2 { animation:phSpinRev 60s linear infinite; }
+  html:not(.motion-off) .ph-num { animation:phSweep 7s ease-in-out infinite; }
+  html:not(.motion-off) .ph-guide::before, html:not(.motion-off) .ph-article::before { animation:phKen 26s ease-in-out infinite alternate; }
+  html:not(.motion-off) .ph-steam { animation:phRise 7s ease-out infinite; }
+  html:not(.motion-off) .ph-steam.s2 { animation-delay:1.4s; }
+  html:not(.motion-off) .ph-steam.s3 { animation-delay:2.8s; }
+  html:not(.motion-off) .ph-steam.s4 { animation-delay:4.2s; }
+  html:not(.motion-off) .ph-steam.s5 { animation-delay:5.6s; }
+  html:not(.motion-off) .ph-band { animation:phBand 9s ease-in-out infinite alternate; }
+  html:not(.motion-off) .ph-seal { animation:phSpin 90s linear infinite; }
+  html:not(.motion-off) .ph-mast { animation:phMast 1.4s cubic-bezier(.22,1,.36,1) both; }
+  html:not(.motion-off) .ph-mag .page-hero-inner { animation:phRule 1s cubic-bezier(.22,1,.36,1) both; }
+  html:not(.motion-off) .ph-ping { animation:phPing 4.5s ease-out infinite; }
+  html:not(.motion-off) .ph-ping.p2 { animation-delay:1.5s; }
+  html:not(.motion-off) .ph-ping.p3 { animation-delay:3s; }
+  html:not(.motion-off) .ph-card { animation:phFloat 7s ease-in-out infinite; }
+  html:not(.motion-off) .ph-card-shine { animation:phShine 5s ease-in-out infinite; }
+}
+
+/* ============================================================
+   v14b — Hero principal : scène SVG animée en arrière-plan
+   (rayons solaires, treillis de pagne, feuilles de manioc qui se balancent,
+   étincelles dorées, vagues de lagune). Neutralisée en mouvement réduit / pause.
+   ============================================================ */
+.hero-scene { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.hero-inner::before, .hero-inner::after { display:none; }
+.hero-inner { z-index:2; }
+
+.hs-lattice { position:absolute; inset:0; width:100%; height:100%; opacity:.09; -webkit-mask-image:radial-gradient(ellipse at 50% 45%, #000 0%, transparent 72%); mask-image:radial-gradient(ellipse at 50% 45%, #000 0%, transparent 72%); }
+.hs-rays { position:absolute; left:50%; top:42%; width:min(1500px, 190vw); aspect-ratio:1; margin:calc(min(1500px, 190vw) / -2) 0 0 calc(min(1500px, 190vw) / -2); opacity:.2; -webkit-mask-image:radial-gradient(circle, #000 30%, transparent 70%); mask-image:radial-gradient(circle, #000 30%, transparent 70%); }
+
+.hs-leaf { position:absolute; bottom:-6%; color:#e8c97a; opacity:.34; filter:drop-shadow(0 0 18px rgba(201,168,76,.28)); transform-origin:50% 96%; }
+.hs-l1 { left:-4%; width:clamp(200px, 26vw, 420px); --r:-8deg; }
+.hs-l2 { left:12%; width:clamp(110px, 14vw, 230px); --r:6deg; opacity:.2; bottom:-9%; }
+.hs-l3 { left:-1%; width:clamp(90px, 10vw, 170px); --r:-20deg; opacity:.16; bottom:12%; }
+.hs-r1 { right:-4%; width:clamp(200px, 26vw, 420px); --r:8deg; }
+.hs-r2 { right:12%; width:clamp(110px, 14vw, 230px); --r:-6deg; opacity:.2; bottom:-9%; }
+.hs-r3 { right:-1%; width:clamp(90px, 10vw, 170px); --r:20deg; opacity:.16; bottom:12%; }
+.hs-leaf { rotate:var(--r, 0deg); }
+
+.hs-spark { position:absolute; left:var(--x); bottom:8%; width:6px; height:6px; border-radius:50%; background:#e8c97a; box-shadow:0 0 12px 3px rgba(232,201,122,.55); opacity:0; }
+
+.hs-waves { position:absolute; left:0; bottom:0; width:100%; height:clamp(120px, 24vh, 240px); }
+.hs-waves path { transform-box:fill-box; }
+.hs-waves .w1, .hs-waves .w2, .hs-waves .w3 { width:200%; }
+
+@media (max-width:760px) {
+  .hs-leaf { opacity:.18; } .hs-l2, .hs-r2, .hs-l3, .hs-r3 { display:none; }
+  .hs-l1 { left:-18%; } .hs-r1 { right:-18%; }
+  .hs-rays { opacity:.12; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hsSpin { to { transform:rotate(360deg); } }
+  @keyframes hsSway { 0%,100% { rotate:var(--r); } 50% { rotate:calc(var(--r) + 5deg); } }
+  @keyframes hsLattice { to { transform:translate(56px, 56px); } }
+  @keyframes hsSpark { 0% { transform:translateY(0) scale(.6); opacity:0; } 15% { opacity:.9; } 100% { transform:translateY(-70vh) translateX(18px) scale(1.2); opacity:0; } }
+  @keyframes hsWaveA { to { transform:translateX(-1440px); } }
+  @keyframes hsWaveB { from { transform:translateX(-1440px); } to { transform:translateX(0); } }
+  html:not(.motion-off) .hs-rays { animation:hsSpin 220s linear infinite; }
+  html:not(.motion-off) .hs-lattice rect { animation:hsLattice 18s linear infinite; }
+  html:not(.motion-off) .hs-leaf { animation:hsSway 9s ease-in-out infinite; }
+  html:not(.motion-off) .hs-l2, html:not(.motion-off) .hs-r3 { animation-duration:11s; animation-delay:-3s; }
+  html:not(.motion-off) .hs-l3, html:not(.motion-off) .hs-r2 { animation-duration:13s; animation-delay:-6s; }
+  html:not(.motion-off) .hs-r1 { animation-delay:-4.5s; }
+  html:not(.motion-off) .hs-spark { animation:hsSpark var(--t) ease-out var(--d) infinite; }
+  html:not(.motion-off) .hs-waves .w1 { animation:hsWaveA 26s linear infinite; }
+  html:not(.motion-off) .hs-waves .w2 { animation:hsWaveB 34s linear infinite; }
+  html:not(.motion-off) .hs-waves .w3 { animation:hsWaveA 44s linear infinite; }
 }

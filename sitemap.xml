@@ -149,6 +149,60 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/attieke"/>
   </url>
   <url>
+    <loc>https://anarekaci.com/recette-attieke</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/recette-attieke"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/recette-attieke"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/recette-attieke"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/recette-attieke</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/recette-attieke"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/recette-attieke"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/recette-attieke"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/attieke-unesco</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/attieke-unesco"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/attieke-unesco"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/attieke-unesco"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/attieke-unesco</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/attieke-unesco"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/attieke-unesco"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/attieke-unesco"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/garba</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/garba"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/garba"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/garba"/>
+  </url>
+  <url>
+    <loc>https://anarekaci.com/en/garba</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://anarekaci.com/garba"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://anarekaci.com/en/garba"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://anarekaci.com/garba"/>
+  </url>
+  <url>
     <loc>https://anarekaci.com/blog</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>

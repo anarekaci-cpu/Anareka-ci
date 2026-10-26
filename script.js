@@ -1155,24 +1155,3 @@
     card.style.setProperty('--my', (e.clientY - r.top) + 'px');
   }, { passive: true });
 })();
-
-/* Lumière et parallaxe au pointeur sur les scènes sombres */
-(function () {
-  var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (!fine.matches || reduce.matches) return;
-  var root = document.documentElement;
-  var SCENES = '.hero, .page-hero, .engagement-section';
-  document.addEventListener('pointermove', function (e) {
-    if (root.classList.contains('motion-off')) return;
-    var s = e.target.closest ? e.target.closest(SCENES) : null;
-    if (s) {
-      var r = s.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-      s.style.setProperty('--px', (px * 100).toFixed(1) + '%');
-      s.style.setProperty('--py', (py * 100).toFixed(1) + '%');
-      s.style.setProperty('--nx', (px * 2 - 1).toFixed(3));
-      s.style.setProperty('--ny', (py * 2 - 1).toFixed(3));
-    }
-  }, { passive: true });
-})();
