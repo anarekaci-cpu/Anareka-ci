@@ -137,6 +137,7 @@ test('aucun emoji surdimensionné (accueil FR et EN)', async ({ page }) => {
 // Accessibilité (recommandations UI UX Pro Max) : cibles ≥ 44 px et texte ≥ 12 px sur mobile.
 // Les liens en ligne dans un paragraphe sont exemptés (WCAG 2.2 « Target Size », exception « inline »).
 test('@mobile cibles tactiles de 44 px et texte de 12 px minimum', async ({ page }) => {
+  test.setTimeout(90_000); // 5 pages avec networkidle : dépasse 30 s quand toute la suite tourne en parallèle
   for (const url of ['/', '/en/', '/association', '/adhesion', '/contact']) {
     await page.goto(url);
     await page.waitForLoadState('networkidle');
