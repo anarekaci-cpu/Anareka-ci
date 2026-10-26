@@ -933,9 +933,9 @@
 
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var root = document.documentElement;
-    var INTRO_MS = 1150;   // fin de la choréographie d'intro (voir style.css)
-    var REVEAL_MS = 620;   // durée de l'ouverture (.is-revealing)
-    var CLOSE_MS = reduceMotion ? 0 : 460;    // fermeture avant navigation (aucune en mouvement réduit)
+    var INTRO_MS = 800;    // fin de la choréographie d'intro (voir style.css)
+    var REVEAL_MS = 440;   // durée de l'ouverture (.is-revealing)
+    var CLOSE_MS = reduceMotion ? 0 : 300;    // fermeture avant navigation (aucune en mouvement réduit)
     var SEEN_KEY = 'anarekaSealSeen';
     var navigating = false;
     var revealTimer = null;
@@ -989,6 +989,16 @@
       // d'animer, sinon l'ouverture peut sauter sur une page légère.
       requestAnimationFrame(function () { requestAnimationFrame(scheduleReveal); });
     }
+
+    // Garde-fou : quoi qu'il arrive (onglet en arrière-plan, animation interrompue…), l'overlay
+    // ne reste jamais affiché plus de ~2,5 s au-delà de la durée prévue.
+    setTimeout(function () {
+      if (navigating || overlay.classList.contains('hidden')) return;
+      overlay.classList.remove('is-revealing');
+      overlay.classList.add('hidden');
+      root.classList.add('seal-seen');
+      fireSealReveal();
+    }, (isFirstVisit ? INTRO_MS : 0) + REVEAL_MS + 2500);
 
     // Passer l'intro d'un tap, d'un clic ou d'une touche.
     function skipIntro() { if (isFirstVisit && !revealStarted) reveal(); }
