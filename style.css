@@ -3051,3 +3051,41 @@ footer::before { height:15px; background:var(--kente) repeat-x 0 0 / 48px 15px; 
   .engagement-section { padding:40px 20px; }
   .section { padding:22px 0; }
 }
+
+/* ============================================================
+   v18 — Écran de chargement habillé de pagne
+   Tissu wax en filigrane derrière le sceau, anneau wax qui tourne autour du logo,
+   barre « kente » qui se remplit comme une jauge de chargement.
+   (Aucun changement de balisage : tout passe par les pseudo-éléments existants.)
+   ============================================================ */
+.lottie-overlay::after {
+  content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:var(--wax) 50% 50% / 96px 96px; opacity:.13;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 46%, transparent 14%, #000 82%); mask-image:radial-gradient(ellipse at 50% 46%, transparent 14%, #000 82%);
+}
+.lottie-box::before {
+  content:''; position:absolute; top:50%; left:50%; width:196px; height:196px; margin:-98px 0 0 -98px; border-radius:50%;
+  background:var(--wax) 50% 50% / 56px 56px; opacity:.55;
+  -webkit-mask-image:radial-gradient(circle, transparent 62%, #000 64%, #000 100%); mask-image:radial-gradient(circle, transparent 62%, #000 64%, #000 100%);
+  box-shadow:0 0 0 1px rgba(232,201,122,.35);
+}
+.lottie-word::after {
+  width:min(260px, 70vw); height:10px; border-radius:2px;
+  background:var(--kente) repeat-x 0 0 / 32px 10px;
+  box-shadow:0 0 0 1px rgba(232,201,122,.35), 0 6px 16px -6px rgba(0,0,0,.5);
+  transform-origin:0 50%;
+}
+@keyframes sealFieldIn { from { opacity:0; } to { opacity:.13; } }
+@keyframes sealWaxSpin { to { transform:rotate(-360deg); } }
+@keyframes sealGauge { from { transform:scaleX(0); opacity:.9; } to { transform:scaleX(1); opacity:1; } }
+@keyframes sealWaxIn { from { opacity:0; transform:scale(.7) rotate(20deg); } to { opacity:.55; transform:scale(1) rotate(0); } }
+@keyframes kenteMarchSeal { to { background-position-x:-32px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .lottie-box::before { animation:sealWaxSpin 24s linear infinite; }
+  .lottie-word::after { animation:kenteMarchSeal 1.6s linear infinite; }
+  html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie-box::before { animation:sealWaxIn .7s cubic-bezier(.22,1,.36,1) .15s both, sealWaxSpin 24s linear .85s infinite; }
+  html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing) .lottie-word::after { animation:sealGauge 1.05s cubic-bezier(.4,0,.2,1) .2s both, kenteMarchSeal 1.6s linear infinite; }
+  html:not(.seal-seen) .lottie-overlay:not(.is-revealing):not(.is-closing)::after { animation:sealFieldIn .9s ease-out both; }
+  .lottie-overlay.is-revealing::after, .lottie-overlay.is-closing::after { transition:opacity .3s; opacity:0; }
+  .lottie-overlay.is-revealing .lottie-box::before { animation:sealFadeOut .22s ease-in both; }
+}

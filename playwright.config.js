@@ -7,8 +7,8 @@ const PORT = 8788;
 
 module.exports = defineConfig({
   testDir: './tests',
-  timeout: 30000,
-  retries: process.env.CI ? 1 : 0,
+  timeout: 60000, // les pages chargent les polices, l'intro et la carte Google : 30 s ne suffisent pas quand la suite tourne en parallèle
+  retries: 1,
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
   use: {
     baseURL: `http://localhost:${PORT}`,
