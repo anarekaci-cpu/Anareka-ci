@@ -22,6 +22,16 @@ Search Console reported "Données structurées impossibles à analyser → Propr
 **Valider la correction**. Then use "Inspection de l'URL" → "Demander une indexation" on
 `/blog/orbaff-productrices-attieke` and `/blog/dibou-productrices-attieke`.
 
+### Second pass (claude-seo guidance: seo-technical, seo-schema, seo-geo)
+
+| Sev. | Area | Finding | Status |
+|---|---|---|---|
+| Low | AI search | `robots.txt` did not name the AI search crawlers. They were already allowed by the general rule; `OAI-SearchBot` (ChatGPT Search), `Claude-SearchBot` and `PerplexityBot` are now allowed explicitly. Training-only bots (GPTBot, ClaudeBot, CCBot) are left as before: allowing or blocking them is a licensing choice, not a visibility one. | Done |
+| Low | Recrawl | `dateModified`, `article:modified_time` and sitemap `lastmod` set to 2026-11-02 on the two repaired articles so Google re-reads them sooner. | Done |
+| Info | HowTo | Still on `/attieke` and `/en/attieke`. claude-seo lists it as deprecated (no rich result). Harmless; safe to remove. | Owner |
+| Info | Authority signals | `sameAs` lists only Facebook and LinkedIn. Brand mentions (YouTube, Wikipedia/Wikidata, LinkedIn, Google Business Profile) correlate most with AI-answer visibility. These live outside the repo. | Owner |
+| Info | Freshness | Pages untouched for 6+ months lose AI-citation eligibility. Publishing or refreshing one article a month is the best lever left. | Owner |
+
 ## Findings (earlier audit)
 
 | Sev. | Area | Finding | Status |

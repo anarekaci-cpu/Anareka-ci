@@ -4,4 +4,15 @@ Disallow: /templates/
 Disallow: /.github/
 Disallow: /tests/
 
+# Moteurs de réponse IA : explicitement autorisés (citation dans ChatGPT Search,
+# Claude, Perplexity). Googlebot (AI Overviews) est couvert par la règle générale.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 Sitemap: https://anarekaci.com/sitemap.xml
