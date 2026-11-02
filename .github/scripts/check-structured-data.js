@@ -20,6 +20,32 @@ function attr(root, sel, name) {
   return el ? el.getAttribute(name) : null;
 }
 
+// JSON.parse garde silencieusement la dernière valeur d'une clé répétée, mais Google
+// rejette l'objet ("Propriété en double"). On relit donc le texte brut du bloc.
+function duplicateKeys(text) {
+  const dups = [];
+  const stack = []; // une entrée par objet/tableau ouvert : Set des clés, ou null pour un tableau
+  const re = /"(?:[^"\\]|\\.)*"|[{}[\]:]/g;
+  let m;
+  let prev = null;
+  while ((m = re.exec(text))) {
+    const t = m[0];
+    if (t === '{') stack.push(new Set());
+    else if (t === '[') stack.push(null);
+    else if (t === '}' || t === ']') stack.pop();
+    else if (t === ':' && prev && prev[0] === '"') {
+      const keys = stack[stack.length - 1];
+      const key = JSON.parse(prev);
+      if (keys) {
+        if (keys.has(key)) dups.push(key);
+        keys.add(key);
+      }
+    }
+    prev = t;
+  }
+  return dups;
+}
+
 function walk(value, fn) {
   if (Array.isArray(value)) value.forEach((v) => walk(v, fn));
   else if (value && typeof value === 'object') Object.values(value).forEach((v) => walk(v, fn));
@@ -38,6 +64,11 @@ for (const file of findHtmlFiles()) {
     problems.push(e.message);
     continue;
   }
+  page.root.querySelectorAll('script[type="application/ld+json"]').forEach((el, i) => {
+    for (const k of duplicateKeys(el.text)) {
+      problems.push(`${r} : bloc JSON-LD n°${i + 1}, propriété "${k}" en double dans le même objet`);
+    }
+  });
   blocks.forEach((b, i) => {
     if (!b['@context']) problems.push(`${r} : bloc JSON-LD n°${i + 1} sans @context`);
     walk(b, (s) => {

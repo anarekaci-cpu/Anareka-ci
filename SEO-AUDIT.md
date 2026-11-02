@@ -6,7 +6,23 @@ Checklist borrowed from claude-seo's seo-page, seo-hreflang, seo-schema and seo-
 ## Verdict
 The site was already in good shape. There are no critical issues, and the changes below are small.
 
-## Findings
+## Update 2026-11-02: Search Console "Propriété en double"
+
+Search Console reported "Données structurées impossibles à analyser → Propriété en double" on
+`/blog/orbaff-productrices-attieke` (first detected 30/10/2026).
+
+| Sev. | Area | Finding | Status |
+|---|---|---|---|
+| Critical | Blog JSON-LD | `"@id"` was written twice inside `author` and `publisher` of the `BlogPosting` on `orbaff-productrices-attieke` **and** `dibou-productrices-attieke` (the second one was not reported yet). Google rejects the whole object, so the article loses its rich result. | Fixed |
+| Medium | CI | `check-structured-data.js` used `JSON.parse`, which silently accepts repeated keys. It now also fails on any key repeated inside the same JSON-LD object. | Fixed |
+| Low | Template | `templates/article-template.html` lacked the Organization `@id` on author/publisher, so it was added by hand in each new article (where the duplicate came from). | Fixed |
+| Info | Thin content | Three articles (orbaff ≈240 words, inhp ≈250, dibou ≈260) and the contact pages are short. More factual detail (dates, numbers, quotes) would help them rank. Only the owner can supply it. | Owner |
+
+**To do in Search Console after deploy:** open the "Propriété en double" report and click
+**Valider la correction**. Then use "Inspection de l'URL" → "Demander une indexation" on
+`/blog/orbaff-productrices-attieke` and `/blog/dibou-productrices-attieke`.
+
+## Findings (earlier audit)
 
 | Sev. | Area | Finding | Status |
 |---|---|---|---|
