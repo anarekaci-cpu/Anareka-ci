@@ -6,9 +6,9 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 ## [Non publié]
 
 ### Ajouté
-- Mouvement (`style.css` v22, `script.js`) : orbes, losanges et poussière d'or du héros rétablis ; vague dorée lettre par lettre sur le titre ; boutons à l'or mouvant et magnétiques ; bordure conique dorée au survol des cartes partenaires ; éclat sur les cartes de chiffres ; cascade des révélations (`--stg`) ; parallaxe douce et fondu du héros au défilement. Sous `prefers-reduced-motion: no-preference`, coupé par `html.motion-off`. `?v=` : `20261119b` partout.
+- Mouvement (`style.css` v22, `script.js`) : orbes, losanges et poussière d'or du héros rétablis ; vague dorée lettre par lettre sur le titre ; boutons à l'or mouvant et magnétiques ; bordure conique dorée au survol des cartes partenaires ; éclat sur les cartes de chiffres ; cascade des révélations (`--stg`) ; fondu du héros au défilement. Sous `prefers-reduced-motion: no-preference`, coupé par `html.motion-off`. `?v=` : `20261119c` partout.
 - `apple-touch-icon` et icône PNG 192 px (`/icon-192.png`) sur toutes les pages et dans le gabarit d'article (iOS ne lit pas le WebP).
-- `site.webmanifest` : `id`, `categories`, `orientation` et raccourcis Adhésion, Contact, Blog.
+- `site.webmanifest` : `id`, `categories` et raccourcis Adhésion, Contact, Blog.
 - `/speculation-rules.json` (préchargement des pages internes, `eagerness: moderate`) + en-tête `Speculation-Rules` et type `application/speculationrules+json` dans `_headers`.
 - WhatsApp : ligne « WhatsApp » sur les pages Contact (FR/EN) et bouton « Partager sur WhatsApp » sous chaque article (également dans le gabarit et `new-article`).
 - `npm run new-article` : crée l'article depuis le gabarit et met à jour blog, accueil, barres latérales et sitemap (voir le guide de publication). Le gabarit d'article est resynchronisé avec le nav/footer actuels.

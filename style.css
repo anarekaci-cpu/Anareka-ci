@@ -3158,9 +3158,9 @@ html:not(.seal-seen) .hero-scene *, html:not(.seal-seen) .hero-scene { animation
    ============================================================ */
 @property --ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
 @keyframes goldFlow { 0% { background-position:0% 50%; } 100% { background-position:200% 50%; } }
-@keyframes goldWave { 0%, 55%, 100% { color:#fff; text-shadow:none; } 25% { color:var(--or-clair); text-shadow:0 0 22px rgba(232,201,122,.55); } }
+@keyframes goldWave { 0%, 55%, 100% { color:#fff; text-shadow:0 2px 24px rgba(0,0,0,.35); } 25% { color:var(--or-clair); text-shadow:0 2px 24px rgba(0,0,0,.35), 0 0 22px rgba(232,201,122,.55); } }
 @keyframes angSpin { to { --ang:360deg; } }
-@keyframes statGlint { 0%, 70% { transform:translateX(-120%); } 100% { transform:translateX(220%); } }
+@keyframes statGlint { 0%, 70% { transform:translateX(-120%); } 100% { transform:translateX(280%); } }
 @keyframes heroFadeScroll { to { opacity:.15; transform:translateY(-36px) scale(.97); } }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -3178,10 +3178,14 @@ html:not(.seal-seen) .hero-scene *, html:not(.seal-seen) .hero-scene { animation
   }
   html:not(.motion-off) .hero h1 .split-char:nth-last-child(-n+2).reveal-char { animation-name:none; }
 
-  /* Boutons : or mouvant (la pulsation d'origine laisse la place au flux) */
-  html:not(.motion-off) .btn-or, html:not(.motion-off) .btn-contact {
+  /* Boutons : or mouvant. Le dégradé revient à sa couleur de départ (pas d'arête quand le fond se répète). */
+  html:not(.motion-off) .btn-or {
+    background-image:linear-gradient(90deg, #c9a84c, #f3dc9a, #c9a84c, #8f6f1f, #c9a84c);
     background-size:200% auto; animation:goldFlow 6s linear infinite;
+  }
+  html:not(.motion-off) .btn-or, html:not(.motion-off) .btn-ghost, html:not(.motion-off) .btn-contact {
     translate:var(--mag-x, 0) var(--mag-y, 0);
+    transition-property:transform, translate, box-shadow, background-color, border-color, color;
   }
 
   /* Cartes partenaires : bordure conique dorée au survol (pointeur fin). Seul ::after est libre sur .part-card ;
@@ -3197,11 +3201,11 @@ html:not(.seal-seen) .hero-scene *, html:not(.seal-seen) .hero-scene { animation
   }
 
   /* Chiffres : éclat qui traverse la carte */
-  html:not(.motion-off) .chiffre-item { position:relative; overflow:hidden; }
+  html:not(.motion-off) .chiffre-item { position:relative; clip-path:inset(0 0 0 -12px); }
   html:not(.motion-off) .chiffre-item::after {
     content:''; position:absolute; top:0; bottom:0; left:0; width:40%; pointer-events:none;
     background:linear-gradient(100deg, transparent, rgba(232,201,122,.16), transparent);
-    animation:statGlint 6s ease-in-out infinite;
+    animation:statGlint 6s ease-in-out infinite backwards;
   }
   html:not(.motion-off) .chiffre-item:nth-child(2)::after { animation-delay:.6s; }
   html:not(.motion-off) .chiffre-item:nth-child(3)::after { animation-delay:1.2s; }
@@ -3210,11 +3214,14 @@ html:not(.seal-seen) .hero-scene *, html:not(.seal-seen) .hero-scene { animation
   /* Cascade des révélations : --stg (0,09 s d'écart, plafonné) posé par script.js */
   html:not(.motion-off) .reveal.on, html:not(.motion-off) .reveal-l.on, html:not(.motion-off) .reveal-scale.on { transition-delay:calc(var(--stg, 0) * .09s); }
 
-  /* Parallaxe douce du héros (variables posées par script.js) */
-  html:not(.motion-off) .hero-inner { translate:0 var(--hero-py, 0px); }
-
   /* Le héros s'estompe quand on défile (navigateurs qui connaissent scroll()) */
   @supports (animation-timeline: scroll()) {
     html:not(.motion-off) .hero-inner { animation:heroFadeScroll linear both; animation-timeline:scroll(root block); animation-range:0 70vh; }
   }
 }
+
+/* Pendant l'intro, tout le décor animé du héros est en pause (comme .hero-scene) ; orbes masqués sur petit écran. */
+html:not(.seal-seen) .hero-orb1, html:not(.seal-seen) .hero-orb2, html:not(.seal-seen) .hero-orb3,
+html:not(.seal-seen) .hero-diamond, html:not(.seal-seen) .hero-particles span,
+html:not(.seal-seen) .hero h1 .split-char { animation-play-state:paused !important; }
+@media (max-width:760px) { .hero-orb1, .hero-orb2 { display:none !important; } }
