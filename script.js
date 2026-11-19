@@ -1177,11 +1177,17 @@
   // Cascade : chaque bloc révélé dans le même parent reçoit un rang (0..5) → 0,09 s d'écart, plafonné.
   function stagger() {
     var groups = new Map();
-    document.querySelectorAll('.reveal, .reveal-l, .reveal-scale').forEach(function (el) {
+    document.querySelectorAll('.reveal:not(.section), .reveal-l:not(.section), .reveal-scale:not(.section)').forEach(function (el) {
       var p = el.parentElement;
       var n = groups.get(p) || 0;
       el.style.setProperty('--stg', Math.min(n, 5));
       groups.set(p, n + 1);
+      // Une fois révélé, le décalage ne doit plus retarder les survols : on le retire.
+      el.addEventListener('transitionend', function done(e) {
+        if (e.target !== el || e.propertyName !== 'opacity') return;
+        el.style.removeProperty('--stg');
+        el.removeEventListener('transitionend', done);
+      });
     });
   }
 
@@ -1199,26 +1205,10 @@
     }, { passive: true });
     document.addEventListener('pointerout', function (e) {
       var b = e.target.closest && e.target.closest(SEL);
-      if (b) { b.style.removeProperty('--mag-x'); b.style.removeProperty('--mag-y'); }
+      if (b && !b.contains(e.relatedTarget)) { b.style.removeProperty('--mag-x'); b.style.removeProperty('--mag-y'); }
     }, { passive: true });
   }
 
-  // Parallaxe douce : le contenu du héros avance à ~12 % de la vitesse du défilement.
-  function heroParallax() {
-    var inner = document.querySelector('.hero-inner');
-    if (!inner) return;
-    var ticking = false;
-    function update() {
-      ticking = false;
-      var y = window.scrollY;
-      if (off() || y > window.innerHeight) { inner.style.removeProperty('--hero-py'); return; }
-      inner.style.setProperty('--hero-py', (y * 0.12).toFixed(1) + 'px');
-    }
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }, { passive: true });
-  }
-
-  function init() { stagger(); magnetic(); heroParallax(); }
+  function init() { stagger(); magnetic(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
