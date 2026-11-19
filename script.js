@@ -1165,3 +1165,60 @@
     card.style.setProperty('--my', (e.clientY - r.top) + 'px');
   }, { passive: true });
 })();
+
+/* v22 — Couche de mouvement : cascade des révélations (--stg), boutons magnétiques, parallaxe douce du héros.
+   Inactif sous prefers-reduced-motion: reduce et sous html.motion-off ; réagit à un changement en direct. */
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  var off = function () { return reduce.matches || root.classList.contains('motion-off'); };
+
+  // Cascade : chaque bloc révélé dans le même parent reçoit un rang (0..5) → 0,09 s d'écart, plafonné.
+  function stagger() {
+    var groups = new Map();
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-scale').forEach(function (el) {
+      var p = el.parentElement;
+      var n = groups.get(p) || 0;
+      el.style.setProperty('--stg', Math.min(n, 5));
+      groups.set(p, n + 1);
+    });
+  }
+
+  // Boutons magnétiques (pointeur fin)
+  function magnetic() {
+    if (!fine.matches) return;
+    var SEL = '.btn-or, .btn-ghost, .btn-contact';
+    document.addEventListener('pointermove', function (e) {
+      if (off()) return;
+      var b = e.target.closest && e.target.closest(SEL);
+      if (!b) return;
+      var r = b.getBoundingClientRect();
+      b.style.setProperty('--mag-x', ((e.clientX - r.left - r.width / 2) * 0.12).toFixed(1) + 'px');
+      b.style.setProperty('--mag-y', ((e.clientY - r.top - r.height / 2) * 0.18).toFixed(1) + 'px');
+    }, { passive: true });
+    document.addEventListener('pointerout', function (e) {
+      var b = e.target.closest && e.target.closest(SEL);
+      if (b) { b.style.removeProperty('--mag-x'); b.style.removeProperty('--mag-y'); }
+    }, { passive: true });
+  }
+
+  // Parallaxe douce : le contenu du héros avance à ~12 % de la vitesse du défilement.
+  function heroParallax() {
+    var inner = document.querySelector('.hero-inner');
+    if (!inner) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var y = window.scrollY;
+      if (off() || y > window.innerHeight) { inner.style.removeProperty('--hero-py'); return; }
+      inner.style.setProperty('--hero-py', (y * 0.12).toFixed(1) + 'px');
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+  }
+
+  function init() { stagger(); magnetic(); heroParallax(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();

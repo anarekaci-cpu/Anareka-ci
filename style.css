@@ -3149,3 +3149,73 @@ footer::before { height:15px; background:var(--kente) repeat-x 0 0 / 48px 15px; 
    (l'intro reste fluide même sur un téléphone d'entrée de gamme). */
 html:not(.seal-seen) .hero-scene *, html:not(.seal-seen) .hero-scene { animation-play-state:paused !important; }
 .lottie-overlay { contain:strict; }
+
+/* ============================================================
+   v22 — Couche de mouvement : héros vivant (orbes, losanges, poussière d'or, vague dorée sur le titre),
+   boutons à l'or mouvant, bordure conique des cartes, éclat des chiffres, cascade des révélations,
+   héros qui s'estompe au défilement. Tout sous prefers-reduced-motion: no-preference,
+   coupé par html.motion-off (le bouton « pause » du pied de page).
+   ============================================================ */
+@property --ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+@keyframes goldFlow { 0% { background-position:0% 50%; } 100% { background-position:200% 50%; } }
+@keyframes goldWave { 0%, 55%, 100% { color:#fff; text-shadow:none; } 25% { color:var(--or-clair); text-shadow:0 0 22px rgba(232,201,122,.55); } }
+@keyframes angSpin { to { --ang:360deg; } }
+@keyframes statGlint { 0%, 70% { transform:translateX(-120%); } 100% { transform:translateX(220%); } }
+@keyframes heroFadeScroll { to { opacity:.15; transform:translateY(-36px) scale(.97); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.motion-off) .hero-orb1, html:not(.motion-off) .hero-orb2, html:not(.motion-off) .hero-orb3,
+  html:not(.motion-off) .hero-diamonds, html:not(.motion-off) .hero-particles { display:block; }
+  html:not(.motion-off) .hero-orb1 { opacity:.8; }
+  html:not(.motion-off) .hero-orb2 { opacity:.7; }
+  html:not(.motion-off) .hero-orb3 { opacity:.9; }
+  html:not(.motion-off) .hero-diamond { background:rgba(232,201,122,.22); }
+  html:not(.motion-off) .hero-particles span { background:rgba(232,201,122,.75); }
+
+  /* Vague dorée lettre par lettre ; l'index --i est posé par script.js (initSplitText). */
+  html:not(.motion-off) .hero h1 .split-char.reveal-char {
+    animation:goldWave 4.8s ease-in-out calc(1.2s + var(--i, 0) * .12s) infinite;
+  }
+  html:not(.motion-off) .hero h1 .split-char:nth-last-child(-n+2).reveal-char { animation-name:none; }
+
+  /* Boutons : or mouvant (la pulsation d'origine laisse la place au flux) */
+  html:not(.motion-off) .btn-or, html:not(.motion-off) .btn-contact {
+    background-size:200% auto; animation:goldFlow 6s linear infinite;
+    translate:var(--mag-x, 0) var(--mag-y, 0);
+  }
+
+  /* Cartes : bordure conique dorée au survol (pointeur fin uniquement) */
+  @media (hover:hover) and (pointer:fine) {
+    html:not(.motion-off) .domaine-card, html:not(.motion-off) .part-card, html:not(.motion-off) .blog-card { position:relative; }
+    html:not(.motion-off) .domaine-card::before, html:not(.motion-off) .part-card::before, html:not(.motion-off) .blog-card::before { content:none; }
+    html:not(.motion-off) .domaine-card:hover::before, html:not(.motion-off) .part-card:hover::before, html:not(.motion-off) .blog-card:hover::before {
+      content:''; position:absolute; inset:0; border-radius:inherit; padding:2px; pointer-events:none; z-index:2;
+      background:conic-gradient(from var(--ang), transparent 0 60%, var(--or) 78%, var(--or-clair) 88%, transparent 100%);
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+      animation:angSpin 3.2s linear infinite;
+    }
+  }
+
+  /* Chiffres : éclat qui traverse la carte */
+  html:not(.motion-off) .chiffre-item { position:relative; overflow:hidden; }
+  html:not(.motion-off) .chiffre-item::after {
+    content:''; position:absolute; top:0; bottom:0; left:0; width:40%; pointer-events:none;
+    background:linear-gradient(100deg, transparent, rgba(232,201,122,.16), transparent);
+    animation:statGlint 6s ease-in-out infinite;
+  }
+  html:not(.motion-off) .chiffre-item:nth-child(2)::after { animation-delay:.6s; }
+  html:not(.motion-off) .chiffre-item:nth-child(3)::after { animation-delay:1.2s; }
+  html:not(.motion-off) .chiffre-item:nth-child(4)::after { animation-delay:1.8s; }
+
+  /* Cascade des révélations : --stg (0,09 s d'écart, plafonné) posé par script.js */
+  html:not(.motion-off) .reveal.on, html:not(.motion-off) .reveal-l.on, html:not(.motion-off) .reveal-scale.on { transition-delay:calc(var(--stg, 0) * .09s); }
+
+  /* Parallaxe douce du héros (variables posées par script.js) */
+  html:not(.motion-off) .hero-inner { translate:0 var(--hero-py, 0px); }
+
+  /* Le héros s'estompe quand on défile (navigateurs qui connaissent scroll()) */
+  @supports (animation-timeline: scroll()) {
+    html:not(.motion-off) .hero-inner { animation:heroFadeScroll linear both; animation-timeline:scroll(root block); animation-range:0 70vh; }
+  }
+}

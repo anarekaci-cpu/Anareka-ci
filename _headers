@@ -5,6 +5,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-ar150DoAojai1PELbj0zka9cdLwTL+UZ5Plv6XBMj2o=' 'sha256-SGK2cRa5DmMzFzLl5CTHEPKyWWEgfKS5ZlIGbEuni8s=' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com; connect-src 'self' https://formspree.io https://cloudflareinsights.com; form-action 'self' https://formspree.io; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; upgrade-insecure-requests
+  Speculation-Rules: "/speculation-rules.json"
 
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
@@ -32,6 +33,10 @@
 
 /.well-known/*
   Content-Type: text/plain; charset=utf-8
+
+/speculation-rules.json
+  Content-Type: application/speculationrules+json
+  Cache-Control: public, max-age=86400
 
 /site.webmanifest
   Cache-Control: public, max-age=86400
