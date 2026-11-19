@@ -3225,3 +3225,7 @@ html:not(.seal-seen) .hero-orb1, html:not(.seal-seen) .hero-orb2, html:not(.seal
 html:not(.seal-seen) .hero-diamond, html:not(.seal-seen) .hero-particles span,
 html:not(.seal-seen) .hero h1 .split-char { animation-play-state:paused !important; }
 @media (max-width:760px) { .hero-orb1, .hero-orb2 { display:none !important; } }
+
+/* Performance : les diapos du « voyage du manioc » hors courante/voisines ne sont pas rendues,
+   donc leur image (loading="lazy") ne se télécharge pas dès l'arrivée sur la page (≈ 1,2 Mo économisés). */
+.manioc-slide:not(.active):not(.near) { content-visibility:hidden; }

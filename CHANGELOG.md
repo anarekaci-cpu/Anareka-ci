@@ -5,6 +5,13 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 
 ## [Non publié]
 
+### Performance
+- Accueil : les diapos du « voyage du manioc » hors courante/voisines ne sont plus rendues (`content-visibility`), leur image ne se charge plus d'un coup (≈ 1,2 Mo en moins au chargement).
+- Images en `srcset` : variantes 640 px (`/thumbs/*-640.webp`, 14 fichiers) pour le bandeau d'albums, les cartes du blog et l'image d'engagement (gain ≈ 60 % par image).
+- Logo du menu et du héros : `/logo-260w.webp` (17 Ko) au lieu de `/logo.webp` (35 Ko), mêmes pixels affichés ; préchargement aligné.
+- Retrait du `<link rel="icon" … icon-192.png>` ajouté plus tôt : Chrome le téléchargeait (51 Ko) à chaque page. `apple-touch-icon` reste.
+- `?v=` : `20261120a` partout.
+
 ### Ajouté
 - Mouvement (`style.css` v22, `script.js`) : orbes, losanges et poussière d'or du héros rétablis ; vague dorée lettre par lettre sur le titre ; boutons à l'or mouvant et magnétiques ; bordure conique dorée au survol des cartes partenaires ; éclat sur les cartes de chiffres ; cascade des révélations (`--stg`) ; fondu du héros au défilement. Sous `prefers-reduced-motion: no-preference`, coupé par `html.motion-off`. `?v=` : `20261119c` partout.
 - `apple-touch-icon` et icône PNG 192 px (`/icon-192.png`) sur toutes les pages et dans le gabarit d'article (iOS ne lit pas le WebP).
