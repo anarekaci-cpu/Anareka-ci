@@ -6,7 +6,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), reg
 ## [Non publié]
 
 ### Ajouté
-- Mouvement (`style.css` v22, `script.js`) : orbes, losanges et poussière d'or du héros rétablis ; vague dorée lettre par lettre sur le titre ; boutons à l'or mouvant et magnétiques ; bordure conique dorée au survol des cartes ; éclat sur les cartes de chiffres ; cascade des révélations (`--stg`) ; parallaxe douce et fondu du héros au défilement. Sous `prefers-reduced-motion: no-preference`, coupé par `html.motion-off`. `?v=` : `20261119a` partout.
+- Mouvement (`style.css` v22, `script.js`) : orbes, losanges et poussière d'or du héros rétablis ; vague dorée lettre par lettre sur le titre ; boutons à l'or mouvant et magnétiques ; bordure conique dorée au survol des cartes partenaires ; éclat sur les cartes de chiffres ; cascade des révélations (`--stg`) ; parallaxe douce et fondu du héros au défilement. Sous `prefers-reduced-motion: no-preference`, coupé par `html.motion-off`. `?v=` : `20261119b` partout.
 - `apple-touch-icon` et icône PNG 192 px (`/icon-192.png`) sur toutes les pages et dans le gabarit d'article (iOS ne lit pas le WebP).
 - `site.webmanifest` : `id`, `categories`, `orientation` et raccourcis Adhésion, Contact, Blog.
 - `/speculation-rules.json` (préchargement des pages internes, `eagerness: moderate`) + en-tête `Speculation-Rules` et type `application/speculationrules+json` dans `_headers`.

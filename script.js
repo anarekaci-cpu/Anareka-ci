@@ -1182,6 +1182,12 @@
       var n = groups.get(p) || 0;
       el.style.setProperty('--stg', Math.min(n, 5));
       groups.set(p, n + 1);
+      // Une fois révélé, le décalage ne doit plus retarder les survols : on le retire.
+      el.addEventListener('transitionend', function done(e) {
+        if (e.target !== el || e.propertyName !== 'opacity') return;
+        el.style.removeProperty('--stg');
+        el.removeEventListener('transitionend', done);
+      });
     });
   }
 

@@ -3184,11 +3184,10 @@ html:not(.seal-seen) .hero-scene *, html:not(.seal-seen) .hero-scene { animation
     translate:var(--mag-x, 0) var(--mag-y, 0);
   }
 
-  /* Cartes : bordure conique dorée au survol (pointeur fin uniquement) */
+  /* Cartes partenaires : bordure conique dorée au survol (pointeur fin). Seul ::after est libre sur .part-card ;
+     les cartes domaine et blog gardent leurs pseudo-éléments et le halo qui suit le pointeur. */
   @media (hover:hover) and (pointer:fine) {
-    html:not(.motion-off) .domaine-card, html:not(.motion-off) .part-card, html:not(.motion-off) .blog-card { position:relative; }
-    html:not(.motion-off) .domaine-card::before, html:not(.motion-off) .part-card::before, html:not(.motion-off) .blog-card::before { content:none; }
-    html:not(.motion-off) .domaine-card:hover::before, html:not(.motion-off) .part-card:hover::before, html:not(.motion-off) .blog-card:hover::before {
+    html:not(.motion-off) .part-card:hover::after {
       content:''; position:absolute; inset:0; border-radius:inherit; padding:2px; pointer-events:none; z-index:2;
       background:conic-gradient(from var(--ang), transparent 0 60%, var(--or) 78%, var(--or-clair) 88%, transparent 100%);
       -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
