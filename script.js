@@ -340,6 +340,10 @@
         const on = idx === current;
         el.classList.toggle('active', on);
         el.setAttribute('aria-hidden', on ? 'false' : 'true');
+        // Seules la diapo courante, la précédente (fondu de sortie) et la suivante sont rendues :
+        // les autres ne chargent pas leur image tant qu'elles ne sont pas proches.
+        const d = (idx - current + slides.length) % slides.length;
+        el.classList.toggle('near', d === 0 || d === 1 || d === slides.length - 1);
       });
       buttons.forEach((el, idx) => {
         const on = idx === current;
